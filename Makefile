@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/06/12 15:59:28 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/06/23 20:17:39 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
 RM = rm -f
 
+INC = minishell.h
 LIBFT_PATH = Libft/
 GET_NEXT_LINE_PATH = Get_next_line/
 EXECUTE_PATH = Execute/
@@ -56,11 +57,11 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%.o:%.c
+%o:%c $(INC)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

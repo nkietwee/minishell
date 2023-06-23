@@ -6,12 +6,19 @@ int main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
     (void)env;
-
-    // ac = 0;
-    // printf("Hello from minishell\n");
-    // // write(STDERR_FILENO)
-    printf("Hello World! From Milo EiEi\n");
-    printf("minishell is bug laewwwwwwww Fix it now\n");
-        
+    // printf("env : %s\n" , env[2]);
+    // printf("Hello World! From Milo EiEi\n");
+    // printf("minishell is bug laewwwwwwww Fix it now\n");
+    char *tmp=NULL;
+    // int i = 0;
+    while (1)
+    {
+        tmp = readline("Name ");
+        // tmp = readline 
+        if (!tmp)
+            return (0);
+        printf("%s\n" ,tmp);
+        free(tmp);
+        // i = readline("Name");
+    }
 }
-
