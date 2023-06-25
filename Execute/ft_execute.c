@@ -13,12 +13,13 @@ int main(int ac, char **av, char **env)
     // int i = 0;
     while (1)
     {
-        tmp = readline("Name ");
-        // tmp = readline 
+        tmp = readline(BLU"nkietwee % "RESET);
         if (!tmp)
             return (0);
-        printf("%s\n" ,tmp);
+        if (ft_strlen(tmp) > 0)
+            ft_main(tmp, env);
+            // ft_initdata();
+            
         free(tmp);
-        // i = readline("Name");
     }
 }

@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/06/23 20:17:39 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/06/26 00:12:46 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,13 @@ INC = minishell.h
 LIBFT_PATH = Libft/
 GET_NEXT_LINE_PATH = Get_next_line/
 EXECUTE_PATH = Execute/
+BUILTINS_PATH = Builtins/
 
 # MINISHELL_SRCS = ft_minishell.c\
 
 EXECUTE_SRCS = ft_execute.c \
+                ft_init.c \
+               
 
 LIBFT_SRCS = ft_atoi.c\
             ft_isalnum.c\
@@ -44,10 +47,16 @@ LIBFT_SRCS = ft_atoi.c\
 GET_NEXT_LINE_SRCS = get_next_line.c\
 					get_next_line_utils.c\
 
+BUILTINS_SRCS = ft_echo.c \
+                ft_pwd.c \
+                ft_cd.c \
+                ft_prterr.c\
+                ft_env.c \
 
 SRCS = $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
 	   $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) \
-	$(addprefix $(EXECUTE_PATH), $(EXECUTE_SRCS))
+	$(addprefix $(EXECUTE_PATH), $(EXECUTE_SRCS))\
+	$(addprefix $(BUILTINS_PATH), $(BUILTINS_SRCS))
 
 # SRCS = $(EXECUTE_SRCS) \
 #        $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS)) \

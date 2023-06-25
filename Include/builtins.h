@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 15:41:48 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/26 00:15:37 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/06/24 13:57:55 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/06/26 00:15:01 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
-
-void    ft_initdata(void);
-int     ft_main(char *find , char **env);
-int     ft_findstr(char *str, char *find, int len);
-int     ft_strcmp(char *s1, char *s2);
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
 
-//pwd
-void    ft_pwd(void);
+enum e_error
+{
+    PER_DN,
+    CANNT_OPEN
+    
+};
+
+void    ft_echo(char *str);
+void    ft_cd(char *str);
+void    ft_prterr(int mode, char *cmd, char *str, int err);
+void    ft_env(char **env);
+
 #endif

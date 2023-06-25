@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 15:41:48 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/26 00:15:37 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/06/24 21:13:15 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/06/24 21:26:17 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+# include "../Include/minishell.h"
 
-void    ft_initdata(void);
-int     ft_main(char *find , char **env);
-int     ft_findstr(char *str, char *find, int len);
-int     ft_strcmp(char *s1, char *s2);
-
-
-//pwd
-void    ft_pwd(void);
-#endif
+void    ft_pwd(void)
+{
+    char path[128];
+    // char *tmp ;
+    getcwd(path, 128);
+    printf("%s\n", path);
+    // printf("tmp : %s\n", tmp);
+    // exit ()
+}

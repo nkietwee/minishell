@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 15:41:48 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/26 00:15:37 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/06/26 00:12:52 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/06/26 00:14:38 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#include "../Include/minishell.h"
 
-void    ft_initdata(void);
-int     ft_main(char *find , char **env);
-int     ft_findstr(char *str, char *find, int len);
-int     ft_strcmp(char *s1, char *s2);
+void    ft_env(char **env)
+{
+    int i;
 
-
-//pwd
-void    ft_pwd(void);
-#endif
+    i = 0;
+    while (env[i])
+    {
+        printf("%s\n" ,env[i]);
+        i++;
+    }    
+}
