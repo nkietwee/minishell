@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/06/26 00:12:46 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/07/01 20:15:05 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,6 @@ BUILTINS_PATH = Builtins/
 
 # MINISHELL_SRCS = ft_minishell.c\
 
-EXECUTE_SRCS = ft_execute.c \
-                ft_init.c \
-               
-
 LIBFT_SRCS = ft_atoi.c\
             ft_isalnum.c\
 			ft_isalpha.c\
@@ -43,6 +39,9 @@ LIBFT_SRCS = ft_atoi.c\
             ft_strnstr.c\
             ft_strtrim.c\
 
+EXECUTE_SRCS = ft_execute.c \
+                ft_init.c \
+                ft_heredoc.c\
 
 GET_NEXT_LINE_SRCS = get_next_line.c\
 					get_next_line_utils.c\

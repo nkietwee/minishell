@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:34:03 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/25 23:00:32 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/07/02 20:05:45 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,19 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h> 
+
+
+typedef struct s_data
+{
+    char    **infile; // loop open infile;
+    char    **outfile; // loop open outfile
+    char    **append; // loop open outfile
+    char    **heredoc; // delimeter for heredoc
+    int     fd_in; // for last infille
+    int     fd_out; // for last outfile
+    char    **arg;
+    char    **cmd;
+     
+} t_data;
 
 #endif
