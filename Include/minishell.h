@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:34:03 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/07/02 20:05:45 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:54:39 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,27 @@
 # include <readline/history.h>
 # include <sys/types.h> 
 
+enum e_type
+{
+    HEREDOC,
+    INFILE,
+    APPEND,
+    OUTFILE
+} ;
+
+
+typedef struct s_rdr
+{
+    enum e_type type;
+    // int     type;
+    char    *file; // 
+    int     index; // for loop open file 
+} t_rdr ;
 
 typedef struct s_data
 {
-    char    **infile; // loop open infile;
-    char    **outfile; // loop open outfile
-    char    **append; // loop open outfile
-    char    **heredoc; // delimeter for heredoc
+    t_rdr   **in_here; 
+    t_rdr   **out_append;
     int     fd_in; // for last infille
     int     fd_out; // for last outfile
     char    **arg;
