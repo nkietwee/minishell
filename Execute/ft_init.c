@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 01:57:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/07/02 20:05:57 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:08:52 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ int ft_findbuitin(char *str, char **env)
 		printf("--export--\n");
 	if (ft_findstr(str, "unset", 5) == EXIT_SUCCESS)
 		printf("--unset--\n");
-	if (ft_findstr(str, "env", 3) == EXIT_SUCCESS)
-		ft_env(env);
+	// if (ft_findstr(str, "env", 3) == EXIT_SUCCESS)
+	// 	ft_env(env);
 		// printf("--env--\n");
 	if (ft_findstr(str, "exit", 4) == EXIT_SUCCESS)
-		printf("--exit--\n"); 
-	
+		printf("--exit--\n");
+
 	return (EXIT_SUCCESS);
 }
 
 int ft_main(char *find ,char **env)
 {
-	
+
 	// ft_heredoc();
 	ft_findbuitin(find, env);
 	// printf("main\n");
