@@ -6,11 +6,11 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 13:07:18 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/27 16:07:35 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:39:46 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../include/minishell.h"
 
 int	find_n(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 02:22:23 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/12 15:45:28 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:39:50 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../include/minishell.h"
 
 int	ft_strlenmode(char *str, int mode)
 {
@@ -20,7 +20,7 @@ int	ft_strlenmode(char *str, int mode)
 	if (!str)
 		return (0);
 	if (mode == 0)
-	{	
+	{
 		while (str[i] != '\0')
 			i++;
 	}
@@ -66,7 +66,7 @@ char	*ft_keeptext(char *tmp)
 {
 	char	*str;
 	int		i;
-	int		count_nl;	
+	int		count_nl;
 
 	i = 0;
 	count_nl = ft_strlenmode(tmp, 1);
@@ -126,6 +126,26 @@ char	*get_next_line(int fd)
 	tmp = ft_keeptmp(tmp);
 	return (text);
 }
+
+// int	main(void)
+// {
+// 	int	fd;
+// 	char *str;
+
+// 	fd = open("infile", O_RDWR);
+// 	str = get_next_line(fd);
+// 	if (!str)
+// 		return (0);
+// 	printf("str : %s\n", str);
+// 	while (str)
+// 	{
+// 		str = get_next_line(fd);
+// 		if (!str)
+// 			return (0);
+// 		printf("str : %s\n", str);
+// 	}
+
+// }
 
 /*int	main(void)
 {

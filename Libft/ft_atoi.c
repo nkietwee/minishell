@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 int	ft_atoi(const char *str)
 {
 	int	i;
-	int	symbol;	
+	int	symbol;
 	int	result;
 
 	i = 0;
@@ -34,6 +34,6 @@ int	ft_atoi(const char *str)
 	{
 		result = result * 10 +(str[i] - '0');
 		i++;
-	}	
+	}
 	return (result * symbol);
 }

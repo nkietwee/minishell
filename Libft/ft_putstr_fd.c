@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 20:57:08 by nkietwee          #+#    #+#             */
-/*   Updated: 2022/10/16 12:21:44 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/08/14 15:54:17 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/08/14 20:07:41 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *str, int fd)
 {
-	if (!s)
+	if (!str)
 		return ;
-	write(fd, s, ft_strlen(s));
+	write(fd, str, ft_strlen(str));
 }

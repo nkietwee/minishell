@@ -5,51 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 18:36:05 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/07/02 20:06:25 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/09/17 01:28:02 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../Include/minishell.h"
+#include "../include/minishell.h"
 
-//deli -> delimeter
-// void    ft_heredoc(char **deli)
-// {   
-//     char    *input;
-//     char    *tmp=NULL;
-//     char    **deli;
-//     int     i = 0;
-    
-//     while(1)
-//     {
-//         input = readline("\x1B[34m]""Enter a line of text: ""\033[0m");
-//         if (!input)
-//             return (0);
-//         int fd = open("a.txt" , O_CREAT | O_RDWR | O_APPEND , 0644);
+int	ft_heredoc(t_list *table_list, int cnt_heredoc)
+{
+	t_table *table;
+	t_rdr	*rdr;
+	char	*tmp;
+	int		i;
+	int		fd_heredoc;
 
-//         if (ft_strcmp(deli[0], "<<") == EXIT_SUCCESS)
-//         {
-//             i = 1;
-//             while (1)
-//             {
-//                 while (deli[i])
-//                 {      
-//                     write(1, "> ", 2);
-//                     tmp = get_next_line(STDIN_FILENO);
-//                     if (ft_strcmp(tmp ,deli[i]) == EXIT_SUCCESS)
-//                         break;
-//                     ft_putstr(tmp);
-//                     int len = ft_strlen(tmp); // -1 because - newline
-//                     write(fd, tmp, len);
-//                     free (tmp); 
-//                 }
-//                 i++;
-//                 if (deli[i] == NULL)
-//                     break;
-//             }
-//         }
-//         close(fd);
-//     }
-//     free(input);
-//     return 0;
+	i = 0;
+	tmp = NULL;
+	fd_heredoc = open("tmpfile", O_CREAT | O_TRUNC, 0644);
+	while(table_list)
+	{
+		table = (t_table *)(table_list->data);
+		rdr = (t_rdr *)(table->rdr->data);
+		rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
+		while (i < cnt_heredoc)
+		{
+			write(STDOUT_FILENO, "> ", 2);
+			tmp = get_next_line(STDIN_FILENO);
+			if (ft_strcmp(tmp , rdr->file) == EXIT_SUCCESS)
+				break;
+			if (i == cnt_heredoc - 1)
+				write(fd_heredoc, tmp, ft_strlen(tmp));
+			// free(rdr->file);
+		}
+		i++;
+		if (i == cnt_heredoc)
+			break;
+	}
+	// close(fd_heredoc);
+	return(fd_heredoc);
+}
+
+// int main(int ac, char **av)
+// {
+// 	// t_data data;
+// 	ft_heredoc(ac, av);
 // }

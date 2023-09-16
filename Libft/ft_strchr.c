@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -18,7 +18,7 @@ char	*ft_strchr(const char *s, int c)
 
 	alpha = (char)c;
 	while (*s)
-	{	
+	{
 		if (*s == alpha)
 			return ((char *)(s));
 		s++;

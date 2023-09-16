@@ -5,14 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 15:37:18 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/06/20 15:16:52 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/08/14 16:31:23 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/09/17 00:21:53 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
+#ifndef	COLOR_H
 # define COLOR_H
 
+/*
 //Regular text
 # define BLK "\e[0;30m"
 # define RED "\e[0;31m"
@@ -24,13 +25,13 @@
 # define WHT "\e[0;37m"
 
 //Regular bold text
-# define BBLK "\e[1;30m" 
-# define BRED "\e[1;31m" 
-# define BGRN "\e[1;32m" 
-# define BYEL "\e[1;33m" 
-# define BBLU "\e[1;34m" 
+# define BBLK "\e[1;30m"
+# define BRED "\e[1;31m"
+# define BGRN "\e[1;32m"
+# define BYEL "\e[1;33m"
+# define BBLU "\e[1;34m"
 # define BMAG "\e[1;35m"
-# define BCYN "\e[1;36m" 
+# define BCYN "\e[1;36m"
 # define BWHT "\e[1;37m"
 
 //Regular underline text
@@ -53,7 +54,7 @@
 # define CYNB "\e[46m"
 # define WHTB "\e[47m"
 
-//High intensty background 
+//High intensty background
 # define BLKHB "\e[0;100m"
 # define REDHB "\e[0;101m"
 # define GRNHB "\e[0;102m"
@@ -87,5 +88,25 @@
 # define RESET "\e[0m"
 # define CRESET "\e[0m"
 # define COLOR_RESET "\e[0m"
+*/
+
+/* text color */
+#define RED "\e[0;31m"
+#define GRN "\e[0;32m"
+#define YEL "\e[0;33m"
+#define BLU "\e[0;34m"
+#define PUR "\e[0;35m"
+#define CYN "\e[0;36m"
+#define WHT "\e[0;37m"
+
+/* bold text color */
+
+#define REDB "\e[1;31m"
+#define GRNB "\e[1;32m"
+#define YELB "\e[0;33m"
+#define BLUB "\e[1;34m"
+#define PURB "\e[1;35m"
+#define CYNB "\e[1;36m"
+#define WHTB "\e[1;37m"
 
 #endif

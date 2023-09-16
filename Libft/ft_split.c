@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 09:36:56 by nkietwee          #+#    #+#             */
-/*   Updated: 2022/10/16 12:22:04 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/01/31 20:04:26 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/08/14 16:14:14 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 static size_t	ft_countword(char const *s, char c)
 {
@@ -42,15 +42,17 @@ static char	*ft_printword(char const *s, char c, size_t *start)
 	i = 0;
 	len = 0;
 	while (s[*start] == c)
-	*start += 1;
+		*start += 1;
 	while (s[*start + len] != '\0' && s[*start + len] != c)
 		len++;
 	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
 	while (i < len)
-	{	
+	{
 		res[i] = s[*start + i];
 		i++;
-	}	
+	}
 	*start += len;
 	res[i] = '\0';
 	return (res);

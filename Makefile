@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/07/01 20:15:05 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/09/17 02:35:05 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,47 +19,68 @@ FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 RM = rm -f
 
 INC = minishell.h
-LIBFT_PATH = Libft/
-GET_NEXT_LINE_PATH = Get_next_line/
-EXECUTE_PATH = Execute/
+
 BUILTINS_PATH = Builtins/
+EXECUTE_PATH = Execute/
+GET_NEXT_LINE_PATH = Get_next_line/
+LIBFT_PATH = Libft/
+LIBFTMINISHELL_PATH = libminishell/
+PARSER_PATH = parser/
 
-# MINISHELL_SRCS = ft_minishell.c\
+# MINISHELL_SRCS = ft_minishell.c
+OPENDIR				=	-L./usr/include/readline -L./libft -L./libminishell
+LIBLINK				=	-lreadline
 
-LIBFT_SRCS = ft_atoi.c\
-            ft_isalnum.c\
-			ft_isalpha.c\
-            ft_isdigit.c\
-            ft_putstr_fd.c\
-            ft_split.c\
-            ft_strchr.c\
-            ft_strjoin.c\
-            ft_strlen.c\
-            ft_strncmp.c\
-            ft_strnstr.c\
-            ft_strtrim.c\
+BUILTINS_SRCS = ft_cnt_builtins.c\
+				ft_getenv.c\
+				main_builtin.c\
+				ft_cd.c\
+				ft_pwd.c\
+				ft_free_buit.c\
+				ft_env.c\
+				ft_echo.c\
+				ft_export.c\
+				ft_export_util.c\
+				ft_prtlinklist.c\
 
-EXECUTE_SRCS = ft_execute.c \
-                ft_init.c \
-                ft_heredoc.c\
+EXECUTE_SRCS = execute.c\
+			ft_cnt_execute.c\
+			ft_err.c\
+			ft_findchar.c\
+			ft_getfile.c\
+			mtpcmd.c\
+			ft_heredoc.c\
 
 GET_NEXT_LINE_SRCS = get_next_line.c\
 					get_next_line_utils.c\
 
-BUILTINS_SRCS = ft_echo.c \
-                ft_pwd.c \
-                ft_cd.c \
-                ft_prterr.c\
-                ft_env.c \
+LIBFT_SRCS = ft_isalpha.c ft_isdigit.c ft_isascii.c ft_isalnum.c ft_isprint.c \
+				ft_toupper.c ft_tolower.c ft_memcmp.c ft_strncmp.c ft_atoi.c \
+				ft_strlen.c  ft_bzero.c \
+				ft_calloc.c ft_putchar_fd.c \
+				ft_putstr_fd.c ft_putnbr_fd.c ft_putendl_fd.c ft_striteri.c \
+				ft_strchr.c ft_strdup.c ft_strrchr.c ft_strnstr.c  \
+				ft_substr.c  ft_split.c \
+				ft_issign.c ft_lstnew.c ft_lstadd_front.c ft_lstlast.c ft_lstadd_back.c \
+				ft_lstsize.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c  \
+				ft_lstpop_bot.c ft_lstpop_top.c ft_atol.c ft_isspace.c ft_split_allsp.c \
+				ft_freesplite.c  ft_strjoinextra.c ft_strcmp.c \
+				ft_lstadd_front_dict.c ft_lstnew_dict.c ft_lstadd_back_dict.c\
+				ft_lstsize_dict.c ft_memmove.c ft_memcpy.c\
 
-SRCS = $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
-	   $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) \
-	$(addprefix $(EXECUTE_PATH), $(EXECUTE_SRCS))\
-	$(addprefix $(BUILTINS_PATH), $(BUILTINS_SRCS))
+LIBFTMINISHELL_SRCS = ft_ismetachar.c ft_isquote.c ft_isvalide_quote.c
 
-# SRCS = $(EXECUTE_SRCS) \
-#        $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS)) \
-#        $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS))
+PARSER_SRCS = main.c prompt.c lexer.c grab.c init_command_list.c \
+					quotes_validate.c tokenize.c paser.c contain_cmd_to_table.c \
+					get_cmd_to_table.c get_rdr_to_table.c
+
+SRCS = $(addprefix $(BUILTINS_PATH), $(BUILTINS_SRCS))\
+		$(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
+		$(addprefix $(EXECUTE_PATH), $(EXECUTE_SRCS))\
+		$(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS))\
+		$(addprefix $(LIBFTMINISHELL_PATH), $(LIBFTMINISHELL_SRCS))\
+		$(addprefix $(PARSER_PATH), $(PARSER_SRCS))\
+
 
 OBJS = $(SRCS:.c=.o)
 
@@ -70,6 +91,9 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)
+
+# $(CC) $(FLAGS) -L/usr/local/lib -L./usr/include -I/usr/local/include  $(OBJS) -o $(NAME) -lreadline
+
 
 clean:
 	$(RM) $(OBJS)

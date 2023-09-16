@@ -5,28 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 00:12:52 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/07/02 16:31:06 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/08/14 18:32:57 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/08/27 17:20:33 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Include/minishell.h"
+#include "../include/minishell.h"
 
-/*get env ???*/
-void    ft_env(char **env ,char **name)
+/* update oldpwd pwd
+getcwd
+*/
+
+void	ft_env(t_data *data)
 {
-    int i;
+	int	i;
+	t_dict *new_dict;
 
-    i = 0;
-    while (env[i])
-    {
-        printf("%s\n" ,env[i]);
-        i++;
-    }
-    // i = 0;
-    // if (name)
-    // {
-    //    printf("%s\n" ,name[i]);
-    //    i++;
-    // }
+	i = 0;
+	// new_dict = ft_export(data->env_start);
+	while (new_dict)
+	{
+		ft_putstr_fd(new_dict->tmp_dict->key, STDOUT_FILENO);
+		ft_putstr_fd("=", STDOUT_FILENO);
+		ft_putstr_fd(new_dict->tmp_dict->value, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		new_dict = new_dict -> next;
+	}
+	// printf("END\n");
+	// printf("env\n");
+
 }
