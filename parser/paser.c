@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:52:19 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:31:03 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:00:36 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	error_exit(t_minishell *ms)
 {
 	t_list	*lst;
 
-	lst = ms->lst;
+	lst = ms->tk_lst;
 	printf("error\n");
 	ft_lstclear(&lst, &free);
 	return (1);

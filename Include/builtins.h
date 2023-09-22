@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 02:58:41 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 01:15:37 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:26:16 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_dict t_dict;
 typedef struct s_dict_value t_dict_value;
 
 void	ft_buildin(char **av, t_data *data, char **env);
-void	ft_initdata(t_data *data, char **env);
+// void	ft_initdata(t_data *data, char **env);
 
 /*cnt_builtin*/
 int		ft_cntstr(char **str);

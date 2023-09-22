@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 16:05:36 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:30:42 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:01:17 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ int	get_cmd_to_table(t_minishell **ms)
 	t_table	*table;
 	t_list	*lst;
 
-	(*ms)->table = NULL;
-	lst = (*ms)->lst;
+	(*ms)->tb_lst = NULL;
+	lst = (*ms)->tk_lst;
 	while (lst)
 	{
-		if ((*ms)->table == NULL)
-			(*ms)->table = ft_lstnew(malloc(sizeof(t_table)));
+		if ((*ms)->tb_lst == NULL)
+			(*ms)->tb_lst = ft_lstnew(malloc(sizeof(t_table)));
 		else
-			ft_lstadd_back(&((*ms)->table), ft_lstnew(malloc(sizeof(t_table))));
-		table = (ft_lstlast((*ms)->table))->data;
+			ft_lstadd_back(&((*ms)->tb_lst), ft_lstnew(malloc(sizeof(t_table))));
+		table = (ft_lstlast((*ms)->tb_lst))->data;
 		table->cmd = get_cmd_n_slide(&lst);
 		table->rdr = NULL;
 		if (lst && ((t_token *)((lst->data)))->type == PIPE)

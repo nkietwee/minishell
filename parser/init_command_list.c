@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:52:18 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:30:51 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 19:51:03 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	init_command_list(t_minishell **ms, char *line)
 		if (index == -1)
 			return (1);
 		grab_to_lst(&lst, &ptr_line, index);
-		print_lst(lst);
+		// print_lst(lst);
 	}
-	(*ms)->lst = lst;
+	(*ms)->tk_lst = lst;
 	return (0);
 }

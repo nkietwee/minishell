@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 01:39:19 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:33:15 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,40 +111,94 @@ void	ft_child(int i, t_data *data, int j)
 		ft_execvecmd(cmd, data->path, data->tmp_env);
 }
 
-// void	ft_mainexec(t_data *data, int ac, char **av)
-void	ft_mainexec(t_minishell *main, int ac, char **av)
+void	ft_execute(t_minishell *ms, int ac, char **av)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 2;
-	main->data->nbr_cmd = ft_cntcmd(main->table);
-	main->data->pid = malloc(sizeof(pid_t) * main->data->nbr_cmd);
-	if (!main->data->pid)
+	ms->data.nbr_cmd = ft_cntcmd(ms->tb_lst);
+	ms->data.pid = malloc(sizeof(pid_t) * ms->data.nbr_cmd);
+	if (!ms->data.pid)
 		return ;
-	ft_getfd(main);
+	ft_getfd(ms);
 	i = 0;
-	printf("nbr_cmd : %d\n" ,main->data->nbr_cmd);
-	while(i < main->data->nbr_cmd)
+	printf("nbr_cmd : %d\n" ,ms->data.nbr_cmd);
+	while(i < ms->data.nbr_cmd)
 	{
-		if (pipe(main->data->fd_pipe)== -1)
+		if (pipe(ms->data.fd_pipe)== -1)
 			ft_prterr(CANNT_PIPE);
-		main->data->pid[i] = fork();
-		if (main->data->pid[i] == -1)
+		ms->data.pid[i] = fork();
+		if (ms->data.pid[i] == -1)
 			ft_prterr(CANNT_FORK);
-		else if (main->data->pid[i] == 0)
-			ft_child(i, main->data, j);
+		else if (ms->data.pid[i] == 0)
+			ft_child(i, &ms->data, j);
 		else
-			ft_parent(main->data);
+			ft_parent(&ms->data);
 		i++;
 		j++;
 	}
 	int k = 0;
-	while(k < main->data->nbr_cmd)
+	while(k < ms->data.nbr_cmd)
 	{
-		waitpid(main->data->pid[k], NULL, 0);
+		waitpid(ms->data.pid[k], NULL, 0);
 		k++;
 	}
+}
+
+
+// // void	ft_mainexec(t_data *data, int ac, char **av)
+// void	ft_execute(t_minishell *ms, int ac, char **av)
+// {
+// 	int		i;
+// 	int		j;
+
+// 	i = 0;
+// 	j = 2;
+// 	ms->data->nbr_cmd = ft_cntcmd(ms->tb_lst);
+// 	ms->data->pid = malloc(sizeof(pid_t) * ms->data->nbr_cmd);
+// 	if (!ms->data->pid)
+// 		return ;
+// 	ft_getfd(ms);
+// 	i = 0;
+// 	printf("nbr_cmd : %d\n" ,ms->data->nbr_cmd);
+// 	while(i < ms->data->nbr_cmd)
+// 	{
+// 		if (pipe(ms->data->fd_pipe)== -1)
+// 			ft_prterr(CANNT_PIPE);
+// 		ms->data->pid[i] = fork();
+// 		if (ms->data->pid[i] == -1)
+// 			ft_prterr(CANNT_FORK);
+// 		else if (ms->data->pid[i] == 0)
+// 			ft_child(i, ms->data, j);
+// 		else
+// 			ft_parent(ms->data);
+// 		i++;
+// 		j++;
+// 	}
+// 	int k = 0;
+// 	while(k < ms->data->nbr_cmd)
+// 	{
+// 		waitpid(ms->data->pid[k], NULL, 0);
+// 		k++;
+// 	}
+// }
+
+void	ft_countexec(t_minishell *ms)
+{
+	// printf("count_exec\n");
+	// ms->data.nbr_cmd = ft_cntcmd(ms->tb_lst);
+	ms->data.nbr_heredoc = ft_cnt_heredoc(ms->tb_lst);
+	printf("nbr_heredoc : %d\n", ms->data.nbr_heredoc );
+
+}
+
+
+void	ft_mainexec(t_minishell *ms)
+{
+	// printf("main_exec\n");
+	ft_countexec(ms);
+	ft_heredoc(ms->tb_lst , ms->data.nbr_heredoc);
 
 }

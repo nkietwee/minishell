@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:33:50 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 01:24:24 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 18:34:48 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ typedef struct s_rdr t_rdr;
 typedef struct s_list t_list;
 typedef struct s_minishell t_minishell;
 
+void	ft_initdata(t_minishell *ms, char **env);
 
-void	ft_mainexec(t_minishell *main, int ac, char **av);
+void	ft_mainexec(t_minishell *ms);
 /* ft_getfile */
 void	ft_getfd(t_minishell *main);
 int	ft_getfd_in(t_minishell *main);

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 02:58:16 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/03 15:58:52 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:26:51 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void	ft_buildin(char **av, t_data *data, char **env)
 
 }
 
-void	ft_initdata(t_data *data, char **env)
-{
-	// data->dict = ft_getenv(env);
-	// data->env_start = env;
+// void	ft_initdata(t_data *data, char **env)
+// {
+// 	// data->dict = ft_getenv(env);
+// 	// data->env_start = env;
 
-}
+// }
 
 // /*expand for export*/
 // int	main(int ac, char **av, char **env)

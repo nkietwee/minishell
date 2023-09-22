@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 16:24:16 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:30:44 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:01:32 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	get_rdr_to_table(t_minishell **ms)
 	t_list	*table_lst;
 	t_list	*lst;
 
-	table_lst = (*ms)->table;
-	lst = (*ms)->lst;
+	table_lst = (*ms)->tb_lst;
+	lst = (*ms)->tk_lst;
 	while(table_lst)
 	{
 		get_rdr_n_slide(&(((t_table *)(table_lst->data))->rdr), &lst);

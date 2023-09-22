@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:26:21 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:42:05 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:00:07 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	quotes_validate(t_minishell *env)
 	t_list	*lst;
 	char	*str;
 
-	lst = env->lst;
+	lst = env->tk_lst;
 	while (lst)
 	{
 		str = ((t_token *)(lst->data))->str;

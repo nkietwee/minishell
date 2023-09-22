@@ -20,7 +20,7 @@ static void	print_table(t_minishell ms)
 	t_table	*table;
 	int		i;
 
-	tb_lst = ms.table;
+	tb_lst = ms.tb_lst;
 	while (tb_lst)
 	{
 		table = tb_lst->data;
@@ -54,7 +54,7 @@ static void	print_token(t_minishell ms)
 	t_list	*token_lst;
 	t_token	*token;
 
-	token_lst = ms.lst;
+	token_lst = ms.tk_lst;
 	printf("----token----\n");
 	while(token_lst)
 	{
@@ -65,13 +65,38 @@ static void	print_token(t_minishell ms)
 	}
 }
 
+
+void	ft_initdata(t_minishell *ms, char **env)
+{
+	// ms->data = NULL;
+	// printf("init_data\n");
+	ms->data.fd_in = 0;
+	ms->data.fd_out = 0;
+	ms->data.fd_tmp_read = 0;
+	ms->data.fd_pipe[0] = 0;
+	ms->data.fd_pipe[1] = 0;
+	ms->data.nbr_infile = 0;
+	ms->data.nbr_out_append = 0;
+	ms->data.nbr_cmd = 0;
+	ms->data.nbr_heredoc = 0;
+	ms->data.fd_heredoc = 0;
+	ms->data.tmp_env = env;
+	ms->data.path = NULL;
+
+	// ms->dict = ft_getenv(env);
+	// exit (0);
+
+}
 int main(int ac, char **av, char **env)
 {
 	char 		*line;
 	char 		*prompt_str;
 	t_minishell	ms;
 
-	// init_ms(&ms, env, &ac, &av);
+	// int i = ms.data.fd_in = 0;
+	// printf("i : %d\n", i);
+	ft_initdata(&ms, env);
+	// exit(0);
 	(void)ac;
 	(void)av;
 	(void)env;
@@ -86,9 +111,10 @@ int main(int ac, char **av, char **env)
 		add_history(line);
 		if(lexer(line, &ms))
 			continue ;
-		print_token(ms);
+		// print_token(ms);
 		paser(&ms);
-		print_table(ms);
+		// print_table(ms);
+		ft_mainexec(&ms);
 		// excute(&ms); รับ signal ใน while loop
 		// free_token(&ms.token);
 	}

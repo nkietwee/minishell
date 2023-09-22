@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 01:32:17 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:46:03 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # include "libminishell.h"
 # include "parser.h"
 
-// #define table"ms->table"
 
 /* token and tag_ctrl index define*/
 
@@ -127,9 +126,11 @@ typedef struct s_data
 	int		fd_out;
 	int		fd_tmp_read;
 	int		fd_pipe[2];
+
 	int		nbr_infile;
 	int		nbr_out_append;
 	int		nbr_cmd;
+	int		nbr_heredoc;
 
 	int		fd_heredoc;
 	int		tmp_ac;
@@ -141,37 +142,12 @@ typedef struct s_data
 
 typedef struct	s_minishell
 {
-	t_list	*lst; // lexer
-	t_list	*table; // parser
+	t_list	*tk_lst; // tk_list from token list lexer
+	t_list	*tb_lst; //  tb_list from table list from parser
 	t_dict	*dict; // env
-	t_data	*data; // for execute
+	// t_data	*data; // for execute
+	t_data	data; // for execute
 
 } t_minishell;
-
-
-
-
-// typedef struct s_data
-// {
-// 	// t_cmd *cmd;
-// 	int		fd_in; // for last infille
-// 	int		fd_heredoc;
-// 	int		fd_out; // for last outfile
-// 	int		fd_pipe[2];
-// 	int		fd_read;
-// 	char	**arg;
-// 	char	**cmd;
-// 	char	**path; // env
-// 	char	**tmp_env;
-// 	pid_t	*pid; //for fork
-// 	int		fd_tmp_read;
-// 	int		cnt_cmd;
-// 	int		cnt_heredoc;
-
-// 	int		tmp_ac;
-// 	char	**tmp_av;
-// 	t_dict	**dict;
-// } t_data;
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:59:50 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:31:16 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:00:25 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	tokenize(t_minishell **ms)
 
 	if(!ms)
 		return(1);
-	lst = (*ms)->lst;
+	lst = (*ms)->tk_lst;
 	tag_ctrl = START;
 	while(lst)
 	{
