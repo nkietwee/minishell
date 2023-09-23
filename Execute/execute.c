@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/22 22:33:15 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:39:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,44 +147,6 @@ void	ft_execute(t_minishell *ms, int ac, char **av)
 	}
 }
 
-
-// // void	ft_mainexec(t_data *data, int ac, char **av)
-// void	ft_execute(t_minishell *ms, int ac, char **av)
-// {
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 2;
-// 	ms->data->nbr_cmd = ft_cntcmd(ms->tb_lst);
-// 	ms->data->pid = malloc(sizeof(pid_t) * ms->data->nbr_cmd);
-// 	if (!ms->data->pid)
-// 		return ;
-// 	ft_getfd(ms);
-// 	i = 0;
-// 	printf("nbr_cmd : %d\n" ,ms->data->nbr_cmd);
-// 	while(i < ms->data->nbr_cmd)
-// 	{
-// 		if (pipe(ms->data->fd_pipe)== -1)
-// 			ft_prterr(CANNT_PIPE);
-// 		ms->data->pid[i] = fork();
-// 		if (ms->data->pid[i] == -1)
-// 			ft_prterr(CANNT_FORK);
-// 		else if (ms->data->pid[i] == 0)
-// 			ft_child(i, ms->data, j);
-// 		else
-// 			ft_parent(ms->data);
-// 		i++;
-// 		j++;
-// 	}
-// 	int k = 0;
-// 	while(k < ms->data->nbr_cmd)
-// 	{
-// 		waitpid(ms->data->pid[k], NULL, 0);
-// 		k++;
-// 	}
-// }
-
 void	ft_countexec(t_minishell *ms)
 {
 	// printf("count_exec\n");
@@ -194,10 +156,48 @@ void	ft_countexec(t_minishell *ms)
 
 }
 
+int	ft_check_name_file(char	*file)
+{
+	if ((file[0] >= 'A' && file[0] <= 'Z') ||
+	 (file[0] >= 'a' && file[0] <= 'z') ||
+	 (file[0] >= '0' && file[0] <= '9'))
+	 	return (EXIT_SUCCESS);
+	else
+		printf("bash: syntax error near unexpected token '%c'\n" ,file[0]);
+	return (EXIT_FAILURE);
+}
+
+int	ft_checkfile(t_list *tb_lst)
+{
+	t_table	*table;
+	t_list	*rdr_lst;
+	t_rdr	*rdr;
+
+	// printf("ft_checkfile\n");
+	while (tb_lst)
+	{
+		table = (t_table *)(tb_lst->data);
+		rdr_lst = (table->rdr);
+		while (rdr_lst)
+		{
+			rdr = (t_rdr *)(rdr_lst->data);
+			if (rdr->type == INFILE || rdr->type == OUTFILE || rdr->type == APPEND)
+			{
+				if (ft_check_name_file(rdr->file) == EXIT_FAILURE)
+					return (EXIT_FAILURE);
+			}
+			rdr_lst = rdr_lst->next;
+		}
+		tb_lst = tb_lst->next;
+	}
+	return (EXIT_SUCCESS);
+}
 
 void	ft_mainexec(t_minishell *ms)
 {
 	// printf("main_exec\n");
+	if (ft_checkfile(ms->tb_lst) == EXIT_FAILURE)
+		return ;
 	ft_countexec(ms);
 	ft_heredoc(ms->tb_lst , ms->data.nbr_heredoc);
 

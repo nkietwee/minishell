@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 02:45:00 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:58:05 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,10 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 		{
 			rdr = (t_rdr *)(rdr_lst->data);
 			rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
-			// printf("deli : %s", rdr->file);
 			while (1)
 			{
 				write(STDOUT_FILENO, "> ", 2);
 				tmp = get_next_line(STDIN_FILENO);
-				// printf("tmp : %s", tmp);
-				// printf("deli : %s", rdr->file);
-
 				if (ft_strcmp(tmp, rdr->file) == EXIT_SUCCESS)
 				{
 					i++;
@@ -102,12 +98,9 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 						return (fd_heredoc);
 					break;
 				}
-				printf("i : %d , nbr_heredoc : %d\n", i, nbr_heredoc);
+				// printf("i : %d , nbr_heredoc : %d\n", i, nbr_heredoc);
 				if (i == nbr_heredoc - 1)
-				{
-					// write(1, "finish\n", 7);
 					write(fd_heredoc, tmp, ft_strlen(tmp));
-				}
 			}
 			rdr_lst = rdr_lst->next;
 		}
@@ -116,65 +109,6 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 	return (0);
 	// return (fd_heredoc);
 }
-
-
-
-
-// int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
-// {
-// 	t_table *table;
-// 	t_list	*rdr_lst;
-// 	t_rdr	*rdr;
-// 	char	*tmp;
-// 	int		i;
-// 	int		fd_heredoc;
-
-// 	i = 0;
-// 	tmp = NULL;
-// 	// printf("Entry ft_heredoc\n");
-// 	ft_prt_heredoc(tb_lst);
-// 	fd_heredoc = open("tmpfile", O_CREAT | O_TRUNC, 0644);
-// 	while (tb_lst)
-// 	{
-// 		table = (t_table *)(tb_lst->data);
-// 		// rdr = (t_rdr *)(table->rdr->data);
-// 		rdr_lst = table->rdr;
-// 		while (i < nbr_heredoc)
-// 		{
-// 			rdr = (t_rdr *)(rdr_lst->data);
-// 			rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
-// 			while (rdr_lst)
-// 			{
-// 				int n = 0;
-// 				write(STDOUT_FILENO, "> ", 2);
-// 				tmp = get_next_line(STDIN_FILENO);
-// 				printf("tmp : %s ", tmp);
-// 				if (ft_strcmp(tmp , rdr->file) == EXIT_SUCCESS)
-// 				{
-// 					n = 2;
-// 					printf("n : %d\n", n);
-// 					rdr_lst = rdr_lst->next;
-// 					if (!rdr_lst)
-// 						break;
-// 					rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
-// 					// break;
-// 				}
-// 				if (i == nbr_heredoc - 1)
-// 					write(fd_heredoc, tmp, ft_strlen(tmp));
-// 				// free(rdr->file);
-// 				// if (n == 2)
-// 					// rdr_lst = rdr_lst->next;
-// 				n = 0;
-// 			}
-// 		}
-// 		i++;
-// 		if (i == nbr_heredoc)
-// 			break;
-// 		tb_lst = tb_lst->next;
-// 	}
-// 	// close(fd_heredoc);
-// 	return(fd_heredoc);
-// }
 
 // int main(int ac, char **av)
 // {

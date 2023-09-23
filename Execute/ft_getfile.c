@@ -6,49 +6,11 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:46:22 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/22 22:34:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:09:46 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-
-int	ft_cnt_infile(t_list *table_list)
-{
-	int	i;
-	t_table *table;
-	t_rdr	*rdr;
-
-	i = 0;
-	while (table_list)
-	{
-		table = (t_table *)(table_list->data);
-		rdr = (t_rdr *)(table->rdr->data);
-		if (rdr->type == INFILE)
-			i++;
-		table_list = table_list->next;
-	}
-	return (i);
-}
-
-int	ft_cnt_outfile(t_list *table_list)
-{
-	int	i;
-	t_table *table;
-	t_rdr	*rdr;
-
-	i = 0;
-	while (table_list)
-	{
-		table = (t_table *)(table_list->data);
-		rdr = (t_rdr *)(table->rdr->data);
-		if (rdr->type == OUTFILE || rdr->type == APPEND)
-			i++;
-		table_list = table_list->next;
-	}
-	return (i);
-}
-
 
 int	ft_getfd_in(t_minishell *main)
 {
@@ -115,22 +77,3 @@ void	ft_getfd(t_minishell *main)
 	else
 		main->data.fd_out = ft_getfd_out(main);
 }
-
-// void	ft_getfd(t_minishell *main)
-// {
-// 	int		nbr_infile;
-// 	int		nbr_outfile;
-// 	// t_table	*table;
-
-// 	// table = (t_table *)(main->table->data);
-// 	nbr_infile = ft_cnt_infile(main->tb_lst);
-// 	if (nbr_infile == 0) // no infile
-// 		main->data->fd_in = STDIN_FILENO;
-// 	else
-// 		main->data->fd_in = ft_getfd_in(main);
-// 	nbr_outfile = ft_cnt_outfile(main->tb_lst);
-// 	if (nbr_outfile == 0) // no outfile
-// 		main->data->fd_out = STDOUT_FILENO;
-// 	else
-// 		main->data->fd_out = ft_getfd_out(main);
-// }

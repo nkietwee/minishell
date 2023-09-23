@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/22 20:58:44 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:09:58 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,42 @@ int	ft_cntcmd(t_list *table_list)
 			i++;
 		}
 		table_list = table_list -> next; // t_lst only
+	}
+	return (i);
+}
+
+int	ft_cnt_infile(t_list *table_list)
+{
+	int	i;
+	t_table *table;
+	t_rdr	*rdr;
+
+	i = 0;
+	while (table_list)
+	{
+		table = (t_table *)(table_list->data);
+		rdr = (t_rdr *)(table->rdr->data);
+		if (rdr->type == INFILE)
+			i++;
+		table_list = table_list->next;
+	}
+	return (i);
+}
+
+int	ft_cnt_outfile(t_list *table_list)
+{
+	int	i;
+	t_table *table;
+	t_rdr	*rdr;
+
+	i = 0;
+	while (table_list)
+	{
+		table = (t_table *)(table_list->data);
+		rdr = (t_rdr *)(table->rdr->data);
+		if (rdr->type == OUTFILE || rdr->type == APPEND)
+			i++;
+		table_list = table_list->next;
 	}
 	return (i);
 }
