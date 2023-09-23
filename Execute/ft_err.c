@@ -6,20 +6,20 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:37:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/08/14 22:34:53 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/24 00:06:01 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void    ft_prterr_builtins(int mode, char *cmd, char *str, int err)
+void	ft_prterr_builtins(int mode, char *cmd, char *str, int err)
 {
 
-    if (mode == PER_DN)
-        printf("bash: %s: %s: No such file or directory\n" ,cmd, str);
-    else if (mode == CANNT_OPEN)
-        printf("bash: %s: %s: Permission denied\n" ,cmd, str);
-    // exit (err); // ??
+	if (mode == PER_DN)
+		printf("bash: %s: %s: No such file or directory\n" ,cmd, str);
+	else if (mode == CANNT_OPEN)
+		printf("bash: %s: %s: Permission denied\n" ,cmd, str);
+	// exit (err); // ??
 }
 
 void	ft_prterrexec(char *str, int errno, int mode)

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 22:39:12 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/08/14 23:26:07 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 23:16:41 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	ft_findstr(char *str, char *find, int len)
 	return (EXIT_FAILURE);
 }
 
-int	main(int ac, char **av)
-{
-	(void)ac;
-	printf("sucess : %d\n", EXIT_SUCCESS);
-	printf("failure : %d\n", EXIT_FAILURE);
-	// printf("av[1] : %s\n", av[1]);
-	printf("res : %d\n", ft_findstr(av[1], "~", 1));
+// int	main(int ac, char **av)
+// {
+// 	(void)ac;
+// 	printf("sucess : %d\n", EXIT_SUCCESS);
+// 	printf("failure : %d\n", EXIT_FAILURE);
+// 	// printf("av[1] : %s\n", av[1]);
+// 	printf("res : %d\n", ft_findstr(av[1], "~", 1));
 
-}
+// }

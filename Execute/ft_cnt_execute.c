@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 15:09:58 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 23:54:25 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ int	ft_cntcmd(t_list *table_list)
 	t_table *table;
 
 	i = 0;
-	printf("ft_cnt_cmd\n");
+	// printf("ft_cnt_cmd\n");
 	while (table_list)
 	{
 		table = (t_table *)(table_list->data);
 		if (table->cmd[0] != NULL)
 		{
-			printf("cmd : %s\n", table->cmd[0]);
+			// printf("cmd_ : %s\n", table->cmd[0]);
 			i++;
 		}
-		table_list = table_list -> next; // t_lst only
+		table_list = table_list->next; // t_lst only
 	}
 	return (i);
 }
@@ -97,15 +97,12 @@ int	ft_cnt_outfile(t_list *table_list)
 	return (i);
 }
 
-// int	ft_cntfile(t_rdr *file)
-// {
-// 	int	cnt;
+void	ft_countexec(t_minishell *ms)
+{
+	// printf("count_exec\n");
+	// ms->data.nbr_heredoc = ft_cnt_heredoc(ms->tb_lst);
+	// printf("nbr_heredoc : %d\n", ms->data.nbr_heredoc );
+	// ms->data.nbr_cmd = ft_cntcmd(ms->tb_lst);
 
-// 	cnt = 0;
-// 	while (file)
-// 	{
-// 		cnt++;
-// 		file = file->next;
-// 	}
-// 	return (cnt);
-// }
+
+}

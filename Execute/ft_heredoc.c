@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 14:58:05 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/23 20:10:42 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,7 @@ void	ft_prt_heredoc(t_list *tb_list)
 	t_rdr	*rdr;
 	t_list *rdr_lst;
 
-	printf("Entry ft_prt_heredoc\n");
-	// t_table *tmp_table;
-	// t_rdr	*tmp_rdr;
-
-	// tmp_table = (t_table *)(tb_list->data);
-	// tmp_rdr = (t_rdr *)(tmp_table->rdr->next->data);
-	// printf("here : %s\n",  tmp_rdr->file);
-	// exit(0);
+	// printf("Entry ft_prt_heredoc\n");
 	while (tb_list)
 	{
 		table = (t_table *)(tb_list->data);
@@ -77,8 +70,8 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 
 	i = 0;
 	ft_prt_heredoc(tb_lst);
-	fd_heredoc = open("tmpfile", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	printf("fd_ : %d\n", fd_heredoc);
+	// fd_heredoc = open("tmpfile", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	// printf("fd_ : %d\n", fd_heredoc);
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
@@ -106,6 +99,7 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 		}
 		tb_lst = tb_lst->next;
 	}
+	// close (fd_heredoc);
 	return (0);
 	// return (fd_heredoc);
 }

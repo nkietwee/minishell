@@ -70,18 +70,18 @@ void	ft_initdata(t_minishell *ms, char **env)
 {
 	// ms->data = NULL;
 	// printf("init_data\n");
-	ms->data.fd_in = 0;
-	ms->data.fd_out = 0;
-	ms->data.fd_tmp_read = 0;
-	ms->data.fd_pipe[0] = 0;
-	ms->data.fd_pipe[1] = 0;
-	ms->data.nbr_infile = 0;
-	ms->data.nbr_out_append = 0;
-	ms->data.nbr_cmd = 0;
-	ms->data.nbr_heredoc = 0;
-	ms->data.fd_heredoc = 0;
-	ms->data.tmp_env = env;
-	ms->data.path = NULL;
+	// ms->data.fd_in = 0;
+	// ms->data.fd_out = 0;
+	// ms->data.fd_tmp_read = 0;
+	// ms->data.fd_pipe[0] = 0;
+	// ms->data.fd_pipe[1] = 0;
+	// ms->data.nbr_infile = 0;
+	// ms->data.nbr_out_append = 0;
+	// ms->data.nbr_cmd = 0;
+	// ms->data.nbr_heredoc = 0;
+	// ms->data.fd_heredoc = 0;
+	// ms->data.tmp_env = env;
+	// ms->data.path = NULL;
 
 	// ms->dict = ft_getenv(env);
 	// exit (0);
