@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/24 00:53:06 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 02:03:52 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ typedef struct s_rdr
 
 typedef struct s_data
 {
-	pid_t	*pid;
+	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
-	int		fd_tmp_read;
+	// int		fd_tmp_read;
 	int		fd_pipe[2];
 
 	int		nbr_infile;
@@ -134,19 +134,18 @@ typedef struct s_table
 	t_list	*rdr; // redirect
 	t_data	exec_data;
 	char	**cmd;
+	int		nbr_cmd;
 
 } t_table;
 
-
+	// if (pipe(data_exec.fd_pipe) == -1)
 
 typedef struct	s_minishell
 {
 	t_list	*tk_lst; // tk_list from token list lexer
 	t_list	*tb_lst; //  tb_list from table list from parser
 	t_dict	*dict; // env
-	// t_data	*data; // for execute
-	// t_data	data; // for execute
-
+	char	**env;
 } t_minishell;
 
 #endif

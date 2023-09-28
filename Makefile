@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/09/23 17:25:26 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/09/26 15:12:27 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ EXECUTE_SRCS = execute.c\
 			mtpcmd.c\
 			ft_heredoc.c\
 			ft_check_name.c\
-			ft_main_exec.c
+			ft_main_exec.c\
+			ft_execve.c
 
 GET_NEXT_LINE_SRCS = get_next_line.c\
 					get_next_line_utils.c\

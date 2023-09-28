@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:37:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/24 00:06:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:24:25 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	ft_prterrexec(char *str, int errno, int mode)
 void    ft_prterr(int mode)
 {
 	if (mode == CANNT_PIPE)
-		ft_putstr_fd("It cann't create pipe", 2);
+		ft_putstr_fd("It can't create pipe", 2);
 	else if (mode == CANNT_FORK)
-		ft_putstr_fd("It cann't fork", 2);
+		ft_putstr_fd("It can't fork", 2);
 	else if (mode == CANNT_OPENIN)
-		ft_putstr_fd("It cann't open in file", 2);
+		ft_putstr_fd("It can't open in file", 2);
 	else if (mode == CANNT_OPENOUT)
-		ft_putstr_fd("It cann't open out file", 2);
+		ft_putstr_fd("It can't open out file", 2);
 	// exit();??
 }

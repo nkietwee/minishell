@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 00:40:49 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/28 15:53:44 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_unset(char **cmd, t_dict *tmp_export)
 	i = 1;
 	while (cmd[i])
 	{
-		index = ft_findkey_export();
+		// index = ft_findkey_export(cmd[0], env);
 		if (index == -1)
 			continue;
 		ft_lstdelete_node(tmp_export, index);

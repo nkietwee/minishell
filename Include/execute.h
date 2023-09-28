@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:33:50 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 23:54:13 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 00:55:54 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_initdata(t_minishell *ms, char **env);
 
 void	ft_mainexec(t_minishell *ms);
 
-void	ft_execute(t_list *tb_lst);
+char	**ft_findpath(char **env);
+void	ft_execute(t_list *tb_lst, char **env);
 /* ft_getfile */
 void	ft_getfd(t_minishell *main);
 int	ft_getfd_in(t_minishell *main);
@@ -34,13 +35,27 @@ int	ft_cnt_outfile(t_list *table_list);
 int	ft_cnt_heredoc(t_list *table_list);
 
 /*ft_cnt_execute*/
-void	ft_countexec(t_minishell *ms);
+// void	ft_countexec(t_minishell *ms);
 int		ft_cntfile(t_rdr *file);
 int		ft_cntcmd(t_list *table_list);
+void	ft_countexec(t_list *tb_lst);
 
 /*ft_check_name*/
 int	ft_checkfile(t_list *tb_lst);
 
+/*ft_execve*/
+void	ft_execvecmd(char **cmd, char **path, char **tmp_env);
+void	ft_execvepath(char **path, char **tmp_env);
+// void	ft_parent(t_list *tb_lst);
+// void	ft_parent(t_list *tb_lst, int i);
+void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read);
+// void	ft_child(t_list *tb_lst, int i, char **env);
+void	ft_child(t_list *tb_lst, int i, char **env, int *fd_tmp_read);
+
+/*ft_execute*/
+// void	ft_dup2(int i, t_data *data_exec);
+void	ft_dup2(int i, t_data *data_exec, int fd_tmp_read);
+int		ft_check_buildin(char **cmd);
 
 void	ft_prterr(int mode);
 void	ft_prterrexec(char *str, int errno, int mode);

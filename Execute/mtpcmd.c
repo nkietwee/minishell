@@ -6,32 +6,34 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:31:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 23:55:15 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:48:05 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-// void	ft_findpath(t_data *data)
-// {
-// 	int		i;
-// 	// char	**path;
+char	**ft_findpath(char **env)
+{
+	int		i;
+	char	**path;
 
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		if (data->tmp_env[i][0] == 'P' && data->tmp_env[i][1] == 'A' \
-// 		&& data->tmp_env[i][2] == 'T' && data->tmp_env[i][3] == 'H')
-// 			break;
-// 		i++;
-// 	}
-// 	data->path = ft_split(data->tmp_env[i] + 5, ':');
-// 	i = 0;
-// 	while (data->path[i])
-// 	{
-// 		data->path[i] = ft_strjoinextra(data->path[i], "/" , BEFORE);
-// 		i++;
-// 	}
-// }
+	i = 0;
+	// printf("findpath1\n");
+	while (1) // protect in case unset path
+	{
+		if (env[i][0] == 'P' && env[i][1] == 'A' \
+		&& env[i][2] == 'T' && env[i][3] == 'H')
+			break;
+		i++;
+	}
+	path = ft_split(env[i] + 5, ':');
+	i = 0;
+	while (path[i])
+	{
+		path[i] = ft_strjoinextra(path[i], "/" , BEFORE);
+		i++;
+	}
+	return (path);
+}
 
 // void	ft_initvalue(t_data *data, char **env, char **av, int ac)
 // {

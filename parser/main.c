@@ -97,6 +97,7 @@ int main(int ac, char **av, char **env)
 	// printf("i : %d\n", i);
 	ft_initdata(&ms, env);
 	// exit(0);
+	ms.env = env;
 	(void)ac;
 	(void)av;
 	(void)env;
@@ -114,6 +115,7 @@ int main(int ac, char **av, char **env)
 		// print_token(ms);
 		paser(&ms);
 		// print_table(ms);
+		// exit (0);
 		ft_mainexec(&ms);
 		// excute(&ms); รับ signal ใน while loop
 		// free_token(&ms.token);
