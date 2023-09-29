@@ -6,55 +6,53 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:50:46 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 14:59:36 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/30 01:33:20 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	error_exit(t_minishell *ms, char *line)
+static int error_exit(t_minishell *ms, char *line)
 {
-	t_list	*lst;
+	t_list *tk_lst;
 
-	(void)line;
-	lst = ms->tk_lst ;
+	free(line);
+	tk_lst = ms->tk_lst;
 	printf("error\n");
-	ft_lstclear(&lst, &free);
+	ft_lstclear(&tk_lst, &free);
 	return (1);
 }
 
 static int special_char_validate(t_minishell *ms)
 {
-	t_list	*lst;
-	t_token	*token;
+	t_list *tk_lst;
+	t_token *token;
 
-	lst = ms->tk_lst;
-	lst = ft_lstlast(lst);
-	token = ((t_token *)(lst->data));
-	if(token->type == HEREDOC || token->type == INFILE || \
-	token->type == APPEND || token->type == OUTFILE || token->type == PIPE)
+	tk_lst = ms->tk_lst;
+	tk_lst = ft_lstlast(tk_lst);
+	token = ((t_token *)(tk_lst->data));
+	if (token->type == HEREDOC || token->type == INFILE ||
+		token->type == APPEND || token->type == OUTFILE || token->type == PIPE)
 		return (1);
 	return (0);
 }
 
-int	lexer(char *line, t_minishell *ms)
+int lexer(char *line, t_minishell *ms)
 {
+	// printf("c1\n");
 	if (init_command_list(&ms, line))
 		return (error_exit(ms, line));
-	if (!ms->tk_lst)
-		return (1);
+	// printf("c2\n");
 	if (quotes_validate(ms))
 		return (error_exit(ms, line));
+	// printf("c3\n");
 	if (tokenize(&ms))
 		return (error_exit(ms, line));
+	// printf("c4\n");
 	if (special_char_validate(ms))
 		return (error_exit(ms, line));
-	// printf("type = %d\n", ((t_token *)ms->lst->data)->type);
-	// ms->lst = ms->lst->next;
-	// printf("type = %d\n", ((t_token *)ms->lst->data)->type);
-	// ms->lst = ms->lst->next;
-	// printf("type = %d\n", ((t_token *)ms->lst->data)->type);
+	// printf("c5\n");
+	free(line);
+	// printf("c6\n");
 	return (0);
 }
-
-

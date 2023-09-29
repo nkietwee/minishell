@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/29 02:03:52 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:53:30 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,9 @@ typedef struct	s_minishell
 	t_list	*tb_lst; //  tb_list from table list from parser
 	t_dict	*dict; // env
 	char	**env;
+	int		index;
+	int		exit_code;
 } t_minishell;
+
 
 #endif

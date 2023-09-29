@@ -6,40 +6,51 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:26:21 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 15:00:07 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:56:30 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// void	trim_quote(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while(str[i])
-// 	{
-// 		str[i] = str[i + 1];
-// 		i++;
-// 	}
-// 	str[i - 2] = '\0';
-// }
-
-int	quotes_validate(t_minishell *env)
+int ft_isvalide_quote(char *str)
 {
-	t_list	*lst;
-	char	*str;
+	int quote_open;
+	int i;
+	char quote;
 
-	lst = env->tk_lst;
-	while (lst)
+	quote_open = 0;
+	i = 0;
+	while (str[i])
 	{
-		str = ((t_token *)(lst->data))->str;
+		if (quote_open == 0 && (str[i] == '\'' || str[i] == '\"'))
+		{
+			quote_open = 1;
+			quote = str[i];
+		}
+		else if (quote_open == 1 && (str[i] == quote))
+			quote_open = 0;
+		i++;
+	}
+	if (quote_open == 1)
+		return (0);
+	return (1);
+}
+
+int quotes_validate(t_minishell *ms)
+{
+	t_list *tk_lst;
+	char *str;
+
+	tk_lst = ms->tk_lst;
+	while (tk_lst)
+	{
+		str = ((t_token *)(tk_lst->data))->str;
 		if (ft_isquote(*str))
 		{
-			if (!ft_isvalide_quote(str, str[0]))
+			if (!ft_isvalide_quote(str))
 				return (2);
 		}
-		lst = lst->next;
+		tk_lst = tk_lst->next;
 	}
-	 return (0);
+	return (0);
 }

@@ -6,34 +6,33 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:59:50 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 15:00:25 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:56:36 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	search_start(char *str)
+static int	search_start(char *str, int *index)
 {
-	int	i;
-
-	i = 0;
-	if (str[i] == '\'' || str[i] == '\"')
-		i++;
-	if (ft_ismetachar(str[i]))
+	if (ft_ismetachar(str[0]))
 	{
-		if (str[i] == '>' && str[i + 1] == '>')
-			return (APBFCMD);
-		if (str[i] == '>')
-			return (OFBFCMD);
-		if (str[i] == '<' && str[i + 1] == '<')
-			return (HDBFCMD);
-		if (str[i] == '<')
-			return (IFBFCMD);
+		*index = 0;
+		if (str[0] == '|')
+			return (PIPE);
+		if (str[0] == '>' && str[1] == '>')
+			return (APPEND);
+		if (str[0] == '>')
+			return (OUTFILE);
+		if (str[0] == '<' && str[1] == '<')
+			return (HEREDOC);
+		if (str[0] == '<')
+			return (INFILE);
 	}
+	*index = 1;
 	return (CMD);
 }
 
-static int	search_empty(char *str)
+static int	search_empty(char *str, int *index)
 {
 	int	i;
 
@@ -52,6 +51,11 @@ static int	search_empty(char *str)
 			return (HEREDOC);
 		if (str[i] == '<')
 			return (INFILE);
+	}
+	if (*index == 0)
+	{
+		*index = 1;
+		return (CMD);
 	}
 	return (ARG);
 }
@@ -79,7 +83,7 @@ static int	tag_token(int *tag_ctrl)
 	}
 	else if (*tag_ctrl == PIPE)
 	{
-		*tag_ctrl = START;
+		*tag_ctrl = EMPTY;
 		return (PIPE);
 	}
 	else if (*tag_ctrl == FPATH)
@@ -90,64 +94,26 @@ static int	tag_token(int *tag_ctrl)
 	return (0);
 }
 
-static int	tag_token_start(int *tag_ctrl)
-{
-	if (*tag_ctrl == IFBFCMD)
-	{
-		*tag_ctrl = FPBFCMD;
-		return (INFILE);
-	}
-	if (*tag_ctrl == OFBFCMD)
-	{
-		*tag_ctrl = FPBFCMD;
-		return (OUTFILE);
-	}
-	if (*tag_ctrl == HDBFCMD)
-	{
-		*tag_ctrl = FPBFCMD;
-		return (HEREDOC);
-	}
-	if (*tag_ctrl == APBFCMD)
-	{
-		*tag_ctrl = FPBFCMD;
-		return (APPEND);
-	}
-	if (*tag_ctrl == FPBFCMD)
-	{
-		*tag_ctrl = CMD;
-		return (FPATH);
-	}
-	if (*tag_ctrl == CMD)
-		*tag_ctrl = EMPTY;
-	return (CMD);
-}
-
 int	tokenize(t_minishell **ms)
 {
-	t_list	*lst;
+	t_list	*tk_lst;
 	int		tag_ctrl;
 
 	if(!ms)
 		return(1);
-	lst = (*ms)->tk_lst;
-	tag_ctrl = START;
-	while(lst)
+	tk_lst = (*ms)->tk_lst;
+	tag_ctrl = EMPTY;
+	(*ms)->index = -1;
+	while(tk_lst)
 	{
-		if (tag_ctrl == START || tag_ctrl == FPBFCMD)
-		{
-			if (tag_ctrl == START)
-				tag_ctrl = search_start(((t_token *)lst->data)->str);
-			((t_token *)lst->data)->type = tag_token_start(&tag_ctrl);
-		}
-		else
-		{
-			if (tag_ctrl == EMPTY)
-				tag_ctrl = search_empty(((t_token *)lst->data)->str);
-			((t_token *)lst->data)->type = tag_token(&tag_ctrl);
-		}
-		// printf("tag = %d\n", ((t_token *)lst->data)->type);
-		// printf("str = %s\n", ((t_token *)lst->data)->str);
-		lst = lst->next;
+		if ((*ms)->index == -1)
+			tag_ctrl = search_start(((t_token *)tk_lst->data)->str, &(*ms)->index);
+		else if (tag_ctrl == EMPTY)
+			tag_ctrl = search_empty(((t_token *)tk_lst->data)->str, &(*ms)->index);
+		if (tag_ctrl == PIPE)
+			(*ms)->index = -1;
+		((t_token *)tk_lst->data)->type = tag_token(&tag_ctrl);
+		tk_lst = tk_lst->next;
 	}
 	return(0);
 }

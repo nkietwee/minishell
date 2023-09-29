@@ -65,63 +65,49 @@ static void	print_token(t_minishell ms)
 	}
 }
 
-
-void	ft_initdata(t_minishell *ms, char **env)
-{
-	// ms->data = NULL;
-	// printf("init_data\n");
-	// ms->data.fd_in = 0;
-	// ms->data.fd_out = 0;
-	// ms->data.fd_tmp_read = 0;
-	// ms->data.fd_pipe[0] = 0;
-	// ms->data.fd_pipe[1] = 0;
-	// ms->data.nbr_infile = 0;
-	// ms->data.nbr_out_append = 0;
-	// ms->data.nbr_cmd = 0;
-	// ms->data.nbr_heredoc = 0;
-	// ms->data.fd_heredoc = 0;
-	// ms->data.tmp_env = env;
-	// ms->data.path = NULL;
-
-	// ms->dict = ft_getenv(env);
-	// exit (0);
-
-}
 int main(int ac, char **av, char **env)
 {
 	char 		*line;
 	char 		*prompt_str;
 	t_minishell	ms;
 
-	// int i = ms.data.fd_in = 0;
-	// printf("i : %d\n", i);
-	ft_initdata(&ms, env);
-	// exit(0);
-	ms.env = env;
+	// init_minishell(&ms, env, &ac, &av);
 	(void)ac;
 	(void)av;
 	(void)env;
+	ms.env = env;
 	while (1)
 	{
-		// รับ signal ใน while loop
+		// dprintf(1 ,"c_11\n");
 		prompt_str = prompt();
-		line = readline(prompt_str); // รับค่า control d ผ่าน readline
-		free (prompt_str);
-		if (!line)
-			return (1);
+		// dprintf(1 ,"c_12\n");
+		line = readline(prompt_str);
+		// dprintf(1 ,"c_13\n");
+		free(prompt_str);
+		// dprintf(1 ,"c_14\n");
+		if ( !*line || !line)
+		{
+			// free(line);
+			continue ;
+		}
+		// dprintf(1 ,"c_15\n");
 		add_history(line);
+		// dprintf(1 ,"c_16\n");
 		if(lexer(line, &ms))
 			continue ;
 		// print_token(ms);
-		paser(&ms);
+		// dprintf(1 ,"c_17\n");
+		// free(line);
+		if (paser(&ms))
+		{
+			// clear_n_init_ms(&ms);
+			continue;
+		}
+		// dprintf(1 ,"c_18\n");
 		// print_table(ms);
-		// exit (0);
 		ft_mainexec(&ms);
-		// excute(&ms); รับ signal ใน while loop
-		// free_token(&ms.token);
+		// dprintf(1 ,"main\n");
+		// clear_n_init_ms(&ms);
 	}
-	// free_token(&ms.token); exit print
-	free(&line);
-	free(&ms);
 	return (0);
 }

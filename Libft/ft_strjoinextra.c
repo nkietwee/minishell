@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 01:13:12 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/08/14 20:12:06 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:28:56 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ char	*ft_strjoinextra(char *str1, char *str2, int nbr_free)
 		free (str1);
 		free (str2);
 	}
+	// printf("finish_strjoinextra\n");
+	// exit(0);
 	return (res);
 }

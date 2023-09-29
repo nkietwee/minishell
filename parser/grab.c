@@ -6,37 +6,44 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 01:24:09 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:30:49 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:56:10 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-size_t	arg_logic(char *line)
+size_t arg_logic(char *line)
 {
-	size_t	size;
+	size_t size;
 
 	size = 0;
-	while(!ft_isspace(line[size]) && !ft_ismetachar(line[size]) && line[size])
+	while (!ft_isspace(line[size]) && !ft_ismetachar(line[size]) && line[size])
 		size++;
-	return(size);
+	return (size);
 }
 
-size_t	quote_logic(char *line)
+size_t quote_logic(char *line)
 {
-	size_t		size;
-	char	quote;
+	size_t size;
+	char quote;
 
 	quote = line[0];
 	size = 1;
-	while(line[size] != quote && !ft_ismetachar(line[size]) && line[size])
+	while (line[size] && line[size] != quote)
 		size++;
-	return(size + 1);
+	if (line[size + 1])
+	{
+		while (!ft_isspace(line[size]) && line[size])
+			size++;
+	}
+	if (line[size])
+		size++;
+	return (size);
 }
 
-size_t	metachar_logic(char *line)
+size_t metachar_logic(char *line)
 {
-	char	meta_c;
+	char meta_c;
 
 	meta_c = line[0];
 	if (line[1] != meta_c)
@@ -46,43 +53,41 @@ size_t	metachar_logic(char *line)
 	return (0);
 }
 
-char	*grab_n_slide(char **line, size_t (*logic)(char *))
+char *grab_n_slide(char **line, size_t (*logic)(char *))
 {
-	size_t	size;
-	char	*str;
+	size_t size;
+	char *str;
 
 	size = logic(*line);
 	if (size > 0)
 		str = ft_substr(*line, 0, size);
-	while(size > 0)
+	while (size > 0)
 	{
 		(*line)++;
 		size--;
 	}
-	while(ft_isspace(*(*line)))
+	while (ft_isspace(*(*line)))
 		(*line)++;
 	return (str);
 }
 
-void	grab_to_lst(t_list **lst, char **line, int index)
+void grab_to_lst(t_list **lst, char **line, int index)
 {
-	t_list	*new;
-	t_token	*token;
+	t_list *new;
+	t_token *token;
 
 	new = ft_lstnew(malloc(sizeof(t_token)));
 	token = new->data;
 	if (index == 0)
-	{
 		token->str = grab_n_slide(line, &arg_logic);
-		*lst = new;
-		return ;
-	}
 	if (index == 1)
 		token->str = grab_n_slide(line, &arg_logic);
 	if (index == 2)
 		token->str = grab_n_slide(line, &quote_logic);
 	if (index == 3)
 		token->str = grab_n_slide(line, &metachar_logic);
-	if (index != 0)
+	if ((*lst) == NULL)
+		(*lst) = new;
+	else
 		ft_lstadd_back(lst, new);
 }

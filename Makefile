@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/09/26 15:12:27 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/09/30 00:25:41 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
+# FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 RM = rm -f
 
@@ -69,13 +70,14 @@ LIBFT_SRCS = ft_isalpha.c ft_isdigit.c ft_isascii.c ft_isalnum.c ft_isprint.c \
 				ft_lstpop_bot.c ft_lstpop_top.c ft_atol.c ft_isspace.c ft_split_allsp.c \
 				ft_freesplite.c  ft_strjoinextra.c ft_strcmp.c \
 				ft_lstadd_front_dict.c ft_lstnew_dict.c ft_lstadd_back_dict.c\
-				ft_lstsize_dict.c ft_memmove.c ft_memcpy.c\
+				ft_lstsize_dict.c ft_memmove.c ft_memcpy.c ft_strjoin.c\
 
-LIBFTMINISHELL_SRCS = ft_ismetachar.c ft_isquote.c ft_isvalide_quote.c
+
+LIBFTMINISHELL_SRCS = ft_ismetachar.c ft_isquote.c
 
 PARSER_SRCS = main.c prompt.c lexer.c grab.c init_command_list.c \
-					quotes_validate.c tokenize.c paser.c contain_cmd_to_table.c \
-					get_cmd_to_table.c get_rdr_to_table.c
+					quotes_validate.c tokenize.c paser.c \
+					get_cmd_to_table.c get_rdr_to_table.c \
 
 SRCS = $(addprefix $(BUILTINS_PATH), $(BUILTINS_SRCS))\
 		$(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\

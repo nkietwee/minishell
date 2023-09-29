@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:14:59 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/29 00:58:21 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/30 01:33:45 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 
 void	ft_mainexec(t_minishell *ms)
 {
-	// printf("main_exec\n");
 	if (ft_checkfile(ms->tb_lst) == EXIT_FAILURE)
 		return ;
 	// ft_init_buildin(ms->tb_lst);
@@ -45,5 +44,6 @@ void	ft_mainexec(t_minishell *ms)
 	// ft_heredoc(ms->tb_lst , ms->data.nbr_heredoc);
 	// printf("before execute\n");
 	ft_execute(ms->tb_lst, ms->env);
+	// printf("main_exec\n");
 
 }

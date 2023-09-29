@@ -6,18 +6,24 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:52:18 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 19:51:03 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 23:09:59 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	slide_n_decide(t_list *lst, char *line)
+int slide_n_decide(t_list *tk_lst, char *line)
 {
 	while (*line)
 	{
-		if (lst == NULL)
+		if (tk_lst == NULL)
+		{
+			if (ft_isquote(*line))
+				return (2);
+			if (ft_ismetachar(*line))
+				return (3);
 			return (0);
+		}
 		else if (ft_isquote(*line))
 			return (2);
 		else if (ft_ismetachar(*line))
@@ -29,31 +35,31 @@ int	slide_n_decide(t_list *lst, char *line)
 	return (-1);
 }
 
-void	print_lst(t_list *lst)
-{
-	while(lst)
-	{
-		printf("token->str = %s\n", ((t_token*)lst->data)->str);
-		lst = lst->next;
-	}
-}
+// void print_lst(t_list *tk_lst)
+// {
+// 	while (tk_lst)
+// 	{
+// 		printf("token->str = %s\n", ((t_token *)tk_lst->data)->str);
+// 		tk_lst = tk_lst->next;
+// 	}
+// }
 
-int	init_command_list(t_minishell **ms, char *line)
+int init_command_list(t_minishell **ms, char *line)
 {
-	t_list	*lst;
-	char	*ptr_line;
-	int		index;
+	t_list *tk_lst;
+	char *ptr_line;
+	int index;
 
 	ptr_line = line;
-	lst = NULL;
+	tk_lst = NULL;
 	while (*ptr_line)
 	{
-		index = slide_n_decide(lst, ptr_line);
+		index = slide_n_decide(tk_lst, ptr_line);
 		if (index == -1)
 			return (1);
-		grab_to_lst(&lst, &ptr_line, index);
-		// print_lst(lst);
+		grab_to_lst(&tk_lst, &ptr_line, index);
 	}
-	(*ms)->tk_lst = lst;
+	// print_lst(tk_lst);
+	(*ms)->tk_lst = tk_lst;
 	return (0);
 }

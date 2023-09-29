@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:55:20 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 02:27:20 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:27:54 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int					ft_atoi(const char *str);
 int					ft_lstsize(t_list *lst);
 int					ft_lstsize_dict(t_dict *lst);
 
-int				ft_strlen(char *str);
+int				ft_strlen(const char *str);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 void				*ft_memcpy(void *dest, const void *src, size_t n);
@@ -74,7 +74,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_striteri(char *s, void (*f)(unsigned int, char*));
 void				ft_freesplite(char **split);
 
-char				*ft_strdup(char *s);
+char				*ft_strdup(const char *s);
 char				*ft_substr(char *s, unsigned int start, size_t len);
 char				**ft_split(char const *s, char c);
 char				**ft_split_allsp(char const *s);
@@ -103,5 +103,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 long				ft_atol(const char *str);
 int					ft_strcmp(char *s1, char *s2);
 char	*ft_strjoinextra(char *str1, char *str2, int nbr_free);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

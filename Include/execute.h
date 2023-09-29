@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:33:50 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/29 00:55:54 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 21:54:44 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read);
 void	ft_child(t_list *tb_lst, int i, char **env, int *fd_tmp_read);
 
 /*ft_execute*/
-// void	ft_dup2(int i, t_data *data_exec);
-void	ft_dup2(int i, t_data *data_exec, int fd_tmp_read);
+// void	ft_dup2(int i, t_list *tb_lst, int fd_tmp_read);
+void	ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read);
 int		ft_check_buildin(char **cmd);
 
 void	ft_prterr(int mode);

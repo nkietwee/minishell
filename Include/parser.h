@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:24:48 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 00:32:11 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 23:05:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int	get_cmd_to_table(t_minishell **ms);
 
 int	get_rdr_to_table(t_minishell **ms);
 
-
+/* expand_var.c */
+// int	expand_var(t_minishell **ms);
 #endif

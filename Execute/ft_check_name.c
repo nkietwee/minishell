@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:24:21 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 17:24:50 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:16:24 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int	ft_checkfile(t_list *tb_lst)
 		}
 		tb_lst = tb_lst->next;
 	}
+	// printf("finish checkfile\n");
+	// exit(0);
 	return (EXIT_SUCCESS);
 }

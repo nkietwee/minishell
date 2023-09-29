@@ -5,26 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/16 16:05:36 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 15:01:17 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/09/29 22:50:49 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/09/29 22:56:06 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static size_t	count_cmd_n_arg(t_list *lst)
+static size_t	count_cmd_n_arg(t_list *tk_lst)
 {
 	size_t	size;
 	t_token *token;
 
 	size = 0;
-	token = lst->data;
-	while(lst && token->type != PIPE)
+	token = tk_lst->data;
+	while(tk_lst && token->type != PIPE)
 	{
 		size++;
-		lst = lst->next;
-		if (lst)
-			token = lst->data;
+		tk_lst = tk_lst->next;
+		if (tk_lst)
+			token = tk_lst->data;
 	}
 	return (size);
 }
@@ -56,21 +56,21 @@ static char	**get_cmd_n_slide(t_list **lst)
 int	get_cmd_to_table(t_minishell **ms)
 {
 	t_table	*table;
-	t_list	*lst;
+	t_list	*tk_lst;
 
 	(*ms)->tb_lst = NULL;
-	lst = (*ms)->tk_lst;
-	while (lst)
+	tk_lst = (*ms)->tk_lst;
+	while (tk_lst)
 	{
 		if ((*ms)->tb_lst == NULL)
 			(*ms)->tb_lst = ft_lstnew(malloc(sizeof(t_table)));
 		else
 			ft_lstadd_back(&((*ms)->tb_lst), ft_lstnew(malloc(sizeof(t_table))));
 		table = (ft_lstlast((*ms)->tb_lst))->data;
-		table->cmd = get_cmd_n_slide(&lst);
+		table->cmd = get_cmd_n_slide(&tk_lst);
 		table->rdr = NULL;
-		if (lst && ((t_token *)((lst->data)))->type == PIPE)
-			lst = lst->next;
+		if (tk_lst && ((t_token *)((tk_lst->data)))->type == PIPE)
+			tk_lst = tk_lst->next;
 	}
 	return (0);
 }
