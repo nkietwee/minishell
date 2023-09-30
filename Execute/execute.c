@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 00:42:34 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 02:42:48 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 	}
 	else if (i == 0 && nbr_cmd > 1) // start with  > 1 cmd
 	{
-		dprintf(2, "dup 1 cmd\n");
+		// dprintf(2, "dup 1 cmd\n");
 		dup2(exec_data->fd_in, STDIN_FILENO);
 		dup2(exec_data->fd_pipe[1], STDOUT_FILENO);
 	}
 	else if (i == nbr_cmd - 1) // end
 	{
-		dprintf(2 , "last cmd\n");
+		// dprintf(2 , "last cmd\n");
 		// printf("fd_out : %d\n", exec_data->fd_out);
 		exec_data->fd_out = STDOUT_FILENO; // for test
 		dup2(*fd_tmp_read, STDIN_FILENO);
@@ -160,28 +160,15 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 		data_exec->pid = fork();
 		if (data_exec->pid == -1)
 			ft_prterr(CANNT_FORK, "test");
-		// if (data_exec->pid > 0)
-		// {
-			// dprintf(2, " start ft_parent\n");
-			// dprintf(2, " end ft_parent\n");
-		// }
-		if (data_exec->pid == 0)
-		{
-			// dprintf(2, " start ft_child\n");
+		if (data_exec->pid == 0 && ft_check_buildin(table->cmd) == EXIT_FAILURE)
 			ft_child(tb_lst, nbr_cmd, env, &fd_tmp_read);
-			// dprintf(2, " end ft_child\n");
-		}
-		ft_parent(tb_lst, table->i, &fd_tmp_read, nbr_cmd);
+		if (data_exec->pid > 0)
+			ft_parent(tb_lst, table->i, &fd_tmp_read, nbr_cmd);
 		tb_lst = tb_lst->next;
 	}
-	// dprintf(2, "execute_complete\n");
 	// close(data_exec->fd_out);
 	// close(data_exec->fd_in);
 	ft_waitpid(tb_lst_cpy);
-	// if (data_exec->pid != 0) // espectialy parent
-	// 	ft_waitpid(tb_lst_cpy);
-	// dprintf(2, "pid_main_at : %d\n", ((t_table *)(tb_lst_cpy->data))->exec_data.pid);
-	// dprintf(2, "after waitpid\n");
 }
 
 // void	ft_execute(t_minishell *ms)

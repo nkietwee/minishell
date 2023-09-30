@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/26 14:50:20 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 02:37:23 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_dup2(int i, int j, t_data *data)
 	// printf("ft_dup2\n");
 	if (i == 0 && data->nbr_cmd == 1) // start with 1 cmd
 	{
-		printf("dup only 1 cmd\n");
+		// printf("dup only 1 cmd\n");
 		// printf("fd_in : %d\n" , data->fd_in);
 		dup2(data->fd_in, STDIN_FILENO);
 		dup2(data->fd_out, STDOUT_FILENO);

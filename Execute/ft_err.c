@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:37:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 01:33:46 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 02:36:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,15 @@ void	ft_prterrexec(char *str, int errno, int mode)
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(0);
 	}
-
+	else if (mode == ERR_CMD)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(0);
+	}
 }
 
 void    ft_prterr(int mode, char *txt)

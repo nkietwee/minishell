@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 00:14:30 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 02:49:47 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ void	ft_execvecmd(char **cmd, char **path, char **env)
 	i = 0;
 	if (!cmd)
 		return ;
-	// dprintf(2, "ft_execvecmd\n");
 	while (path[i])
 	{
-		// dprintf(2, "Entry_exec\n");
 		path_exec = ft_strjoinextra(path[i], cmd[0], NONE);
 		// free(cmd[0]);
 		// dprintf(2, "path_exec : %s\n", path_exec);
@@ -38,42 +36,42 @@ void	ft_execvecmd(char **cmd, char **path, char **env)
 				dprintf(2, "Can't execve\n");
 				exit(0);
 			}
-			// dprintf(2, "hello\n");
 		}
 		free(path_exec);
 		i++;
 	}
 	if (path[i] == NULL)
 		ft_prterrexec(cmd[0], 1, ERR_CMD);
-	// exit(0);
 }
 
 void	ft_execvepath(char **path, char **tmp_env)
 {
-	// printf("Entry : execvepath\n");
+	// dprintf(2, "Entry : execvepath\n");
 	if (access(path[0], F_OK | X_OK) == -1)
 	{
 		ft_prterrexec(path[0], 1, ERR_PATH);
-		// printf("not access\n");
 		// ft_dbfree((void **)path); // ??
 	}
 	else
-	{
-		// printf("path\n");
 		execve(path[0], path, tmp_env);
-	}
+}
+
+void	ft_prtcmd(t_list *tb_lst, int i)
+{
+	t_table *table;
+
+	table = (t_table *)(tb_lst->data);
+	printf("cmd[%d] : %s\n", i, table->cmd[0]);
+
 }
 
 void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd)
 {
-	// printf ("ft_parent\n");
-	// exit (0);
 	t_table	*table;
 	t_data exec_data;
 
-	// tb_lst = tb_lst->next;
-	// if (i == 1)
-	// 	exit(0);
+	dprintf(2, "Hello from parent\n");
+	ft_prtcmd(tb_lst, i);
 	table = (t_table *)(tb_lst->data);
 	exec_data = (t_data )(table->exec_data);
 	*fd_tmp_read = dup(exec_data.fd_pipe[0]); // another process can read from previos process
@@ -86,25 +84,14 @@ void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd)
 	// if (data_exec.pid != 0) // espectialy parent
 	// dprintf(2, "c1\n");
 	// ft_waitpid(tb_lst);
-	// dprintf(2, "c2\n");
 
 
-	// exit(0);
 	// export
 	// cd
 	// unset
 	// exit
 }
 
-void	ft_prtcmd(t_list *tb_lst, int i)
-{
-	t_table *table;
-
-	table = (t_table *)(tb_lst->data);
-	printf("cmd[%d] : %s\n", i, table->cmd[0]);
-
-
-}
 void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 {
 	char **cmd;
@@ -113,13 +100,12 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	char	**path;
 
 	path = ft_findpath(env);
-	// ft_prtcmd(tb_lst, i);
 	table = (t_table *)(tb_lst->data);
 	exec_data = (t_data *)(&(table->exec_data));
+	dprintf(2, "Hello from child\n");
+	ft_prtcmd(tb_lst, table->i);
 	ft_getfd(tb_lst);
 	// printf("fd_in_child :  %d\n", exec_data->fd_in);
-	// if (ft_check_buildin(table->cmd) == EXIT_SUCCESS)
-	// 	ft_parent(tb_lst);
 	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
 	if (exec_data->fd_heredoc > 2)
 		close(exec_data->fd_heredoc);
