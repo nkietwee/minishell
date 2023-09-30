@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/29 02:46:47 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 00:09:34 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_cnt_infile(t_list *table_list)
 		if (table->rdr)
 		{
 			rdr = (t_rdr *)(table->rdr->data);
-			if (rdr->type == INFILE && rdr)
+			if (rdr->type == INFILE)
 				i++;
 		}
 		table_list = table_list->next;
@@ -103,18 +103,18 @@ int	ft_cnt_outfile(t_list *table_list)
 	return (i);
 }
 
-void	ft_countexec(t_list *tb_lst)
-{
-	t_table	*table;
-	t_data	data_exec;
+// void	ft_countexec(t_minishell *ms)
+// {
+// 	t_table	*table;
+// 	t_data	data_exec;
 
-	table = (t_table *)(tb_lst->data);
-	data_exec = (t_data )(table->exec_data);
-	printf("count_exec\n");
+// 	table = (t_table *)(ms->tb_lst->data);
+// 	data_exec = (t_data )(table->exec_data);
+// 	// printf("count_exec\n");
 
 
-	data_exec.nbr_heredoc = ft_cnt_heredoc(tb_lst);
-	printf("nbr_heredoc : %d\n", data_exec.nbr_heredoc);
-	data_exec.nbr_cmd = ft_cntcmd(tb_lst);
+// 	data_exec.nbr_heredoc = ft_cnt_heredoc(ms->tb_lst);
+// 	// printf("nbr_heredoc : %d\n", data_exec.nbr_heredoc);
+// 	// data_exec.nbr_cmd = ft_cntcmd(tb_lst);
 
-}
+// }

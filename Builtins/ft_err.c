@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:37:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/08/18 12:46:58 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:59:01 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	ft_prterr_builtins(int mode, char *cmd, char *str, int err)
 {
 
 	if (mode == PER_DN)
-		printf("bash: %s: %s: No such file or directory\n" ,cmd, str);
+		dprintf(2, "bash: %s: %s: No such file or directory\n" ,cmd, str);
 	else if (mode == CANNT_OPEN)
-		printf("bash: %s: %s: Permission denied\n" ,cmd, str);
+		dprintf(2, "bash: %s: %s: Permission denied\n" ,cmd, str);
 	// exit (err); // ??
 }
 

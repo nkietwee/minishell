@@ -6,13 +6,13 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/30 01:38:43 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 00:14:30 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_execvecmd(char **cmd, char **path, char **tmp_env)
+void	ft_execvecmd(char **cmd, char **path, char **env)
 {
 	int		i;
 	char	*path_exec;
@@ -20,19 +20,32 @@ void	ft_execvecmd(char **cmd, char **path, char **tmp_env)
 	i = 0;
 	if (!cmd)
 		return ;
-	// printf("ft_execvecmd\n");
+	// dprintf(2, "ft_execvecmd\n");
 	while (path[i])
 	{
+		// dprintf(2, "Entry_exec\n");
 		path_exec = ft_strjoinextra(path[i], cmd[0], NONE);
+		// free(cmd[0]);
+		// dprintf(2, "path_exec : %s\n", path_exec);
 		if (access(path_exec, F_OK) == EXIT_SUCCESS)
 		{
-			execve(path_exec, cmd, tmp_env);
+			cmd[0] = path_exec;
+			// dprintf(2, "cmd : %s\n", cmd[0]);
+			// dprintf(2, "cmd : %s\n", cmd[1]);
+			// dprintf(2, "path_exec : %s\n", path_exec);
+			if (execve(path_exec, cmd, env) == -1)
+			{
+				dprintf(2, "Can't execve\n");
+				exit(0);
+			}
+			// dprintf(2, "hello\n");
 		}
 		free(path_exec);
 		i++;
 	}
 	if (path[i] == NULL)
 		ft_prterrexec(cmd[0], 1, ERR_CMD);
+	// exit(0);
 }
 
 void	ft_execvepath(char **path, char **tmp_env)
@@ -51,23 +64,31 @@ void	ft_execvepath(char **path, char **tmp_env)
 	}
 }
 
-void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read)
+void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd)
 {
 	// printf ("ft_parent\n");
 	// exit (0);
 	t_table	*table;
-	t_data data_exec;
+	t_data exec_data;
 
 	// tb_lst = tb_lst->next;
 	// if (i == 1)
 	// 	exit(0);
-	// printf("Hello from parent\n");
 	table = (t_table *)(tb_lst->data);
-	data_exec = (t_data )(table->exec_data);
-	*fd_tmp_read = dup(data_exec.fd_pipe[0]); // another process can read from previos process
+	exec_data = (t_data )(table->exec_data);
+	*fd_tmp_read = dup(exec_data.fd_pipe[0]); // another process can read from previos process
 	// printf("tmp_read : %d\n" , data->fd_tmp_read);
-	close(data_exec.fd_pipe[0]);
-	close(data_exec.fd_pipe[1]);
+	if (nbr_cmd > 1)
+	{
+		close(exec_data.fd_pipe[0]);
+		close(exec_data.fd_pipe[1]);
+	}
+	// if (data_exec.pid != 0) // espectialy parent
+	// dprintf(2, "c1\n");
+	// ft_waitpid(tb_lst);
+	// dprintf(2, "c2\n");
+
+
 	// exit(0);
 	// export
 	// cd
@@ -75,34 +96,38 @@ void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read)
 	// exit
 }
 
-void	ft_prtcmd(t_list *tb_lst)
+void	ft_prtcmd(t_list *tb_lst, int i)
 {
 	t_table *table;
 
 	table = (t_table *)(tb_lst->data);
-	printf("cmd : %s\n", table->cmd[0]);
+	printf("cmd[%d] : %s\n", i, table->cmd[0]);
 
 
 }
-void	ft_child(t_list *tb_lst, int i, char **env, int *fd_tmp_read)
+void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 {
 	char **cmd;
 	t_table	*table;
-	t_data	data_exec;
+	t_data	*exec_data;
 	char	**path;
 
 	path = ft_findpath(env);
-	// exit(0);
-	// dprintf(2, "ft_child\n");
-	// ft_prtcmd(tb_lst);
+	// ft_prtcmd(tb_lst, i);
 	table = (t_table *)(tb_lst->data);
-	data_exec = (t_data)(table->exec_data);
+	exec_data = (t_data *)(&(table->exec_data));
+	ft_getfd(tb_lst);
+	// printf("fd_in_child :  %d\n", exec_data->fd_in);
 	// if (ft_check_buildin(table->cmd) == EXIT_SUCCESS)
 	// 	ft_parent(tb_lst);
-	ft_dup2(i, tb_lst, fd_tmp_read);
-	// printf("Hello from child\n");
-	close(data_exec.fd_pipe[0]);
-	close(data_exec.fd_pipe[1]);
+	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
+	if (exec_data->fd_heredoc > 2)
+		close(exec_data->fd_heredoc);
+	if (nbr_cmd > 1)
+	{
+		close(exec_data->fd_pipe[0]);
+		close(exec_data->fd_pipe[1]);
+	}
 	if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
 		ft_execvepath(table->cmd, env);
 	else

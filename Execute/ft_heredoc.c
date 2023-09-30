@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/23 20:10:42 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 00:12:24 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 	int		i;
 
 	i = 0;
-	ft_prt_heredoc(tb_lst);
-	// fd_heredoc = open("tmpfile", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	// printf("fd_ : %d\n", fd_heredoc);
+	// ft_prt_heredoc(tb_lst);
+	fd_heredoc = open("../tmpfile", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	printf("fd_ : %d\n", fd_heredoc);
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
@@ -87,8 +87,11 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 				if (ft_strcmp(tmp, rdr->file) == EXIT_SUCCESS)
 				{
 					i++;
-					if (i == nbr_heredoc)
-						return (fd_heredoc);
+					// if (i == nbr_heredoc)
+					// {
+					// 	close(fd_heredoc);
+					// 	return (fd_heredoc);
+					// }
 					break;
 				}
 				// printf("i : %d , nbr_heredoc : %d\n", i, nbr_heredoc);
@@ -100,8 +103,8 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 		tb_lst = tb_lst->next;
 	}
 	// close (fd_heredoc);
-	return (0);
-	// return (fd_heredoc);
+	// return (0);
+	return (fd_heredoc);
 }
 
 // int main(int ac, char **av)

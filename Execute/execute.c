@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/30 01:56:54 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 00:42:34 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,73 +57,69 @@ int ft_check_buildin(char **cmd)
 	return (EXIT_FAILURE);
 }
 
-void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read)
+/*close fd after dup */
+void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 {
 	t_table *table;
-	t_data *data_exec;
+	t_data *exec_data;
 
 	table = (t_table *)(tb_lst->data);
-	data_exec = (t_data *)(&(table->exec_data));
-	// printf("nbr_cmd : %d\n", data_exec->nbr_cmd);
-	// printf("ft_dup2\n");
-	// if (table->nbr_cmd == 0)
-	// printf("i : %d\n", i);
-	// printf("cmd : %d\n", table->nbr_cmd);
+	exec_data = (t_data *)(&(table->exec_data));
+	// dprintf(2, "i : %d\n", i);
+	// dprintf(2, "nbr_cmd : %d\n", nbr_cmd);
 
-	if (i == 0 && table->nbr_cmd == 1)
+	if (i == 0 && nbr_cmd == 1) // for 1 cmd
 	{
-		// printf("one cmd\n");
-		dup2(data_exec->fd_in, STDIN_FILENO);
-		dup2(data_exec->fd_out, STDOUT_FILENO);
+		// dprintf(2, "fd_out_dup2 : %d\n", exec_data->fd_out);
+		dup2(exec_data->fd_in, STDIN_FILENO);
+		dup2(exec_data->fd_out, STDOUT_FILENO);
+		// dprintf(2, "finish_dup\n");
+
 	}
-	else if (i == 0 && data_exec->nbr_cmd != 1) // start with  > 1 cmd
+	else if (i == 0 && nbr_cmd > 1) // start with  > 1 cmd
 	{
-		// printf("dup 1 cmd\n");
-		dup2(data_exec->fd_in, STDIN_FILENO);
-		dup2(data_exec->fd_pipe[1], STDOUT_FILENO);
+		dprintf(2, "dup 1 cmd\n");
+		dup2(exec_data->fd_in, STDIN_FILENO);
+		dup2(exec_data->fd_pipe[1], STDOUT_FILENO);
 	}
-	else if (i == data_exec->nbr_cmd - 1) // end
+	else if (i == nbr_cmd - 1) // end
 	{
 		dprintf(2 , "last cmd\n");
-		// printf("fd_out : %d\n", data_exec->fd_out);
-		data_exec->fd_out = STDOUT_FILENO; // for test
+		// printf("fd_out : %d\n", exec_data->fd_out);
+		exec_data->fd_out = STDOUT_FILENO; // for test
 		dup2(*fd_tmp_read, STDIN_FILENO);
-		dup2(data_exec->fd_out, STDOUT_FILENO);
+		dup2(exec_data->fd_out, STDOUT_FILENO);
 	}
 	else //btw
 	{
 		// printf("btw cmd\n");
 		dup2(*fd_tmp_read, STDIN_FILENO);
-		dup2(data_exec->fd_pipe[1], STDOUT_FILENO);
+		dup2(exec_data->fd_pipe[1], STDOUT_FILENO);
 	}
 }
 
 void ft_initdata_exec(t_list *tb_lst)
 {
 	t_table *table;
-	// int	i = 0;
-	// printf("ft_initdata_exec\n");
+	int	i_cnt = 0;
 	table = (t_table *)(tb_lst->data);
-	table->nbr_cmd = ft_cntcmd(tb_lst);
-	// printf("nbr_cmd__ : %d\n", table->nbr_cmd);
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
+		table->i = i_cnt;
 		table->exec_data.pid = 0;
 		table->exec_data.fd_in = 0;
 		table->exec_data.fd_out = 0;
-		// table->exec_data.fd_tmp_read = 0;
-		// table->exec_data.fd_pipe[0] = 0;
-		// table->exec_data.fd_pipe[1] = 0;
+		table->exec_data.fd_pipe[0] = 0;
+		table->exec_data.fd_pipe[1] = 0;
 		table->exec_data.nbr_infile = ft_cnt_infile(tb_lst);
-		// printf("nbr_infile : %d\n", table->exec_data.nbr_infile);
 		table->exec_data.nbr_out_append = ft_cnt_outfile(tb_lst);
 		table->exec_data.nbr_heredoc = ft_cnt_heredoc(tb_lst);
 		table->exec_data.fd_heredoc = 0;
+		i_cnt++;
 		tb_lst = tb_lst->next;
 	}
-	// printf("finish_initdata_exec\n");
-	// exit(0);
+	// dprintf(2, "ft_initdata_exec\n");
 }
 
 void ft_waitpid(t_list *tb_lst_cpy)
@@ -133,54 +129,59 @@ void ft_waitpid(t_list *tb_lst_cpy)
 
 	while (tb_lst_cpy)
 	{
-		// table_cpy = (t_table *)(tb_lst_cpy->data);
-		// data_exec_cpy = (table_cpy->exec_data);
-		// waitpid(data_exec_cpy.pid , NULL, 0);
-		// printf("pid : %d\n", ((t_table *)(tb_lst_cpy->data))->exec_data.pid);
-		waitpid(((t_table *)(tb_lst_cpy->data))->exec_data.pid, NULL, 0);
+		table_cpy = (t_table *)(tb_lst_cpy->data);
+		data_exec_cpy = (table_cpy->exec_data) ;
+		// dprintf(2, "id[%d] in wait : %d\n", table_cpy->i, data_exec_cpy.pid);
+		waitpid(data_exec_cpy.pid, NULL, 0);
 		tb_lst_cpy = tb_lst_cpy->next;
 	}
 }
 
-void ft_execute(t_list *tb_lst, char **env)
+void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 {
-	int nbr_cmd;
-	int i;
 	int fd_tmp_read;
 	t_table *table;
 	t_data *data_exec;
 	t_list *tb_lst_cpy = NULL;
 
-	nbr_cmd = ft_lstsize(tb_lst);
-	// printf("nbr_cmd : %d\n", nbr_cmd);
-	// printf("ft_execute\n");
-	i = 0;
 	fd_tmp_read = 0;
 	ft_initdata_exec(tb_lst);
-	// while (i < 2) // for test 2 cmd
+	// printf("cnt_cmd : %d\n", nbr_cmd);
 	tb_lst_cpy = tb_lst;
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
-		// printf("cmd_inloop : %d\n" , table->nbr_cmd);
 		data_exec = (t_data *)(&(table->exec_data));
-		if (pipe(data_exec->fd_pipe) == -1)
-			ft_prterr(CANNT_PIPE);
+		if (nbr_cmd > 1)
+		{
+			if (pipe(data_exec->fd_pipe) == -1)
+				ft_prterr(CANNT_PIPE, "test");
+		}
 		data_exec->pid = fork();
-		// printf("pid : %d\n", data_exec->pid);
 		if (data_exec->pid == -1)
-			ft_prterr(CANNT_FORK);
-		else if (data_exec->pid == 0)
-			ft_child(tb_lst, i, env, &fd_tmp_read);
-		else
-			ft_parent(tb_lst, i, &fd_tmp_read);
-		// ((t_table *)(tb_lst->data))->exec_data = data_exec;
-		i++;
+			ft_prterr(CANNT_FORK, "test");
+		// if (data_exec->pid > 0)
+		// {
+			// dprintf(2, " start ft_parent\n");
+			// dprintf(2, " end ft_parent\n");
+		// }
+		if (data_exec->pid == 0)
+		{
+			// dprintf(2, " start ft_child\n");
+			ft_child(tb_lst, nbr_cmd, env, &fd_tmp_read);
+			// dprintf(2, " end ft_child\n");
+		}
+		ft_parent(tb_lst, table->i, &fd_tmp_read, nbr_cmd);
 		tb_lst = tb_lst->next;
 	}
+	// dprintf(2, "execute_complete\n");
+	// close(data_exec->fd_out);
+	// close(data_exec->fd_in);
 	ft_waitpid(tb_lst_cpy);
-	// printf("exit mainexec\n");
-	// printf("bf_waitpid\n");
+	// if (data_exec->pid != 0) // espectialy parent
+	// 	ft_waitpid(tb_lst_cpy);
+	// dprintf(2, "pid_main_at : %d\n", ((t_table *)(tb_lst_cpy->data))->exec_data.pid);
+	// dprintf(2, "after waitpid\n");
 }
 
 // void	ft_execute(t_minishell *ms)

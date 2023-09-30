@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/29 22:53:30 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/09/30 22:08:55 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ typedef struct s_table
 	t_list	*rdr; // redirect
 	t_data	exec_data;
 	char	**cmd;
-	int		nbr_cmd;
+	int		i;
+	// int		nbr_cmd;
 
 } t_table;
 
@@ -145,9 +146,10 @@ typedef struct	s_minishell
 	t_list	*tk_lst; // tk_list from token list lexer
 	t_list	*tb_lst; //  tb_list from table list from parser
 	t_dict	*dict; // env
-	char	**env;
+	int		nbr_cmd;
 	int		index;
 	int		exit_code;
+	char	**env;
 } t_minishell;
 
 
