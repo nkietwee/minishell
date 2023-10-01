@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/09/30 00:25:41 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/10/02 01:14:32 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ BUILTINS_SRCS = ft_cnt_builtins.c\
 				ft_export.c\
 				ft_export_util.c\
 				ft_prtlinklist.c\
+				ft_unset.c\
 
 EXECUTE_SRCS = execute.c\
 			ft_cnt_execute.c\
@@ -80,11 +81,11 @@ PARSER_SRCS = main.c prompt.c lexer.c grab.c init_command_list.c \
 					get_cmd_to_table.c get_rdr_to_table.c \
 
 SRCS = $(addprefix $(BUILTINS_PATH), $(BUILTINS_SRCS))\
-		$(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
 		$(addprefix $(EXECUTE_PATH), $(EXECUTE_SRCS))\
 		$(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS))\
 		$(addprefix $(LIBFTMINISHELL_PATH), $(LIBFTMINISHELL_SRCS))\
 		$(addprefix $(PARSER_PATH), $(PARSER_SRCS))\
+#		$(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
 
 
 OBJS = $(SRCS:.c=.o)
@@ -95,7 +96,7 @@ all: $(NAME)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) $(wildcard Libft/*.o) -o $(NAME)
 
 # $(CC) $(FLAGS) -L/usr/local/lib -L./usr/include -I/usr/local/include  $(OBJS) -o $(NAME) -lreadline
 

@@ -12,28 +12,28 @@
 
 #include "../Include/minishell.h"
 
-int ft_findbuitin(char *str, char **env)
-{
-	// printf("find\n");
-	if (ft_findstr(str, "echo", 4) == EXIT_SUCCESS)
-		printf("--echo--\n");
-		// ft_echo();
-	if (ft_findstr(str, "cd", 2) == EXIT_SUCCESS)
-		ft_cd ("-");
-	if (ft_findstr(str, "pwd", 3) == EXIT_SUCCESS)
-		ft_pwd();
-	if (ft_findstr(str, "export", 6) == EXIT_SUCCESS)
-		printf("--export--\n");
-	if (ft_findstr(str, "unset", 5) == EXIT_SUCCESS)
-		printf("--unset--\n");
-	// if (ft_findstr(str, "env", 3) == EXIT_SUCCESS)
-	// 	ft_env(env);
-		// printf("--env--\n");
-	if (ft_findstr(str, "exit", 4) == EXIT_SUCCESS)
-		printf("--exit--\n");
+// int ft_findbuitin(char *str, char **env)
+// {
+// 	// printf("find\n");
+// 	if (ft_findstr(str, "echo", 4) == EXIT_SUCCESS)
+// 		printf("--echo--\n");
+// 		// ft_echo();
+// 	if (ft_findstr(str, "cd", 2) == EXIT_SUCCESS)
+// 		ft_cd ("-");
+// 	if (ft_findstr(str, "pwd", 3) == EXIT_SUCCESS)
+// 		ft_pwd();
+// 	if (ft_findstr(str, "export", 6) == EXIT_SUCCESS)
+// 		printf("--export--\n");
+// 	if (ft_findstr(str, "unset", 5) == EXIT_SUCCESS)
+// 		printf("--unset--\n");
+// 	// if (ft_findstr(str, "env", 3) == EXIT_SUCCESS)
+// 	// 	ft_env(env);
+// 		// printf("--env--\n");
+// 	if (ft_findstr(str, "exit", 4) == EXIT_SUCCESS)
+// 		printf("--exit--\n");
 
-	return (EXIT_SUCCESS);
-}
+// 	return (EXIT_SUCCESS);
+// }
 
 int ft_main(char *find ,char **env)
 {

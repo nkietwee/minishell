@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 02:42:48 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:59:54 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,40 @@
 
 int ft_check_buildin(char **cmd)
 {
-	if (ft_findstr(cmd[0], "export", 6) == EXIT_SUCCESS)
+	/*
+// echo
+// cd
+// pwd
+export
+unset
+// env
+exit
+*/
+	if (ft_strcmp(cmd[0], "echo") == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_findstr(cmd[0], "cd", 2) == EXIT_SUCCESS)
+	if (ft_strcmp(cmd[0], "cd") == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_findstr(cmd[0], "unset", 5) == EXIT_SUCCESS)
+	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (EXIT_SUCCESS);
-	else if (ft_findstr(cmd[0], "exit", 4) == EXIT_SUCCESS)
+	if (ft_strcmp(cmd[0], "export") == 0)
+		return (EXIT_SUCCESS);
+	if (ft_strcmp(cmd[0], "unset") == 0)
+		return (EXIT_SUCCESS);
+	if (ft_strcmp(cmd[0], "env") == 0)
+		return (EXIT_SUCCESS);
+	if (ft_strcmp(cmd[0], "exit") == 0)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
+
+	// if (ft_findstr(cmd[0], "export", 6) == EXIT_SUCCESS)
+	// 	return (EXIT_SUCCESS);
+	// else if (ft_findstr(cmd[0], "cd", 2) == EXIT_SUCCESS)
+	// 	return (EXIT_SUCCESS);
+	// else if (ft_findstr(cmd[0], "unset", 5) == EXIT_SUCCESS)
+	// 	return (EXIT_SUCCESS);
+	// else if (ft_findstr(cmd[0], "exit", 4) == EXIT_SUCCESS)
+	// 	return (EXIT_SUCCESS);
+	// return (EXIT_FAILURE);
 }
 
 /*close fd after dup */
@@ -145,7 +170,7 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 	t_list *tb_lst_cpy = NULL;
 
 	fd_tmp_read = 0;
-	ft_initdata_exec(tb_lst);
+	// ft_initdata_exec(tb_lst);
 	// printf("cnt_cmd : %d\n", nbr_cmd);
 	tb_lst_cpy = tb_lst;
 	while (tb_lst)
@@ -157,13 +182,14 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 			if (pipe(data_exec->fd_pipe) == -1)
 				ft_prterr(CANNT_PIPE, "test");
 		}
-		data_exec->pid = fork();
+		if (ft_check_buildin(table->cmd) == EXIT_FAILURE)
+			data_exec->pid = fork();
 		if (data_exec->pid == -1)
 			ft_prterr(CANNT_FORK, "test");
 		if (data_exec->pid == 0 && ft_check_buildin(table->cmd) == EXIT_FAILURE)
 			ft_child(tb_lst, nbr_cmd, env, &fd_tmp_read);
 		if (data_exec->pid > 0)
-			ft_parent(tb_lst, table->i, &fd_tmp_read, nbr_cmd);
+			ft_parent(tb_lst, &fd_tmp_read, nbr_cmd, env);
 		tb_lst = tb_lst->next;
 	}
 	// close(data_exec->fd_out);

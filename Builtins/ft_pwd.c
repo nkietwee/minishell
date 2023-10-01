@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:09 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/08/14 22:03:56 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:09:35 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ void	ft_pwd(void)
 {
 	char *path;
 
-	printf("pwd\n");
+	// dprintf(2, "pwd\n");
 	path = getcwd(NULL, 0);
 	if (!path)
 		return ;
 	printf("%s\n", path);
 	free (path); //  path malloc
+	// exit(0);
 }

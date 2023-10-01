@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 02:49:47 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 00:21:16 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ void	ft_prtcmd(t_list *tb_lst, int i)
 
 }
 
-void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd)
+void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env)
 {
 	t_table	*table;
 	t_data exec_data;
 
-	dprintf(2, "Hello from parent\n");
-	ft_prtcmd(tb_lst, i);
+	// dprintf(2, "Hello from parent\n");
 	table = (t_table *)(tb_lst->data);
+	// ft_prtcmd(tb_lst, table->i);
 	exec_data = (t_data )(table->exec_data);
 	*fd_tmp_read = dup(exec_data.fd_pipe[0]); // another process can read from previos process
 	// printf("tmp_read : %d\n" , data->fd_tmp_read);
@@ -81,6 +81,7 @@ void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd)
 		close(exec_data.fd_pipe[0]);
 		close(exec_data.fd_pipe[1]);
 	}
+	// ft_buildin_parent(table->cmd, env);
 	// if (data_exec.pid != 0) // espectialy parent
 	// dprintf(2, "c1\n");
 	// ft_waitpid(tb_lst);
@@ -99,14 +100,15 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	t_data	*exec_data;
 	char	**path;
 
-	path = ft_findpath(env);
+	path = ft_findpath(env); // fixed from env to t_dict *dict
 	table = (t_table *)(tb_lst->data);
 	exec_data = (t_data *)(&(table->exec_data));
-	dprintf(2, "Hello from child\n");
-	ft_prtcmd(tb_lst, table->i);
+	// dprintf(2, "Hello from child\n");
+	// ft_prtcmd(tb_lst, table->i);
 	ft_getfd(tb_lst);
 	// printf("fd_in_child :  %d\n", exec_data->fd_in);
 	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
+	// ft_buildin_child(table->cmd, env, exec_data->fd_out);
 	if (exec_data->fd_heredoc > 2)
 		close(exec_data->fd_heredoc);
 	if (nbr_cmd > 1)

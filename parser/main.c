@@ -71,11 +71,15 @@ int main(int ac, char **av, char **env)
 	char *prompt_str;
 	t_minishell ms;
 
+
 	// init_minishell(&ms, env, &ac, &av);
 	(void)ac;
 	(void)av;
 	(void)env;
 	ms.env = env;
+	ms.dict = ft_getenv(env);
+	int cnt_dict = ft_cntdictmain(ms.dict);
+	dprintf(2, "cnt_org : %d\n", cnt_dict);
 	while (1)
 	{
 		prompt_str = prompt();

@@ -6,69 +6,133 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/28 15:53:44 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 02:01:36 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_dict	*ft_lstdelete_node(t_dict *dict, int index)
+// t_dict	*ft_lstdelete_node(t_dict **dict, int index)
+// {
+// 	t_dict *head;
+// 	t_dict *start;
+
+// 	head = dict;
+// 	start = dict;
+// 	if (index == 0)
+// 	{
+// 		dict = dict->next;
+// 		// return (dict);
+// 	}
+// 	else
+// 	{
+// 		while (index + 1 != 1) // fixed index == 0
+// 		{
+// 			start = dict;
+// 			dict = dict -> next;
+// 			index--;
+// 		}
+// 		start->next = dict->next;
+// 		dict = head;
+// 		return(dict);
+// 	}
+// 	// return (dict); //??
+// 	// ft_prtdict(dict);
+// }
+
+// t_dict	*ft_lstdelete_node(t_dict **dict, int index)
+void	ft_freenode(t_dict *dict, int index)
+{
+	int	i;
+
+	i = 0;
+	while (dict)
+	{
+		if (i == index)
+		{
+			free(dict->tmp_dict->key);
+			free(dict->tmp_dict->value);
+			free(dict->tmp_dict);
+			return ;
+		}
+		i++;
+		dict = dict->next;
+	}
+}
+
+void	ft_lstdelete_node(t_dict **dict, int index)
 {
 	t_dict *head;
 	t_dict *start;
+	t_dict *tmp;
+	t_dict *tmp_2;
 
-	head = dict;
-	start = dict;
+	head = (*dict);
+	start = (*dict);
+	tmp_2 = (*dict);
 	if (index == 0)
 	{
-		dict = dict -> next;
-		return (dict);
+		// free(&dict);
+		dprintf(2, "delete_index0\n");
+		(*dict) = (*dict)->next;
+		ft_freenode(head, 0);
 	}
 	else
 	{
-		while (index + 1 != 1) // fixed index == 0
+		int	l = 0;
+		dprintf(2, "index lst: %d\n", index);
+		while (l < index) // fixed index == 0
 		{
-			start = dict;
-			dict = dict -> next;
-			index--;
+			dprintf(2, "entry\n");
+			start = (*dict);
+			(*dict) = (*dict)->next;
+			l++;
 		}
-		start->next = dict->next;
-		dict = head;
-		return(dict);
+		start->next = (*dict)->next;
+		(*dict) = head;
+		ft_freenode(tmp_2, index);
 	}
-	// return (dict); //??
+	int cnt = ft_cntdictmain(*dict);
+	dprintf(2, "cnt : %d\n", cnt);
 	// ft_prtdict(dict);
 }
 
-int		ft_findkey_export(char *key, char **env)
+int		ft_findkey_export(char *key, t_dict	*dict)
 {
-	t_dict *dict_export;
+	// t_dict *dict_export;
 	int	i;
 
-	export = ft_export(NULL, env);
+	// export = ft_export(NULL, env);
 	i = 0;
-	while (dict_export->tmp_dict)
+	while (dict)
 	{
-		if (ft_strcmp(dict->tmp_dict->key, key) == EXIT_SUCCESS)
+		// dprintf(2, "dict : %s\n", dict->tmp_dict->key);
+		// dprintf(2, "key : %s\n", key);
+		if (ft_strcmp(dict->tmp_dict->key, key) == 0)
+		{
 			return (i);
+		}
 		i++;
-		dict_export->tmp_dict = dict_export->tmp_dict->next;
+		dict = dict->next;
 	}
 	return (-1);
 }
 
-void	ft_unset(char **cmd, t_dict *tmp_export)
+void	ft_unset(char **cmd, t_dict **dict)
 {
-	int	i;
-	int	index;
+	int		i;
+	int		index;
+	t_dict	*tmp;
 
 	i = 1;
 	while (cmd[i])
 	{
-		// index = ft_findkey_export(cmd[0], env);
+		index = ft_findkey_export(cmd[i], *dict);
+		dprintf(2, "index : %d\n", index);
 		if (index == -1)
 			continue;
-		ft_lstdelete_node(tmp_export, index);
+		ft_lstdelete_node(dict, index);
 		i++;
 	}
+	// ft_prtdict(tmp);
 }

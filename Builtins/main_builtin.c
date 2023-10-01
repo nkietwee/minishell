@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 02:58:16 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 15:26:51 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:00:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,70 @@ int	ft_findstr(char *str, char *find, int len)
 	return (EXIT_FAILURE);
 }
 
-
-// void	ft_buildin(char **cmd, t_data *data, char **env)
-void	ft_buildin(char **av, t_data *data, char **env)
-{
-	char	**tmp=NULL;
-
-	// tmp = ft_split(av, ' ');
-	// printf("tmp[0] : %s\n" , tmp[0]);
-	// printf("tmp[1] : %s\n" , tmp[1]);
-	// tmp
-	/*edit tmp[1] -> tmp*/
-
-	printf("fn\n");
-	//fixed av[1]
-	// if (ft_findstr(tmp[0], "cd", 2) == EXIT_SUCCESS)
-	// 	ft_cd(tmp[1]);
-	// else if (ft_findstr(tmp[0], "pwd", 3) == EXIT_SUCCESS)
-	// 	ft_pwd();
-	// else if (ft_findstr(tmp[0], "env", 3) == EXIT_SUCCESS)
-	// 	ft_env(data);
-	// else if (ft_findstr(tmp[0], "echo", 4) == EXIT_SUCCESS)
-	// 	ft_echo(tmp);
-	// else if (ft_findstr(av[1], "export", 6) == EXIT_SUCCESS)
-	if (ft_findstr(av[1], "export", 6) == EXIT_SUCCESS)
-		ft_export(av, env);
+// void	ft_buildin_parent(char **cmd, char  **env)
+// {
+// 	if (ft_findstr(cmd[0], "export", 6) == EXIT_SUCCESS)
+// 		ft_export(cmd, env);
+// 	else if (ft_findstr(cmd[0], "cd", 2) == EXIT_SUCCESS)
+// 		ft_cd(cmd);
+// 	// else if (ft_findstr(cmd[0], "unset", 5) == EXIT_SUCCESS)
+// 	// 	ft_unset(cmd);
+// 	// else if (ft_findstr(cmd[0], "exit", 4) == EXIT_SUCCESS)
+// 	// 	ft_exit(cmd);
 
 
-}
+// 	// else if (ft_findstr(tmp[0], "env", 3) == EXIT_SUCCESS)
+// 	// 	ft_env(data);
+// 	// else if (ft_findstr(tmp[0], "echo", 4) == EXIT_SUCCESS)
+// 	// 	ft_echo(tmp);
+// 	// else if (ft_findstr(av[1], "export", 6) == EXIT_SUCCESS)
+
+// 	// else if (ft_findstr(tmp[0], "pwd", 3) == EXIT_SUCCESS)
+// 	// 	ft_pwd();
+// }
+
+// void	ft_buildin_child(char **cmd, char  **env, int fd_out)
+// {
+// 	// dprintf(2, "ft_buildin_child\n");
+// 	// printf("cmd : %s\n", cmd[0]);
+// 	if (ft_strcmp(cmd[0], "pwd") == 0)
+// 		ft_pwd();
+// 	else if (ft_strcmp(cmd[0], "echo") == 0)
+// 		ft_echo(cmd, fd_out);
+// 	else if (ft_strcmp(cmd[0], "export") == 0)
+// 		ft_export(cmd, env);
+// 	// else if (ft_strcmp(cmd[0], "env") == 0)
+// 	// 	ft_env(data);
+
+// 	// exit(0);
+// }
+
+// void	ft_buildin(char **av, t_data *data, char **env)
+// {
+// 	char	**tmp=NULL;
+
+// 	// tmp = ft_split(av, ' ');
+// 	// printf("tmp[0] : %s\n" , tmp[0]);
+// 	// printf("tmp[1] : %s\n" , tmp[1]);
+// 	// tmp
+// 	/*edit tmp[1] -> tmp*/
+
+// 	printf("fn\n");
+// 	//fixed av[1]
+// 	// if (ft_findstr(tmp[0], "cd", 2) == EXIT_SUCCESS)
+// 	// 	ft_cd(tmp[1]);
+// 	// else if (ft_findstr(tmp[0], "pwd", 3) == EXIT_SUCCESS)
+// 	// 	ft_pwd();
+// 	// else if (ft_findstr(tmp[0], "env", 3) == EXIT_SUCCESS)
+// 	// 	ft_env(data);
+// 	// else if (ft_findstr(tmp[0], "echo", 4) == EXIT_SUCCESS)
+// 	// 	ft_echo(tmp);
+// 	// else if (ft_findstr(av[1], "export", 6) == EXIT_SUCCESS)
+// 	if (ft_findstr(av[1], "export", 6) == EXIT_SUCCESS)
+// 		ft_export(av, env);
+
+
+// }
 
 // void	ft_initdata(t_data *data, char **env)
 // {

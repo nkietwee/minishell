@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 15:48:06 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 02:17:31 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 22:19:52 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,21 @@ void	ft_lstascend(t_dict *dict)
 		}
 		i++;
 	}
-	ft_prtdict(head2);
+	// ft_prtdict(head2);
+	ft_prtexport(head2);
 	//freeloop
 }
 
 
-/* convert env to tmp_env */
-void	ft_printvalue_ep(char **env)
-{
-	t_dict *dict;
+// /* convert env to tmp_env */
+// void	ft_printvalue_ep()
+// {
+// 	// t_dict *dict;
 
-	dict = ft_getenv(env);
-	ft_lstascend(dict);
+// 	// dict = ft_getenv(env);
+// 	ft_lstascend(dict);
 
-}
+// }
 
 /* check first character of variable(key) */
 void	ft_checkname(char **cmd)
@@ -88,19 +89,17 @@ void	ft_checkname(char **cmd)
 
 
 //return t_dict for print env
-t_dict	*ft_export(char **cmd, char **env)
+void	ft_export(char **cmd, t_dict *dict)
 {
 	int	len;
-	t_dict *tmp_export;
+	t_dict *tmp_export=NULL;
 
 	ft_checkname(cmd); //check first character of variable(key)
 	len = ft_cntstr(cmd);
-	printf("len : %d\n", len);
-	if (len == 2) // fixed 2 -> 1 (export no arg)
-		ft_printvalue_ep(env);
-	if (len > 2) // fixed 2 -> 1 (export with arg)
-		tmp_export =  ft_addvalueexport(cmd, env); // left assign value
-
-	// exit(0);
-	return (tmp_export);
+	// dprintf(2, "len_ep : %d\n", len);
+	if (len == 1) // (export no arg)
+		ft_lstascend(dict);
+		// ft_printvalue_ep(env);
+	if (len > 1) // (export with arg)
+		ft_addvalueexport(cmd, dict); // left assign value
 }

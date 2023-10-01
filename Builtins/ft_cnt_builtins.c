@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 12:54:40 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/03 15:53:25 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:18:37 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,19 @@ int	ft_cntdict(t_dict **dict)
 	return (i);
 }
 
+int	ft_cntdictmain(t_dict *dict)
+{
+	int	i;
+
+	i = 0;
+	while (dict)
+	{
+		i++;
+		dict = dict->next;
+	}
+	return (i);
+}
+
 int	ft_cntdict_export(t_dict_value **dict)
 {
 	int	i;
@@ -61,6 +74,18 @@ int	ft_cntstr(char **str)
 		i++;
 	return (i);
 }
+
+// int	ft_cnt_dupexport(char **str)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		i++;
+// 	}
+// 	return (i);
+// }
 
 // int	main(int ac, char **av, char **env)
 // {

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:32:39 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 01:17:15 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:20:45 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 /*update env*/
 
-// void	ft_cd(char *str)
 void	ft_cd(char **cmd)
 {
 	char	pre_path[128];
 	char	*tmp;
+	char	*old_pwd;
 	int		errno;
 
 	errno = 0;
-	printf("fn_cd\n");
-	printf("cmd[1] : %s\n" ,cmd[1]);
+	old_pwd = getcwd(NULL, 0);
+	// dprintf(2, "ft_cd\n");
+	// dprintf(2, "path : %s\n" , cmd[1]);
+	// chdir(cmd[1]);
+	// printf("fn_cd\n");
+	// printf("cmd[1] : %s\n" ,cmd[1]);
 	// if (str)
 	// 	ft_getnewenv(NULL, data->env_start);
 
@@ -42,11 +46,11 @@ void	ft_cd(char **cmd)
 		if (access(cmd[1], R_OK | F_OK) == 0)
 			chdir(cmd[1]);
 		else
-			printf("Err\n");
-		// ft_prterr_builtins(CANNT_OPEN, "cd", cmd[1], errno);
+			ft_prterr_builtins(CANNT_OPEN, "cd", cmd[1], errno);
+			// dprintf(2, "Err\n");
 	}
 	else
-		printf("Err\n");
-	// ft_prterr_builtins(PER_DN, "cd",cmd[1], errno);
+		ft_prterr_builtins(PER_DN, "cd",cmd[1], errno);
+		// dprintf(2, "Err\n");
 
 }

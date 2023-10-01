@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:33:50 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 00:42:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:26:39 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	ft_mainexec(t_minishell *ms);
 
 char	**ft_findpath(char **env);
 // void	ft_execute(t_list *tb_lst, char **env);
-void ft_execute(t_list *tb_lst, char **env, int nbr_cmd);
+void	ft_execute(t_list *tb_lst, char **env, int nbr_cmd);
+void	ft_initdata_exec(t_list *tb_lst);
 
 /* ft_getfile */
 void	ft_getfd(t_list *tb_lst);
@@ -49,7 +50,8 @@ int	ft_checkfile(t_list *tb_lst);
 /*ft_execve*/
 void	ft_execvecmd(char **cmd, char **path, char **tmp_env);
 void	ft_execvepath(char **path, char **tmp_env);
-void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd);
+void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env);
+// void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd);
 void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read);
 
 /*ft_execute*/
@@ -65,5 +67,9 @@ int	ft_findchar(char *s1, char s2);
 
 /*ft_heredoc*/
 int	ft_heredoc(t_list *table_list, int cnt_heredoc);
+
+/*ft_unset*/
+// void	ft_unset(char **cmd, t_dict *dict);
+
 // void	ft_heredoc(int ac, char **av);
 #endif
