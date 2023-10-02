@@ -6,13 +6,13 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 17:03:35 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 00:07:10 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 05:56:54 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_chk_repeat(char *find, t_dict *dict)
+int	ft_find_repeat(char *find, t_dict *dict)
 {
 	while (dict)
 	{
@@ -42,30 +42,61 @@ void	ft_instead_value(char **find, t_dict *dict)
 	}
 }
 
-//str is arg that wanted to add at last arg from env
-t_dict_value **ft_get_value(char **str, t_dict *dict)
+void	ft_lstinsert_node(t_dict **dict, char **key)
 {
-	int	len;
-	t_dict_value **tmp;
-	char	**sp;
-	char	**sp_2;
-	// char	**tmp_str;
 	int	i;
-	int	j;
-	int repeat;
 
-	i = 1;
+	i = 0;
+
+}
+
+void	ft_dbfree(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+int	ft_cnt_repeat(char **str, t_dict *dict)
+{
+	int		i;
+	int		repeat;
+	char	**sp;
+
+	i = 0;
 	repeat = 0;
 	while (str[i])
 	{
 		// printf("str : %s\n", str[i]);
 		sp = ft_split(str[i], '=');
-		if (ft_chk_repeat(sp[0], dict) == EXIT_SUCCESS)
+		if (ft_find_repeat(sp[0], dict) == EXIT_SUCCESS)
 			repeat++;
-		free(sp);
+		ft_dbfree(sp);
 		i++;
 	}
-	dprintf(2, "repeat : %d\n", repeat);
+	return (repeat);
+}
+
+//str is arg that wanted to add at last arg from env
+t_dict_value **ft_get_value(char **str, t_dict *dict)
+{
+	int	len;
+	t_dict_value **tmp;
+	char	**sp_2;
+	int	i;
+	int	j;
+	int repeat;
+
+	i = 1;
+	repeat = ft_cnt_repeat(str, dict);
+	// dprintf(2, "repeat : %d\n", repeat);
+	// exit(0);
 	i = 0;
 	j = 1;
 	len = ft_cntstr(str) - repeat  - 1;
@@ -80,7 +111,7 @@ t_dict_value **ft_get_value(char **str, t_dict *dict)
 		sp_2 = ft_split(str[j], '=');
 		if (sp_2 == NULL)
 			return (NULL);
-		if (ft_chk_repeat(sp_2[0], dict) == EXIT_SUCCESS) // repeat value
+		if (ft_find_repeat(sp_2[0], dict) == EXIT_SUCCESS) // repeat value
 		{
 			// dprintf(2, "repeat\n");
 			ft_instead_value(sp_2, dict);
@@ -100,7 +131,8 @@ t_dict_value **ft_get_value(char **str, t_dict *dict)
 			t = 0;
 		}
 		j++;
-		free(sp_2);
+		// free(sp_2);
+		ft_dbfree(sp_2);
 	}
 	// dprintf(2, "finish_getvalue1\n");
 	// tmp[i]->key = NULL;

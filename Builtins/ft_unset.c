@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 02:01:36 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:41:13 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_freenode(t_dict *dict, int index)
 			free(dict->tmp_dict->key);
 			free(dict->tmp_dict->value);
 			free(dict->tmp_dict);
+			free(dict);
 			return ;
 		}
 		i++;
@@ -66,34 +67,57 @@ void	ft_lstdelete_node(t_dict **dict, int index)
 	t_dict *start;
 	t_dict *tmp;
 	t_dict *tmp_2;
+	t_dict *free_node;
 
 	head = (*dict);
 	start = (*dict);
 	tmp_2 = (*dict);
+	free_node = (*dict);
+	// 	if (index == 0)
+	// {
+	// 	// free(&dict);
+	// 	// dprintf(2, "delete_index0\n");
+	// 	(*dict) = (*dict)->next;
+	// 	ft_freenode(head, 0);
+	// }
 	if (index == 0)
 	{
 		// free(&dict);
-		dprintf(2, "delete_index0\n");
+		// dprintf(2, "delete_index0\n");
+
 		(*dict) = (*dict)->next;
-		ft_freenode(head, 0);
+		free(head->tmp_dict->key);
+		free(head->tmp_dict->value);
+		free(head->tmp_dict);
+		free(head);
+		// ft_freenode(head, 0);
 	}
 	else
 	{
 		int	l = 0;
-		dprintf(2, "index lst: %d\n", index);
+		// dprintf(2, "index lst: %d\n", index);
 		while (l < index) // fixed index == 0
 		{
-			dprintf(2, "entry\n");
+			// dprintf(2, "entry\n");
 			start = (*dict);
 			(*dict) = (*dict)->next;
+			free_node = free_node->next;
 			l++;
 		}
+		// ft_freenode(tmp_2, index);
 		start->next = (*dict)->next;
+		free(free_node->tmp_dict->key);
+		free(free_node->tmp_dict->value);
+		free(free_node->tmp_dict);
+		free(free_node);
 		(*dict) = head;
-		ft_freenode(tmp_2, index);
+		// dprintf(2, "Hello\n");
+		// ft_prtdict(*dict);
+		// exit(0);
+
 	}
-	int cnt = ft_cntdictmain(*dict);
-	dprintf(2, "cnt : %d\n", cnt);
+	// int cnt = ft_cntdictmain(*dict);
+	// dprintf(2, "cnt : %d\n", cnt);
 	// ft_prtdict(dict);
 }
 
@@ -109,9 +133,7 @@ int		ft_findkey_export(char *key, t_dict	*dict)
 		// dprintf(2, "dict : %s\n", dict->tmp_dict->key);
 		// dprintf(2, "key : %s\n", key);
 		if (ft_strcmp(dict->tmp_dict->key, key) == 0)
-		{
 			return (i);
-		}
 		i++;
 		dict = dict->next;
 	}
@@ -128,10 +150,14 @@ void	ft_unset(char **cmd, t_dict **dict)
 	while (cmd[i])
 	{
 		index = ft_findkey_export(cmd[i], *dict);
-		dprintf(2, "index : %d\n", index);
-		if (index == -1)
-			continue;
-		ft_lstdelete_node(dict, index);
+		// dprintf(2, "index : %d\n", index);
+		// if (index == -1)
+		// {
+
+		// 	continue;
+		// }
+		if (index >= 0)
+			ft_lstdelete_node(dict, index);
 		i++;
 	}
 	// ft_prtdict(tmp);
