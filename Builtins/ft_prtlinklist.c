@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:25:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 21:45:19 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:48:28 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 void	ft_prtdict_value(t_dict_value	**tmp_value)
 {
 	int	i;
-	int	len;
+	// int	len;
 
 	i = 0;
-	len = ft_cntdict_export(tmp_value);
-	while (i < len)
+	// // len = ft_cntdict_export(tmp_value);
+	// dprintf(2, "len : %d\n", len);
+	while (tmp_value[i])
 	{
 		printf("tmp_main : %s\n", tmp_value[i]->key);
 		printf("tmp_main : %s\n\n", tmp_value[i]->value);

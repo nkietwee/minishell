@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 11:41:13 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 13:56:55 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,43 +95,30 @@ void	ft_lstdelete_node(t_dict **dict, int index)
 	else
 	{
 		int	l = 0;
-		// dprintf(2, "index lst: %d\n", index);
 		while (l < index) // fixed index == 0
 		{
-			// dprintf(2, "entry\n");
 			start = (*dict);
 			(*dict) = (*dict)->next;
 			free_node = free_node->next;
 			l++;
 		}
-		// ft_freenode(tmp_2, index);
 		start->next = (*dict)->next;
 		free(free_node->tmp_dict->key);
 		free(free_node->tmp_dict->value);
 		free(free_node->tmp_dict);
 		free(free_node);
 		(*dict) = head;
-		// dprintf(2, "Hello\n");
-		// ft_prtdict(*dict);
-		// exit(0);
 
 	}
-	// int cnt = ft_cntdictmain(*dict);
-	// dprintf(2, "cnt : %d\n", cnt);
-	// ft_prtdict(dict);
 }
 
 int		ft_findkey_export(char *key, t_dict	*dict)
 {
-	// t_dict *dict_export;
 	int	i;
 
-	// export = ft_export(NULL, env);
 	i = 0;
 	while (dict)
 	{
-		// dprintf(2, "dict : %s\n", dict->tmp_dict->key);
-		// dprintf(2, "key : %s\n", key);
 		if (ft_strcmp(dict->tmp_dict->key, key) == 0)
 			return (i);
 		i++;

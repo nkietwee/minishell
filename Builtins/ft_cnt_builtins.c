@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 12:54:40 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 01:18:37 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:50:06 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ int	ft_cntdict_export(t_dict_value **dict)
 
 	i = 0;
 	while (dict[i])
+	{
+		// dprintf(2, "key : %s\n" , dict[i]->key);
+		// dprintf(2, "value : %s\n" , dict[i]->value);
 		i++;
+	}
 	return (i);
 }
 

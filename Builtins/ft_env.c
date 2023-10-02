@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:32:57 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 17:02:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:00:15 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ft_env(t_dict *new_dict)
 	while (new_dict)
 	{
 		ft_putstr_fd(new_dict->tmp_dict->key, STDOUT_FILENO);
-		ft_putstr_fd("=", STDOUT_FILENO);
+		if (new_dict->tmp_dict->value)
+			ft_putstr_fd("=", STDOUT_FILENO);
 		ft_putstr_fd(new_dict->tmp_dict->value, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		new_dict = new_dict -> next;
