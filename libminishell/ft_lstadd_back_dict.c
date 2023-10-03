@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isquote.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back_dict.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 00:50:19 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/08/01 00:51:00 by marvin           ###   ########.fr       */
+/*   Created: 2023/09/28 23:13:05 by ptungbun          #+#    #+#             */
+/*   Updated: 2023/09/28 23:13:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libminishell.h"
 
-int	ft_isquote(char c)
+void	ft_lstadd_back_dict(t_dict **lst, t_dict *new)
 {
-	if (c == '\'' || c == '\"' || c == '(' || c == ')')
-		return (1);
-	return (0);
+	t_dict	*tmp;
+
+	if (!(*lst))
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while ((*lst)->next != NULL)
+		(*lst) = (*lst)->next;
+	(*lst)->next = new;
+	(*lst) = tmp;
 }

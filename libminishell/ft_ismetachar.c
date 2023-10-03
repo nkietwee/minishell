@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ismetachar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 00:50:19 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 01:43:32 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:05:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libminishell.h"
 
 int	ft_ismetachar(char c)
 {

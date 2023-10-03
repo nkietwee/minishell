@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 17:03:35 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 21:16:07 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 02:20:29 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,6 @@ void	ft_instead_value(char **find, t_dict *dict)
 	}
 }
 
-void	ft_lstinsert_node(t_dict **dict, char **key)
-{
-	int	i;
-
-	i = 0;
-
-}
-
 void	ft_dbfree(char **str)
 {
 	int	i;
@@ -83,33 +75,29 @@ int	ft_cnt_repeat(char **str, t_dict *dict)
 }
 
 //str is arg that wanted to add at last arg from env
-t_dict_value **ft_get_value(char **str, t_dict *dict)
+t_dict_value	**ft_get_value(char **str, t_dict *dict)
 {
 	int	len;
 	t_dict_value **tmp;
 	char	**sp_2;
 	int	i;
-	int	j;
 	int repeat;
 
 	repeat = ft_cnt_repeat(str, dict);
 	i = 0;
-	j = 1;
 	len = ft_cntstr(str) - repeat  - 1;
-	dprintf(2, "repeat : %d\n", repeat);
 	tmp = malloc(sizeof(t_dict_value *) * (len + 1));
 	if (!tmp)
 		return (NULL);
 	int t = 0;
-	while (str[j])
+	while (str[i])
 	{
 		tmp[i] = malloc(sizeof(t_dict_value ));
-		sp_2 = ft_split(str[j], '=');
+		sp_2 = ft_split(str[i], '=');
 		if (sp_2 == NULL)
 			return (NULL);
-		if (ft_find_repeat(sp_2[0], dict) == EXIT_SUCCESS) // repeat value
+		if (ft_find_repeat(sp_2[0], dict) == EXIT_SUCCESS && sp_2[0]) // repeat value
 		{
-			// dprintf(2, "repeat\n");
 			ft_instead_value(sp_2, dict);
 			t = 1;
 		}
@@ -126,7 +114,7 @@ t_dict_value **ft_get_value(char **str, t_dict *dict)
 			i++;
 		}
 		t = 0;
-		j++;
+		i++;
 		ft_dbfree(sp_2);
 	}
 	tmp[i] = NULL;
@@ -138,10 +126,10 @@ void	ft_addvalueexport(char **av, t_dict *dict)
 {
 	t_dict			*tmp_newdict=NULL;
 	t_dict_value	**tmp_value;
-	int	i;
+	int				i;
 
 	i = 0;
-	tmp_value =  ft_get_value(av, dict);
+	tmp_value = ft_get_value(av, dict);
 	while (tmp_value[i])
 	{
 		tmp_newdict = ft_lstnew_dict(tmp_value[i]);

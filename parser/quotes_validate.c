@@ -6,21 +6,21 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:26:21 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/29 22:56:30 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:33:29 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int ft_isvalide_quote(char *str)
+int	ft_isvalide_quote(char *str)
 {
-	int quote_open;
-	int i;
-	char quote;
+	int		quote_open;
+	int		i;
+	char	quote;
 
 	quote_open = 0;
 	i = 0;
-	while (str[i])
+	while(str[i])
 	{
 		if (quote_open == 0 && (str[i] == '\'' || str[i] == '\"'))
 		{
@@ -36,10 +36,10 @@ int ft_isvalide_quote(char *str)
 	return (1);
 }
 
-int quotes_validate(t_minishell *ms)
+int	quotes_validate(t_minishell *ms)
 {
-	t_list *tk_lst;
-	char *str;
+	t_list	*tk_lst;
+	char	*str;
 
 	tk_lst = ms->tk_lst;
 	while (tk_lst)
@@ -48,9 +48,9 @@ int quotes_validate(t_minishell *ms)
 		if (ft_isquote(*str))
 		{
 			if (!ft_isvalide_quote(str))
-				return (2);
+				return (exit_err(ms, 2));
 		}
 		tk_lst = tk_lst->next;
 	}
-	return (0);
+	 return (0);
 }

@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   exit_err.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/14 18:32:57 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:14:59 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/09/30 23:42:33 by ptungbun          #+#    #+#             */
+/*   Updated: 2023/10/02 21:32:52 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_env(t_dict *new_dict)
+static void	set_exit_code(t_minishell *ms)
 {
-	int	i;
+	if (ms->err_code == 1 || ms->err_code == 2 || \
+	ms->err_code == 4 || ms->err_code == 5 || \
+	ms->err_code == 7)
+		ms->exit_code = 128;
+	if (ms->err_code == 3)
+		ms->exit_code = 1;
+}
 
-	i = 0;
-	dprintf(2, "env\n");
-	while (new_dict)
-	{
-		ft_putstr_fd(new_dict->tmp_dict->key, STDOUT_FILENO);
-		if (new_dict->tmp_dict->value)
-		{
-			ft_putstr_fd("=", STDOUT_FILENO);
-			ft_putstr_fd(new_dict->tmp_dict->value, STDOUT_FILENO);
-		}
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		new_dict = new_dict -> next;
-	}
+int	exit_err(t_minishell *ms, int index)
+{
+	ms->err_code = index;
+	set_exit_code(ms);
+	return (ms->err_code);
 }

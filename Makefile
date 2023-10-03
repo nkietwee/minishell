@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/10/02 01:14:32 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/10/03 16:16:56 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror
-# FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+# FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 RM = rm -f
 
@@ -44,6 +44,7 @@ BUILTINS_SRCS = ft_cnt_builtins.c\
 				ft_export_util.c\
 				ft_prtlinklist.c\
 				ft_unset.c\
+				ft_exit.c
 
 EXECUTE_SRCS = execute.c\
 			ft_cnt_execute.c\
@@ -71,7 +72,7 @@ LIBFT_SRCS = ft_isalpha.c ft_isdigit.c ft_isascii.c ft_isalnum.c ft_isprint.c \
 				ft_lstpop_bot.c ft_lstpop_top.c ft_atol.c ft_isspace.c ft_split_allsp.c \
 				ft_freesplite.c  ft_strjoinextra.c ft_strcmp.c \
 				ft_lstadd_front_dict.c ft_lstnew_dict.c ft_lstadd_back_dict.c\
-				ft_lstsize_dict.c ft_memmove.c ft_memcpy.c ft_strjoin.c\
+				ft_lstsize_dict.c ft_memmove.c ft_memcpy.c ft_strjoin.c ft_itoa.c \
 
 
 LIBFTMINISHELL_SRCS = ft_ismetachar.c ft_isquote.c
@@ -79,13 +80,15 @@ LIBFTMINISHELL_SRCS = ft_ismetachar.c ft_isquote.c
 PARSER_SRCS = main.c prompt.c lexer.c grab.c init_command_list.c \
 					quotes_validate.c tokenize.c paser.c \
 					get_cmd_to_table.c get_rdr_to_table.c \
+					exit_err.c expand_in_quote.c expand_var.c \
+					scan_n_expand.c
 
 SRCS = $(addprefix $(BUILTINS_PATH), $(BUILTINS_SRCS))\
 		$(addprefix $(EXECUTE_PATH), $(EXECUTE_SRCS))\
 		$(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS))\
 		$(addprefix $(LIBFTMINISHELL_PATH), $(LIBFTMINISHELL_SRCS))\
 		$(addprefix $(PARSER_PATH), $(PARSER_SRCS))\
-#		$(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
+		$(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))\
 
 
 OBJS = $(SRCS:.c=.o)
@@ -96,7 +99,7 @@ all: $(NAME)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) $(wildcard Libft/*.o) -o $(NAME)
+	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)
 
 # $(CC) $(FLAGS) -L/usr/local/lib -L./usr/include -I/usr/local/include  $(OBJS) -o $(NAME) -lreadline
 

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 15:48:06 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 22:19:52 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 02:20:49 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,14 @@ void	ft_lstascend(t_dict *dict)
 		}
 		i++;
 	}
-	// ft_prtdict(head2);
 	ft_prtexport(head2);
 	//freeloop
 }
-
-
-// /* convert env to tmp_env */
-// void	ft_printvalue_ep()
-// {
-// 	// t_dict *dict;
-
-// 	// dict = ft_getenv(env);
-// 	ft_lstascend(dict);
-
-// }
 
 /* check first character of variable(key) */
 void	ft_checkname(char **cmd)
 {
 	int	i;
-
 
 	i = 1; // i = 0 is export
 	while (cmd[i])
@@ -80,7 +67,7 @@ void	ft_checkname(char **cmd)
 		{
 			ft_putstr_fd("bash: export: `", STDERR_FILENO);
 			ft_putstr_fd(cmd[i], STDERR_FILENO);
-			ft_putstr_fd("': not a valid identifier", STDOUT_FILENO);
+			ft_putstr_fd("': not a valid identifier\n", STDOUT_FILENO);
 		}
 		i++;
 	}
@@ -96,7 +83,6 @@ void	ft_export(char **cmd, t_dict *dict)
 
 	ft_checkname(cmd); //check first character of variable(key)
 	len = ft_cntstr(cmd);
-	// dprintf(2, "len_ep : %d\n", len);
 	if (len == 1) // (export no arg)
 		ft_lstascend(dict);
 		// ft_printvalue_ep(env);

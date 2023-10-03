@@ -6,49 +6,28 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:15:57 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/29 22:56:33 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:33:32 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	expand_in_quotes(char **ep_str, t_dict *dict)
+void	expand(char **ep_str, t_dict *dict, char *exit_code)
 {
-	char	*s[3];
-	char	*str;
-	size_t	posi[2];
-	size_t	i;
+	char	*ep_str_ptr;
 
-	i = 0;
-	while((*ep_str)[i] && (*ep_str)[i] != '$')
-		i++;
-	posi[0] = i;
-	while((*ep_str)[i] && !ft_isalpha((*ep_str)[i]))
-		i++;
-	posi[1] = i;
-	s[0] = ft_substr(*ep_str, 0, posi[0] + 1);
-	s[1] = ft_substr(*ep_str, posi[0], posi[1] - posi[0] + 1);
-	s[2] = ft_substr(*ep_str, posi[1], ft_strlen(*ep_str) - posi[1]);
-	while(dict)
+	ep_str_ptr = *ep_str;
+	ep_str_ptr++;
+	if (*ep_str_ptr == '?')
 	{
-		if (ft_strncmp(s[1], dict->tmp_dict->key, ft_strlen(s[1])) && \
-		ft_strncmp(dict->tmp_dict->key, s[1], ft_strlen(dict->tmp_dict->key)))
-		{
-			free(*ep_str);
-			str = ft_strcat_n_free(s[0], s[1]);
-			*ep_str = ft_strcat_n_free(str, s[2]);
-			return ;
-		}
-		dict = dict->next;
+		free(*ep_str);
+		*ep_str = ft_strdup(exit_code);
+		return ;
 	}
-}
-
-static void	expand(char **ep_str, t_dict *dict)
-{
 	while(dict)
 	{
-		if (ft_strncmp(*ep_str, dict->tmp_dict->key, ft_strlen(*ep_str)) && \
-		ft_strncmp(dict->tmp_dict->key, *ep_str, ft_strlen(dict->tmp_dict->key)))
+		if (ft_strncmp(ep_str_ptr, dict->tmp_dict->key, ft_strlen(ep_str_ptr)) == 0 && \
+		ft_strncmp(dict->tmp_dict->key, ep_str_ptr, ft_strlen(dict->tmp_dict->key)) == 0)
 		{
 			free(*ep_str);
 			*ep_str = ft_strdup(dict->tmp_dict->value);
@@ -56,9 +35,11 @@ static void	expand(char **ep_str, t_dict *dict)
 		}
 		dict = dict->next;
 	}
+	free(*ep_str);
+	*ep_str = ft_strdup("");
 }
 
-void	scan_n_expand(t_list **ep_lst, t_dict *dict)
+void	scan_n_expand(t_list **ep_lst, t_dict *dict, char *exit_code)
 {
 	char	*ep_str;
 	t_list	*ep_lst_ptr;
@@ -68,9 +49,15 @@ void	scan_n_expand(t_list **ep_lst, t_dict *dict)
 	{
 		ep_str = (char *)((ep_lst_ptr)->data);
 		if (*ep_str == '\"')
-			expand_in_quotes(&ep_str, dict);
+		{
+			expand_in_quote(&ep_str, dict, exit_code);
+			ep_lst_ptr->data = ep_str;
+		}
 		else if (*ep_str == '$')
-			expand(&ep_str, dict);
+		{
+			expand(&ep_str, dict, exit_code);
+			ep_lst_ptr->data = ep_str;
+		}
 		ep_lst_ptr = ep_lst_ptr->next;
 	}
 }

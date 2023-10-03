@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 02:58:41 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 01:26:02 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 00:34:10 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int		ft_cntdictmain(t_dict *dict);
 int		ft_findstr(char *str, char *find, int len);
 
 /*cd*/
-void	ft_cd(char **cmd);
+// void	ft_cd(char **cmd);
+void	ft_cd(char **cmd, t_dict *dict);
 
 /*pwd*/
 void	ft_pwd(void);
@@ -46,14 +47,17 @@ void	ft_echo(char **cmd , int fd_out);
 void	ft_unset(char **cmd, t_dict **dict);
 
 /* env */
-t_dict *ft_getenv(char **env);
-t_dict_value **ft_getvalue_env(char **env);
+t_dict			*ft_getenv(char **env);
+t_dict_value**	ft_getvalue_env(char **env);
+t_dict_value **ft_get_value(char **str, t_dict *dict, int start);
 
 /*export*/
 void	ft_export(char **cmd, t_dict *dict);
 void	ft_printvalue_ep(char **env);
 void	ft_lstascend(t_dict *dict);
 void	ft_swap(t_dict *dict);
+int	ft_cnt_repeat(char **str, t_dict *dict);
+
 // t_dict	*ft_addvalueexport(char **av, char **env);
 void	ft_addvalueexport(char **av, t_dict *dict);
 // t_dict	*ft_addvalueexport(char **av, t_dict *dict);
@@ -64,6 +68,7 @@ void	ft_prtexport(t_dict	*dict);
 // void	ft_env(char **env);
 void	ft_env(t_dict *new_dict);
 
+void	ft_exit(char **cmd, t_dict *dict);
 /*prtlinklist*/
 void	ft_prtdict(t_dict	*dict);
 void	ft_prtdict_value(t_dict_value	**tmp_value);

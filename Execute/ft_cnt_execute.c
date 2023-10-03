@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 00:09:34 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 02:07:36 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ int	ft_cntcmd(t_list *table_list)
 	t_table *table;
 
 	i = 0;
-	// printf("ft_cnt_cmd\n");
 	while (table_list)
 	{
 		table = (t_table *)(table_list->data);
 		if (table->cmd[0] != NULL)
-		{
-			// printf("cmd_ : %s\n", table->cmd[0]);
 			i++;
-		}
-		table_list = table_list->next; // t_lst only
+		table_list = table_list->next;
 	}
 	return (i);
 }
@@ -66,18 +62,17 @@ int	ft_cnt_infile(t_list *table_list)
 	int	i;
 	t_table *table;
 	t_rdr	*rdr;
+	t_list	*rdr_lst;
 
 	i = 0;
-	while (table_list)
+	table = (t_table *)(table_list->data);
+	rdr_lst = (t_list *)(table->rdr);
+	while (rdr_lst)
 	{
-		table = (t_table *)(table_list->data);
-		if (table->rdr)
-		{
-			rdr = (t_rdr *)(table->rdr->data);
-			if (rdr->type == INFILE)
-				i++;
-		}
-		table_list = table_list->next;
+		rdr = (t_rdr *)(rdr_lst->data);
+		if (rdr->type == INFILE)
+			i++;
+		rdr_lst = rdr_lst->next;
 	}
 	return (i);
 }
@@ -87,34 +82,17 @@ int	ft_cnt_outfile(t_list *table_list)
 	int	i;
 	t_table *table;
 	t_rdr	*rdr;
+	t_list	*rdr_lst;
 
 	i = 0;
-	while (table_list)
+	table = (t_table *)(table_list->data);
+	rdr_lst = (t_list *)(table->rdr);
+	while (rdr_lst)
 	{
-		table = (t_table *)(table_list->data);
-		if (table->rdr)
-		{
-			rdr = (t_rdr *)(table->rdr->data);
-			if (rdr->type == OUTFILE || rdr->type == APPEND)
-				i++;
-		}
-		table_list = table_list->next;
+		rdr = (t_rdr *)(rdr_lst->data);
+		if (rdr->type == OUTFILE || rdr->type == APPEND)
+			i++;
+		rdr_lst = rdr_lst->next;
 	}
 	return (i);
 }
-
-// void	ft_countexec(t_minishell *ms)
-// {
-// 	t_table	*table;
-// 	t_data	data_exec;
-
-// 	table = (t_table *)(ms->tb_lst->data);
-// 	data_exec = (t_data )(table->exec_data);
-// 	// printf("count_exec\n");
-
-
-// 	data_exec.nbr_heredoc = ft_cnt_heredoc(ms->tb_lst);
-// 	// printf("nbr_heredoc : %d\n", data_exec.nbr_heredoc);
-// 	// data_exec.nbr_cmd = ft_cntcmd(tb_lst);
-
-// }

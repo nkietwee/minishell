@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 02:02:32 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/17 02:02:34 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 00:30:15 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_dict	*ft_lstnew_dict(void *content)
 	new = (t_dict *)malloc(sizeof(t_dict));
 	if (!new)
 		return (NULL);
-	new -> tmp_dict = content;
-	new -> next = NULL;
+	new->tmp_dict = content;
+	new->next = NULL;
 	return (new);
 }
 

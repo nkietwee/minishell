@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 00:21:16 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 02:04:25 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,16 @@ void	ft_execvecmd(char **cmd, char **path, char **env)
 		if (access(path_exec, F_OK) == EXIT_SUCCESS)
 		{
 			cmd[0] = path_exec;
-			// dprintf(2, "cmd : %s\n", cmd[0]);
-			// dprintf(2, "cmd : %s\n", cmd[1]);
-			// dprintf(2, "path_exec : %s\n", path_exec);
 			if (execve(path_exec, cmd, env) == -1)
 			{
-				dprintf(2, "Can't execve\n");
-				exit(0);
+				ft_putstr_fd("Can't execve\n" , STDOUT_FILENO);
+				// exit(0);
 			}
 		}
 		free(path_exec);
 		i++;
 	}
+	// dprintf(2, "path_exec____ \n");
 	if (path[i] == NULL)
 		ft_prterrexec(cmd[0], 1, ERR_CMD);
 }
@@ -81,12 +79,16 @@ void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env)
 		close(exec_data.fd_pipe[0]);
 		close(exec_data.fd_pipe[1]);
 	}
+
+	// if (exec_data.fd_in != 0)
+	// 	close(exec_data.fd_in);
+	// if (exec_data.fd_out != 1)
+	// 	close(exec_data.fd_out);
+
 	// ft_buildin_parent(table->cmd, env);
 	// if (data_exec.pid != 0) // espectialy parent
 	// dprintf(2, "c1\n");
 	// ft_waitpid(tb_lst);
-
-
 	// export
 	// cd
 	// unset
@@ -100,17 +102,23 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	t_data	*exec_data;
 	char	**path;
 
+	// check unset path
 	path = ft_findpath(env); // fixed from env to t_dict *dict
 	table = (t_table *)(tb_lst->data);
 	exec_data = (t_data *)(&(table->exec_data));
 	// dprintf(2, "Hello from child\n");
 	// ft_prtcmd(tb_lst, table->i);
+	// dprintf(2, "fd_here_child_1 : %d\n", table->fd_heredoc);
 	ft_getfd(tb_lst);
-	// printf("fd_in_child :  %d\n", exec_data->fd_in);
+	// dprintf(2, "fd_here_child_2 : %d\n", table->fd_heredoc);
+	if (exec_data->fd_in == -1)
+		return ;
 	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
+	// dprintf(2, "fd_inchild_2 : %d\n", exec_data->fd_in);
+	// dprintf(2, "fd_outchild_2 : %d\n", exec_data->fd_out);
 	// ft_buildin_child(table->cmd, env, exec_data->fd_out);
-	if (exec_data->fd_heredoc > 2)
-		close(exec_data->fd_heredoc);
+	// if (table->fd_heredoc > 2)
+	// 	close(table->fd_heredoc);
 	if (nbr_cmd > 1)
 	{
 		close(exec_data->fd_pipe[0]);

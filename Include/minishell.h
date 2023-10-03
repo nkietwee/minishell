@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/30 22:08:55 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 02:29:15 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # include "libminishell.h"
 # include "parser.h"
 
+# define ULLONG_MAX 9223372036854775807
+# define LLONG_MAX			// ft_putstr_fd("exit\n", STDOUT_FILENO);
+			// ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
+			// ft_putstr_fd(cmd[1], STDOUT_FILENO);
+			// ft_putstr_fd(": numeric argument required\n", STDOUT_FILENO);
+			// exit(255);7
 
 /* token and tag_ctrl index define*/
 
@@ -51,6 +57,19 @@
 # define APBFCMD 13
 # define FPBFCMD 14
 
+/* error msg define*/
+
+# define ERRINITCMDLST "minishell: error in init_command_list\n"
+# define ERRQUOTEVALIDATE "minishell: syntax error near unexpected token `unclose quotes'\n"
+# define ERRTOKENIZE "minishell: error in tokenize\n"
+# define ERRSCHARVALIDATE "minishell: syntax error near unexpected token `metachar at the end of line'\n"
+# define ERREXPANDVAR "minishell: error in expand_var'\n"
+# define ERRCMDTOTABLE "minishell: error in get_cmd_to_table'\n"
+# define ERRRDRTOTABLE "minishell: error in get_rdr_to_table'\n"
+
+# define FOUND 1
+# define NOTFOUND 0
+
 enum e_prterr
 {
 	CANNT_PIPE,
@@ -72,16 +91,10 @@ enum e_typestrjoin
 enum e_prtexec
 {
 	ERR_PATH,
-	ERR_CMD
+	ERR_CMD,
+	NO_FILE,
+	PER_FILE
 };
-
-// enum e_type
-// {
-// 	HEREDOC,
-// 	INFILE,
-// 	APPEND,
-// 	OUTFILE
-// } ;
 
 typedef struct	s_token
 {
@@ -99,6 +112,7 @@ typedef struct s_dict_value
 {
 	char *key;
 	char *value;
+	int	equal; // for check equal
 } t_dict_value;
 
 typedef struct s_dict
@@ -126,7 +140,7 @@ typedef struct s_data
 	int		nbr_cmd;
 	int		nbr_heredoc;
 
-	int		fd_heredoc;
+	// int		fd_heredoc;
 } t_data;
 
 typedef struct s_table
@@ -135,22 +149,25 @@ typedef struct s_table
 	t_data	exec_data;
 	char	**cmd;
 	int		i;
+	int		fd_heredoc;
+	int		nbr_heredoc;
 	// int		nbr_cmd;
-
+	char	**env;
 } t_table;
-
-	// if (pipe(data_exec.fd_pipe) == -1)
 
 typedef struct	s_minishell
 {
 	t_list	*tk_lst; // tk_list from token list lexer
 	t_list	*tb_lst; //  tb_list from table list from parser
 	t_dict	*dict; // env
-	int		nbr_cmd;
 	int		index;
+	int		err_code;
 	int		exit_code;
+	int		nbr_cmd;
+	// int		nbr_heredoc;
 	char	**env;
-} t_minishell;
-
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
+}				t_minishell;
 
 #endif

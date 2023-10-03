@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:33:50 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 01:26:39 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 02:33:17 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,20 @@ void	ft_initdata(t_minishell *ms, char **env);
 void	ft_mainexec(t_minishell *ms);
 
 char	**ft_findpath(char **env);
-// void	ft_execute(t_list *tb_lst, char **env);
 void	ft_execute(t_list *tb_lst, char **env, int nbr_cmd);
 void	ft_initdata_exec(t_list *tb_lst);
-
+// void	ft_initdata_exec(t_list *tb_lst, char **env);
+int		ft_check_buildin(char **cmd);
+void	ft_prt_type(int type);
 /* ft_getfile */
 void	ft_getfd(t_list *tb_lst);
 int	ft_getfd_in(t_list *tb_lst);
-// int	ft_getfd_out(t_minishell *main);
 int	ft_getfd_out(t_list *tb_lst);
 int	ft_cnt_infile(t_list *table_list);
 int	ft_cnt_outfile(t_list *table_list);
 int	ft_cnt_heredoc(t_list *table_list);
 
 /*ft_cnt_execute*/
-// void	ft_countexec(t_minishell *ms);
 int		ft_cntfile(t_rdr *file);
 int		ft_cntcmd(t_list *table_list);
 void	ft_countexec(t_list *tb_lst);
@@ -51,16 +50,15 @@ int	ft_checkfile(t_list *tb_lst);
 void	ft_execvecmd(char **cmd, char **path, char **tmp_env);
 void	ft_execvepath(char **path, char **tmp_env);
 void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env);
-// void	ft_parent(t_list *tb_lst, int i , int *fd_tmp_read, int nbr_cmd);
 void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read);
 
 /*ft_execute*/
 void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read, int nbr_cmd);
-// int		ft_check_buildin(char **cmd);
+int		ft_check_buildin(char **cmd);
 void	ft_waitpid(t_list *tb_lst_cpy);
 
-// void	ft_prterr(int mode);
 void	ft_prterr(int mode, char *txt);
+// void	ft_prterr(int mode);
 void	ft_prterrexec(char *str, int errno, int mode);
 
 int	ft_findchar(char *s1, char s2);
