@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:38:54 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 20:01:53 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,40 +63,47 @@ void	ft_prtcmd(t_list *tb_lst, int i)
 
 }
 
-// void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , t_dict *dict)
-void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env)
+void	ft_parent(t_minishell *ms, t_list *tb_lst)
 {
 	t_table	*table;
 	t_data exec_data;
-	(void) env;
 	// dprintf(2, "Hello from parent\n");
 	table = (t_table *)(tb_lst->data);
-	// ft_prtcmd(tb_lst, table->i);
-	exec_data = (t_data )(table->exec_data);
-	*fd_tmp_read = dup(exec_data.fd_pipe[0]); // another process can read from previos process
-	// printf("tmp_read : %d\n" , data->fd_tmp_read);
-	if (nbr_cmd > 1)
+	exec_data = (t_data)(table->exec_data);
+	table->fd_tmp = dup(exec_data.fd_pipe[0]); // another process can read from previos process
+	if (ms->nbr_cmd > 1)
 	{
 		close(exec_data.fd_pipe[0]);
 		close(exec_data.fd_pipe[1]);
 	}
-
-	// if (exec_data.fd_in != 0)
-	// 	close(exec_data.fd_in);
-	// if (exec_data.fd_out != 1)
-	// 	close(exec_data.fd_out);
-
-	// ft_buildin_parent(table->cmd, env);
-	// if (data_exec.pid != 0) // espectialy parent
-	// dprintf(2, "c1\n");
-	// ft_waitpid(tb_lst);
-	// export
-	// cd
-	// unset
-	// exit
 }
 
-void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
+
+void	ft_parent_builtin(t_list *tb_lst, char **env, int nbr_cmd)
+{
+	t_table	*table;
+	// t_dict	*tmp_env;
+
+	table = (t_table *)(tb_lst->data);
+	ft_getfd(tb_lst);
+	if (table->exec_status == 2)
+	{
+		if (ft_strcmp(table->cmd[0], "cd") == 0)
+			ft_cd(table->cmd, dict);
+		if (ft_strcmp(table->cmd[0], "pwd") == 0)
+			ft_pwd();
+		if (ft_strcmp(table->cmd[0], "export") == 0)
+			ft_export(table->cmd,  dict);
+		if (ft_strcmp(table->cmd[0], "env") == 0)
+			ft_env(ms->dict);
+		if (ft_strcmp(table->cmd[0], "unset") == 0)
+			ft_unset(table->cmd, &ms->dict);
+		if (ft_strcmp(table->cmd[0], "exit") == 0)
+			ft_exit(table->cmd, ms->dict);
+	}
+}
+
+void	ft_child(t_list *tb_lst, char **env, int nbr_cmd)
 {
 	// char **cmd;
 	t_table	*table;
@@ -106,26 +113,13 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	// check unset path
 	table = (t_table *)(tb_lst->data);
 	exec_data = (t_data *)(&(table->exec_data));
-	// int i = -1;
-	// while (table->tmp_env[++i])
-	// 	dprintf(2, "env[%d] : %s\n", i, table->tmp_env[i]);
-	// printf("findpath1\n");
-	// exit(0);
 	path = ft_findpath(env); // fixed from env to t_dict *dict
-	// exit(0);
-	// dprintf(2, "Hello from child\n");
-	// ft_prtcmd(tb_lst, table->i);
-	// dprintf(2, "fd_here_child_1 : %d\n", table->fd_heredoc);
 	ft_getfd(tb_lst);
-	// dprintf(2, "fd_here_child_2 : %d\n", table->fd_heredoc);
+
 	if (exec_data->fd_in == -1)
 		return ;
-	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
-	// dprintf(2, "fd_inchild_2 : %d\n", exec_data->fd_in);
-	// dprintf(2, "fd_outchild_2 : %d\n", exec_data->fd_out);
-	// ft_buildin_child(table->cmd, env, exec_data->fd_out);
-	// if (table->fd_heredoc > 2)
-	// 	close(table->fd_heredoc);
+	ft_dup2(table->i, tb_lst, table->fd_tmp, nbr_cmd);
+
 	if (nbr_cmd > 1)
 	{
 		close(exec_data->fd_pipe[0]);
@@ -136,13 +130,25 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	else
 		ft_execvecmd(table->cmd, path, env);
 
-	// if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
-	// 	ft_execvepath(table->cmd, table->tmp_env);
-	// else
-	// 	ft_execvecmd(table->cmd, path, table->tmp_env);
 }
+void	ft_do_nothing(t_list *tb_lst, int nbr_cmd, int status) // 2
+{
+	t_table	*table;
+	t_data	*exec_data;
 
-/* void	ft_child(t_list *tb_lst, int nbr_cmd, t_dict *dict, int *fd_tmp_read)
+	table = (t_table *)(tb_lst->data);
+	exec_data = (t_data *)(&(table->exec_data));
+	if (nbr_cmd > 1)
+	{
+		if(status == 1)
+			table->fd_tmp = dup(exec_data->fd_pipe[0]);
+		close(exec_data->fd_pipe[0]);
+		close(exec_data->fd_pipe[1]);
+		// if(status == 0)
+		// 	exit(exit_status);
+	}
+}
+/* void	ft_child(t_list *tb_lst, int nbr_cmd, t_dict *dict, int *table->fd_tmp)
 {
 	char **cmd;
 	t_table	*table;
@@ -166,10 +172,10 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	// dprintf(2, "fd_here_child_2 : %d\n", table->fd_heredoc);
 	if (exec_data->fd_in == -1)
 		return ;
-	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
+	ft_dup2(table->i, tb_lst, table->fd_tmp, nbr_cmd);
 	// dprintf(2, "fd_inchild_2 : %d\n", exec_data->fd_in);
 	// dprintf(2, "fd_outchild_2 : %d\n", exec_data->fd_out);
-	// ft_buildin_child(table->cmd, env, exec_data->fd_out);
+	// ft_builtin_child(table->cmd, env, exec_data->fd_out);
 	// if (table->fd_heredoc > 2)
 	// 	close(table->fd_heredoc);
 	if (nbr_cmd > 1)

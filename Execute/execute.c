@@ -3,36 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:51:13 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:58:45 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_check_buildin(char **cmd)
+int ft_check_builtin(char **cmd)
 {
+	//check if command is not builtin function return 0
+	// but if it's builtin function return 1 or 2
+	// 1 mean execute in child process
+	// 2 mean execute in parent process
 	if (ft_strcmp(cmd[0], "echo") == 0)
-		return (EXIT_SUCCESS);
-	if (ft_strcmp(cmd[0], "cd") == 0)
-		return (EXIT_SUCCESS);
-	if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (EXIT_SUCCESS);
-	if (ft_strcmp(cmd[0], "export") == 0)
-		return (EXIT_SUCCESS);
-	if (ft_strcmp(cmd[0], "unset") == 0)
-		return (EXIT_SUCCESS);
+		return (1);
 	if (ft_strcmp(cmd[0], "env") == 0)
-		return (EXIT_SUCCESS);
+		return (1);
+	if (ft_strcmp(cmd[0], "pwd") == 0)
+		return (1);
+	if (!ft_strcmp(cmd[0], "export") && !cmd[1])
+		return (1);
+	if (!ft_strcmp(cmd[0], "export") && cmd[1])
+		return (2);
+	if (ft_strcmp(cmd[0], "cd") == 0)
+		return (2);
+	if (ft_strcmp(cmd[0], "unset") == 0)
+		return (2);
 	if (ft_strcmp(cmd[0], "exit") == 0)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+		return (2);
+	return (0);
 }
 
 /*close fd after dup */
-void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
+void ft_dup2(int i, t_list *tb_lst, int *table->fd_tmp, int nbr_cmd)
 {
 	t_table *table;
 	t_data *exec_data;
@@ -67,13 +73,13 @@ void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 		// dprintf(2 , "last cmd\n");
 		// printf("fd_out : %d\n", exec_data->fd_out);
 		exec_data->fd_out = STDOUT_FILENO; // for test
-		dup2(*fd_tmp_read, STDIN_FILENO);
+		dup2(*table->fd_tmp, STDIN_FILENO);
 		dup2(exec_data->fd_out, STDOUT_FILENO);
 	}
 	else //btw
 	{
 		// printf("btw cmd\n");
-		dup2(*fd_tmp_read, STDIN_FILENO);
+		dup2(*table->fd_tmp, STDIN_FILENO);
 		dup2(exec_data->fd_pipe[1], STDOUT_FILENO);
 	}
 }
@@ -97,6 +103,7 @@ void ft_initdata_exec(t_list *tb_lst, char **env)
 		table->exec_data.nbr_infile = ft_cnt_infile(tb_lst);
 		table->exec_data.nbr_out_append = 0;
 		table->exec_data.nbr_heredoc = ft_cnt_heredoc(tb_lst);
+		table->fd_tmp = 0;
 		dprintf(2, "[%d] heredoc : %d\n" , i_cnt, table->exec_data.nbr_heredoc);
 		// table->exec_data.fd_heredoc = 0;
 		// table->
@@ -119,61 +126,63 @@ void ft_waitpid(t_list *tb_lst_cpy)
 	}
 }
 // void ft_execute(t_list *tb_lst, t_dict *dict, int nbr_cmd)
-void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
+void ft_execute(t_minishell *ms, t_list *tb_lst, int nbr_cmd)
 {
-	int		fd_tmp_read;
 	t_table	*table;
 	t_data	*data_exec;
 	t_list	*tb_lst_cpy = NULL;
-	int i = 0;
+	table->i = 0;
 
-	fd_tmp_read = 0;
 	// (void)dict;
 	tb_lst_cpy = tb_lst;
-	while (tb_lst)
+	while (tb_lst && table->i < nbr_cmd)
 	{
 		// dprintf(2, "tb_lst_1\n");
 		table = (t_table *)(tb_lst->data);
 		data_exec = (t_data *)(&(table->exec_data));
-		if (i != nbr_cmd -1 )
+		if (table->i != nbr_cmd -1)
 		{
 			if (pipe(data_exec->fd_pipe) == -1)
 				ft_prterr(CANNT_PIPE, "Pipe");
 		}
-		if (ft_check_buildin(table->cmd) == EXIT_FAILURE)
-			data_exec->pid = fork();
+		table->exec_status = ft_check_builtin(table->cmd);
+		data_exec->pid = fork();
 		if (data_exec->pid == -1)
 			ft_prterr(CANNT_FORK, "Fork");
-		if (data_exec->pid == 0 && ft_check_buildin(table->cmd) == EXIT_FAILURE)
-			ft_child(tb_lst, nbr_cmd, env, &fd_tmp_read);
+		if (data_exec->pid == 0 && ft_check_builtin(table->cmd) == EXIT_FAILURE)
+			branch_child(ms, tb_lst, ms->env);
 		if (data_exec->pid > 0)
-			ft_parent(tb_lst, &fd_tmp_read, nbr_cmd, env);
-		// if (data_exec->pid == 0 && ft_check_buildin(table->cmd) == EXIT_FAILURE)
-		// 	ft_child(tb_lst, nbr_cmd, dict, &fd_tmp_read);
-		// if (data_exec->pid > 0)
-		// 	ft_parent(tb_lst, &fd_tmp_read, nbr_cmd, dict);
+			branch_parent(ms, tb_lst);
+		table->i++;
 		tb_lst = tb_lst->next;
 	}
 	// close(data_exec->fd_out);
 	// close(data_exec->fd_in);
 	ft_waitpid(tb_lst_cpy);
 }
-// while (++id < main->cmd_nbr)
-// 	{
-// 		get_command(main, tmp);
-// 		if (id != main->cmd_nbr - 1)
-// 		{
-// 			if (pipe(main->pfd) == -1)
-// 				return (err_msg("Pipe error: "));
-// 		}
-// 		main->do_cmd = check_builtin(tmp);
-// 		main->pid[id] = fork();
-// 		if (main->pid[id] == -1)
-// 			return (err_msg("Fork error: "));
-// 		else if (main->pid[id] == 0)
-// 			child_process(main, tmp, id);
-// 		else
-// 			parent_process(main, tmp);
-// 		free_2d(tmp->command);
-// 		tmp = tmp->next;
-// 	}
+
+void branch_parent(t_minishell *ms, t_list *tb_lst)
+{
+	t_table	*table;
+
+	table = (t_table *)(tb_lst->data);
+	if (!table->exec_status)
+		ft_parent(ms, tb_lst);
+	else if (table->exec_status == 2)
+		ft_parent_builtin(ms, tb_lst);
+	else //table->exec_status == 1
+		ft_do_nothing(ms, tb_lst);
+}
+
+void branch_child(t_list *tb_lst, char **env, int nbr_cmd)
+{
+	t_table	*table;
+
+	table = (t_table *)(tb_lst->data);
+	if (!table->exec_status)
+		ft_child(ms, tb_lst);
+	else if (table->exec_status == 1)
+		ft_child_builtin(ms, tb_lst);
+	else //table->exec_status == 2
+		ft_do_nothing(ms, tb_lst);
+}

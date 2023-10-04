@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:18:58 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:55:49 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ typedef struct s_data
 	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
-	// int		fd_tmp_read;
+	// int		table->fd_tmp;
 	int		fd_pipe[2];
 
 	int		nbr_infile;
@@ -147,8 +147,10 @@ typedef struct s_table
 	t_list	*rdr; // redirect
 	t_data	exec_data;
 
+	int		fd_tmp;
 	int		fd_in;
 	int		fd_out;
+	int		exec_status;
 
 	char	**cmd;
 	int		i;
@@ -171,5 +173,8 @@ typedef struct	s_minishell
 	struct sigaction	sigint;
 	struct sigaction	sigquit;
 }				t_minishell;
+
+void branch_parent(t_minishell *ms, t_list *tb_lst);
+void branch_child(t_minishell *ms, t_list *tb_lst);
 
 #endif
