@@ -6,7 +6,7 @@
 #    By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/10/04 12:37:14 by pnamwayk         ###   ########.fr        #
+#    Updated: 2023/10/04 13:47:18 by pnamwayk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 
 # FLAGS = -Wall -Wextra -Werror
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
 RM = rm -f
 

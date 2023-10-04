@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 07:54:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:46:25 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,7 @@ typedef struct s_data
 
 	int		nbr_infile;
 	int		nbr_out_append;
-	int		nbr_cmd;
-	int		nbr_heredoc;
+	int		nbr_heredoc; //จน heredoc file
 
 	// int		fd_heredoc;
 } t_data;
@@ -146,12 +145,15 @@ typedef struct s_data
 typedef struct s_table
 {
 	t_list	*rdr; // redirect
-	t_data	exec_data;
+	// t_data	exec_data;
+
+	int		fd_in;
+	int		fd_out;
+	
 	char	**cmd;
 	int		i;
 	int		fd_heredoc;
 	int		nbr_heredoc;
-	// int		nbr_cmd;
 	char	**tmp_env;
 } t_table;
 

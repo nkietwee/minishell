@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:47:57 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void ft_initdata_exec(t_list *tb_lst, char **env)
 		table->exec_data.nbr_infile = ft_cnt_infile(tb_lst);
 		table->exec_data.nbr_out_append = 0;
 		table->exec_data.nbr_heredoc = ft_cnt_heredoc(tb_lst);
+		dprintf(2, "[%d] heredoc : %d\n" , i_cnt, table->exec_data.nbr_heredoc);
 		// table->exec_data.fd_heredoc = 0;
 		// table->
 		i_cnt++;

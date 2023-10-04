@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:43:57 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 	i = 0;
 	// ft_prt_heredoc(tb_lst);
 	fd_heredoc = open("../tmpfile", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	// printf("fd_heredoc : %d\n", fd_heredoc);
+	printf("fd_heredoc : %d\n", fd_heredoc);
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
@@ -80,7 +80,10 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 		{
 			rdr = (t_rdr *)(rdr_lst->data);
 			if (rdr->type == HEREDOC)
+			{
 				rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
+				dprintf(2, "rdr->file : %s\n" , rdr->file);
+			}
 			else
 				break;
 			while (1)
