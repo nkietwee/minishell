@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 01:52:32 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 01:35:02 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {

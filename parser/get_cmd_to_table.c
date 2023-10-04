@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_to_table.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 16:05:36 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:04 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static size_t	count_cmd_n_arg(t_list *tk_lst)
 {

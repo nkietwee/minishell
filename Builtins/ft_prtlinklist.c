@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prtlinklist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:25:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:21:31 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	ft_prtdict_value(t_dict_value	**tmp_value)
 {

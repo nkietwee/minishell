@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 00:48:00 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:23:17 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:39:33 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {
@@ -19,7 +19,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	size_t	j;
 	size_t	malloc_len;
 
-	if (start > ft_strlen(s))
+	if (start > (unsigned int)ft_strlen(s))
 		malloc_len = 0;
 	else if ((ft_strlen(s) - start) >= len)
 		malloc_len = len;

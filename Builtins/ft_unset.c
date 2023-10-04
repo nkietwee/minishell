@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:22:20 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:37:55 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 // t_dict	*ft_lstdelete_node(t_dict **dict, int index)
 // {
@@ -65,7 +65,7 @@ void	ft_lstdelete_node(t_dict **dict, int index)
 {
 	t_dict *head;
 	t_dict *start;
-	t_dict *tmp;
+	// t_dict *tmp;
 	t_dict *tmp_2;
 	t_dict *free_node;
 
@@ -131,7 +131,7 @@ void	ft_unset(char **cmd, t_dict **dict)
 {
 	int		i;
 	int		index;
-	t_dict	*tmp;
+	// t_dict	*tmp;
 
 	i = 1;
 	while (cmd[i])

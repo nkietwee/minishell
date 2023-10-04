@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draft_execute.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/01 02:37:23 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 /* left loop in case it many pipe (It have outfile?)*/
 void	ft_dup2(int i, int j, t_data *data)

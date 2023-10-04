@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:32:39 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:12:16 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:37:36 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	ft_isrepeat(char *key, t_dict *dict)
 {
@@ -50,8 +50,8 @@ void	ft_update_env(char *old_pwd, t_dict *dict)
 }
 void	ft_cd(char **cmd, t_dict *dict)
 {
-	char	pre_path[128];
-	char	*tmp;
+	// char	pre_path[128];
+	// char	*tmp;
 	char	*old_pwd;
 	int		errno;
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
+#    By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/10/03 16:16:56 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/10/04 12:37:14 by pnamwayk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 RM = rm -f
 
-INC = minishell.h
+INC = Include/
 
 BUILTINS_PATH = Builtins/
 EXECUTE_PATH = Execute/
@@ -95,8 +95,8 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%o:%c $(INC)
-	$(CC) $(FLAGS) -c $< -o $@
+%o:%c
+	$(CC) $(FLAGS) -c -I $(INC) $< -o $@
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)

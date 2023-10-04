@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cnt_execute.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:07:36 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 // int	ft_cnt_heredoc(t_list *tb_list)
 int	ft_cnt_heredoc(t_list *tb_list)

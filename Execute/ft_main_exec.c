@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_main_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:14:59 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 08:18:31 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:38:33 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	ft_buildin_onecmd(t_minishell *ms)
 {
 	t_table	*table;
-	t_dict	*tmp_env;
+	// t_dict	*tmp_env;
 
 	table = (t_table *)(ms->tb_lst->data);
 	if (ft_check_buildin(table->cmd) == EXIT_SUCCESS)

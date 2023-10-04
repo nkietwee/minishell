@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 08:16:31 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:38:54 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	ft_execvecmd(char **cmd, char **path, char **env)
 {
@@ -68,7 +68,7 @@ void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env)
 {
 	t_table	*table;
 	t_data exec_data;
-
+	(void) env;
 	// dprintf(2, "Hello from parent\n");
 	table = (t_table *)(tb_lst->data);
 	// ft_prtcmd(tb_lst, table->i);
@@ -98,7 +98,7 @@ void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env)
 
 void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 {
-	char **cmd;
+	// char **cmd;
 	t_table	*table;
 	t_data	*exec_data;
 	char	**path;

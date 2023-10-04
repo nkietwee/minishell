@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 15:48:06 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:20:49 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:37:43 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	ft_swap(t_dict *dict)
 {
@@ -79,7 +79,7 @@ void	ft_checkname(char **cmd)
 void	ft_export(char **cmd, t_dict *dict)
 {
 	int	len;
-	t_dict *tmp_export=NULL;
+	// t_dict *tmp_export=NULL;
 
 	ft_checkname(cmd); //check first character of variable(key)
 	len = ft_cntstr(cmd);
