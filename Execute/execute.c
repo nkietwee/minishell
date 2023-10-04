@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 15:47:57 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:51:13 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 	t_table	*table;
 	t_data	*data_exec;
 	t_list	*tb_lst_cpy = NULL;
+	int i = 0;
 
 	fd_tmp_read = 0;
 	// (void)dict;
@@ -134,7 +135,7 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 		// dprintf(2, "tb_lst_1\n");
 		table = (t_table *)(tb_lst->data);
 		data_exec = (t_data *)(&(table->exec_data));
-		if (nbr_cmd > 1)
+		if (i != nbr_cmd -1 )
 		{
 			if (pipe(data_exec->fd_pipe) == -1)
 				ft_prterr(CANNT_PIPE, "Pipe");
@@ -157,3 +158,22 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 	// close(data_exec->fd_in);
 	ft_waitpid(tb_lst_cpy);
 }
+// while (++id < main->cmd_nbr)
+// 	{
+// 		get_command(main, tmp);
+// 		if (id != main->cmd_nbr - 1)
+// 		{
+// 			if (pipe(main->pfd) == -1)
+// 				return (err_msg("Pipe error: "));
+// 		}
+// 		main->do_cmd = check_builtin(tmp);
+// 		main->pid[id] = fork();
+// 		if (main->pid[id] == -1)
+// 			return (err_msg("Fork error: "));
+// 		else if (main->pid[id] == 0)
+// 			child_process(main, tmp, id);
+// 		else
+// 			parent_process(main, tmp);
+// 		free_2d(tmp->command);
+// 		tmp = tmp->next;
+// 	}

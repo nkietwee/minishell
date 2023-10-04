@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getfile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:46:22 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:19:11 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	ft_accessfile(char *file, int type)
 int	ft_getfd_in(t_list *tb_lst)
 {
 	int		fd_in;
-	int		i;
+	// int		i;
 	t_table *table;
 	t_rdr	*rdr;
 	t_list	*rdr_lst;
 
-	i = 0;
+	// i = 0;
 	table = (t_table *)(tb_lst->data);
 	rdr_lst = (t_list *)(table->rdr);
 	while (rdr_lst)

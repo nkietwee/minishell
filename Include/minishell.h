@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 16:46:25 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:18:58 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,11 @@ typedef struct s_data
 typedef struct s_table
 {
 	t_list	*rdr; // redirect
-	// t_data	exec_data;
+	t_data	exec_data;
 
 	int		fd_in;
 	int		fd_out;
-	
+
 	char	**cmd;
 	int		i;
 	int		fd_heredoc;

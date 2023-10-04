@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prtlinklist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:25:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:07:06 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	ft_prtdict(t_dict	*dict)
 
 void	ft_prtexport(t_dict	*dict)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	while (dict)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);

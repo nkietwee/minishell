@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:37:55 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:07:19 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ void	ft_lstdelete_node(t_dict **dict, int index)
 	t_dict *head;
 	t_dict *start;
 	// t_dict *tmp;
-	t_dict *tmp_2;
+	// t_dict *tmp_2;
 	t_dict *free_node;
 
 	head = (*dict);
 	start = (*dict);
-	tmp_2 = (*dict);
+	// tmp_2 = (*dict);
 	free_node = (*dict);
 	// 	if (index == 0)
 	// {

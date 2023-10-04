@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 17:03:35 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:06:54 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	ft_find_repeat(char *find, t_dict *dict)
 
 void	ft_instead_value(char **find, t_dict *dict)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	while (dict)
 	{
 		if (ft_strcmp(dict->tmp_dict->key, find[0]) == 0)

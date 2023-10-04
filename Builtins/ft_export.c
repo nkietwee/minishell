@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 15:48:06 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:37:43 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:06:37 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	ft_swap(t_dict *dict)
 
 void	ft_lstascend(t_dict *dict)
 {
-	int	len;
+	// int	len;
 	t_dict *head;
 	t_dict *head2;
 
-	len = ft_lstsize_dict(dict);
+	// len = ft_lstsize_dict(dict);
 	head2 = dict; // for print
 	int	i = 0;
 	head = dict;

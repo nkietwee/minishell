@@ -165,14 +165,14 @@ int	main(int ac, char **av, char **env)
 		// print_token(ms);
 		if (paser(&ms))
 			continue;
-		print_table(ms);
-		print_token(ms);
-		// t_dict *dict;
-		print_dict(ms.dict);
+		// print_table(ms);
+		// print_token(ms);
+		// // t_dict *dict;
+		// print_dict(ms.dict);
 		// exit(0);
-
-		// ft_mainexec(&ms);
-		// clear_tb_n_tk(&ms);
+		if ()
+		ft_mainexec(&ms);
+		clear_tb_n_tk(&ms);
 	}
 	clear_minishell(&ms);
 	return (0);
