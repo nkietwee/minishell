@@ -153,7 +153,10 @@ int	main(int ac, char **av, char **env)
 		line = readline(prompt_str);
 		free(prompt_str);
 		if (line == NULL)
+		{
+			dprintf(2, "break\n");
 			break ;
+		}
 		if (!*line)
 		{
 			free(line);
