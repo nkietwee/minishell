@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:31:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/09/29 23:49:18 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 08:09:43 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ char	**ft_findpath(char **env)
 	int		i;
 	char	**path;
 
-	i = 0;
+	i = -1;
+	// while (env[++i])
+	// 	dprintf(2, "env[%d] : %s\n", i, env[i]);
 	// printf("findpath1\n");
+	// exit(0);
+	i = 0;
 	while (1) // protect in case unset path
 	{
 		if (env[i][0] == 'P' && env[i][1] == 'A' \

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:04:25 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 08:16:31 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_prtcmd(t_list *tb_lst, int i)
 
 }
 
+// void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , t_dict *dict)
 void	ft_parent(t_list *tb_lst,int *fd_tmp_read, int nbr_cmd , char **env)
 {
 	t_table	*table;
@@ -103,9 +104,15 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 	char	**path;
 
 	// check unset path
-	path = ft_findpath(env); // fixed from env to t_dict *dict
 	table = (t_table *)(tb_lst->data);
 	exec_data = (t_data *)(&(table->exec_data));
+	// int i = -1;
+	// while (table->tmp_env[++i])
+	// 	dprintf(2, "env[%d] : %s\n", i, table->tmp_env[i]);
+	// printf("findpath1\n");
+	// exit(0);
+	path = ft_findpath(env); // fixed from env to t_dict *dict
+	// exit(0);
 	// dprintf(2, "Hello from child\n");
 	// ft_prtcmd(tb_lst, table->i);
 	// dprintf(2, "fd_here_child_1 : %d\n", table->fd_heredoc);
@@ -128,4 +135,50 @@ void	ft_child(t_list *tb_lst, int nbr_cmd, char **env, int *fd_tmp_read)
 		ft_execvepath(table->cmd, env);
 	else
 		ft_execvecmd(table->cmd, path, env);
+
+	// if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
+	// 	ft_execvepath(table->cmd, table->tmp_env);
+	// else
+	// 	ft_execvecmd(table->cmd, path, table->tmp_env);
 }
+
+/* void	ft_child(t_list *tb_lst, int nbr_cmd, t_dict *dict, int *fd_tmp_read)
+{
+	char **cmd;
+	t_table	*table;
+	t_data	*exec_data;
+	char	**path;
+
+	// check unset path
+	table = (t_table *)(tb_lst->data);
+	exec_data = (t_data *)(&(table->exec_data));
+	// int i = -1;
+	// while (table->tmp_env[++i])
+	// 	dprintf(2, "env[%d] : %s\n", i, table->tmp_env[i]);
+	// printf("findpath1\n");
+	// exit(0);
+	path = ft_findpath(table->tmp_env); // fixed from env to t_dict *dict
+	// exit(0);
+	// dprintf(2, "Hello from child\n");
+	// ft_prtcmd(tb_lst, table->i);
+	// dprintf(2, "fd_here_child_1 : %d\n", table->fd_heredoc);
+	ft_getfd(tb_lst);
+	// dprintf(2, "fd_here_child_2 : %d\n", table->fd_heredoc);
+	if (exec_data->fd_in == -1)
+		return ;
+	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
+	// dprintf(2, "fd_inchild_2 : %d\n", exec_data->fd_in);
+	// dprintf(2, "fd_outchild_2 : %d\n", exec_data->fd_out);
+	// ft_buildin_child(table->cmd, env, exec_data->fd_out);
+	// if (table->fd_heredoc > 2)
+	// 	close(table->fd_heredoc);
+	if (nbr_cmd > 1)
+	{
+		close(exec_data->fd_pipe[0]);
+		close(exec_data->fd_pipe[1]);
+	}
+	if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
+		ft_execvepath(table->cmd, table->tmp_env);
+	else
+		ft_execvecmd(table->cmd, path, table->tmp_env);
+} */

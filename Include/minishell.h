@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:29:15 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 07:54:01 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_table
 	int		fd_heredoc;
 	int		nbr_heredoc;
 	// int		nbr_cmd;
-	char	**env;
+	char	**tmp_env;
 } t_table;
 
 typedef struct	s_minishell

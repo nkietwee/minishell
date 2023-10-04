@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:14:59 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:33:05 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 08:18:31 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	ft_mainexec(t_minishell *ms)
 	if (ms->nbr_cmd == 0 && table->nbr_heredoc > 0)
 		return;
 	// ft_initdata_exec(ms->tb_lst);
-	ft_initdata_exec(ms->tb_lst);
-	// ft_initdata_exec(ms->tb_lst , ms->env);
-	// dprintf(2, "main_exec\n");
+	// ft_initdata_exec(ms->tb_lst);
+	ft_initdata_exec(ms->tb_lst , ms->env);
+	// dprintf(2, "env : %s\n", table->tmp_env[0] );
 	ft_buildin_onecmd(ms);
 	// dprintf(2, "nbr_cmd : %d\n" , ms->nbr_cmd);
 	ft_execute(ms->tb_lst, ms->env, ms->nbr_cmd);
+	// ft_execute(ms->tb_lst, ms->dict, ms->nbr_cmd);
 
 }

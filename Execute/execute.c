@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:33:52 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 08:18:05 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ void ft_dup2(int i, t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 	}
 }
 
-// void ft_initdata_exec(t_list *tb_lst, char **env)
-void ft_initdata_exec(t_list *tb_lst)
+// void ft_initdata_exec(t_list *tb_lst)
+void ft_initdata_exec(t_list *tb_lst, char **env)
 {
 	t_table *table;
 	int	i_cnt = 0;
 	table = (t_table *)(tb_lst->data);
+	table->tmp_env = env;
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
@@ -97,6 +98,7 @@ void ft_initdata_exec(t_list *tb_lst)
 		table->exec_data.nbr_out_append = 0;
 		table->exec_data.nbr_heredoc = ft_cnt_heredoc(tb_lst);
 		// table->exec_data.fd_heredoc = 0;
+		// table->
 		i_cnt++;
 		tb_lst = tb_lst->next;
 	}
@@ -115,6 +117,7 @@ void ft_waitpid(t_list *tb_lst_cpy)
 		tb_lst_cpy = tb_lst_cpy->next;
 	}
 }
+// void ft_execute(t_list *tb_lst, t_dict *dict, int nbr_cmd)
 void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 {
 	int		fd_tmp_read;
@@ -123,6 +126,7 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 	t_list	*tb_lst_cpy = NULL;
 
 	fd_tmp_read = 0;
+	// (void)dict;
 	tb_lst_cpy = tb_lst;
 	while (tb_lst)
 	{
@@ -142,6 +146,10 @@ void ft_execute(t_list *tb_lst, char **env, int nbr_cmd)
 			ft_child(tb_lst, nbr_cmd, env, &fd_tmp_read);
 		if (data_exec->pid > 0)
 			ft_parent(tb_lst, &fd_tmp_read, nbr_cmd, env);
+		// if (data_exec->pid == 0 && ft_check_buildin(table->cmd) == EXIT_FAILURE)
+		// 	ft_child(tb_lst, nbr_cmd, dict, &fd_tmp_read);
+		// if (data_exec->pid > 0)
+		// 	ft_parent(tb_lst, &fd_tmp_read, nbr_cmd, dict);
 		tb_lst = tb_lst->next;
 	}
 	// close(data_exec->fd_out);

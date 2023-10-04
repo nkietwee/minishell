@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 02:58:41 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 00:34:10 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/04 07:57:19 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	ft_unset(char **cmd, t_dict **dict);
 /* env */
 t_dict			*ft_getenv(char **env);
 t_dict_value**	ft_getvalue_env(char **env);
-t_dict_value **ft_get_value(char **str, t_dict *dict, int start);
+t_dict_value **ft_get_value(char **str, t_dict *dict);
+// t_dict_value **ft_get_value(char **str, t_dict *dict, int start);
 
 /*export*/
 void	ft_export(char **cmd, t_dict *dict);
