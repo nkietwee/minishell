@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/05 00:42:53 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,16 @@ int	ft_cnt_outfile(t_list *table_list)
 	i = 0;
 	table = (t_table *)(table_list->data);
 	rdr_lst = (t_list *)(table->rdr);
+	dprintf(2, "ft_cnt_outfile\n");
 	while (rdr_lst)
 	{
 		rdr = (t_rdr *)(rdr_lst->data);
+		ft_prt_type(rdr->type);
 		if (rdr->type == OUTFILE || rdr->type == APPEND)
+		{
 			i++;
+			dprintf(2, "hello\n");
+		}
 		rdr_lst = rdr_lst->next;
 	}
 	return (i);

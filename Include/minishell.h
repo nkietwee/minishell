@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 19:55:49 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/05 02:15:28 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,15 +129,14 @@ typedef struct s_rdr
 
 typedef struct s_data
 {
-	pid_t	pid;
-	int		fd_in;
-	int		fd_out;
+	// pid_t	pid;
+	// int		fd_in;
+	// int		fd_out;
 	// int		table->fd_tmp;
-	int		fd_pipe[2];
+	// int		fd_pipe[2];
 
-	int		nbr_infile;
 	int		nbr_out_append;
-	int		nbr_heredoc; //จน heredoc file
+	// int		nbr_heredoc; //จน heredoc file
 
 	// int		fd_heredoc;
 } t_data;
@@ -148,6 +147,7 @@ typedef struct s_table
 	t_data	exec_data;
 
 	int		fd_tmp;
+	int		fd_pipe[2];
 	int		fd_in;
 	int		fd_out;
 	int		exec_status;
@@ -156,6 +156,8 @@ typedef struct s_table
 	int		i;
 	int		fd_heredoc;
 	int		nbr_heredoc;
+	int		nbr_infile;
+	int		nbr_outfile;
 	char	**tmp_env;
 } t_table;
 
@@ -168,10 +170,11 @@ typedef struct	s_minishell
 	int		err_code;
 	int		exit_code;
 	int		nbr_cmd;
+	pid_t	*pid;
 	// int		nbr_heredoc;
 	char	**env;
-	struct sigaction	sigint;
-	struct sigaction	sigquit;
+	// struct sigaction	sigint;
+	// struct sigaction	sigquit;
 }				t_minishell;
 
 void branch_parent(t_minishell *ms, t_list *tb_lst);

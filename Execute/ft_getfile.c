@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getfile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:46:22 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:19:11 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/05 01:31:27 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,25 +119,23 @@ int	ft_getfd_out(t_list *tb_lst)
 }
 
 /* don't fotget check name of file */
-void	ft_getfd(t_list *tb_lst)
+void	ft_getfd(t_minishell *ms, t_list *tb_lst)
 {
-	int		nbr_infile;
-	int		nbr_outfile;
+	// int		nbr_infile;
+	// int		nbr_outfile;
 	t_table	*table;
-	t_data	*exec_data;
 
 	table = (t_table *)(tb_lst->data);
-	exec_data =  &table->exec_data;
-	nbr_infile = ft_cnt_infile(tb_lst);
-	if (nbr_infile == 0 && table->nbr_heredoc == 0) // no infile
-		exec_data->fd_in = STDIN_FILENO;
-	else
-		exec_data->fd_in = ft_getfd_in(tb_lst);
-	nbr_outfile = ft_cnt_outfile(tb_lst);
-	if (nbr_outfile == 0) // no outfile
-		exec_data->fd_out = STDOUT_FILENO;
-	else
-		exec_data->fd_out = ft_getfd_out(tb_lst);
-	// dprintf(2 , "fd_in_getfd__ :  %d\n", exec_data->fd_in);
-	// dprintf(2 , "fd_out_getfd__ :  %d\n", exec_data->fd_out);
+	// table->nbr_infile = ft_cnt_infile(tb_lst);
+	if (table->nbr_infile || table->nbr_heredoc) // no infile
+		table->fd_in = ft_getfd_in(tb_lst);
+	else if (table->i != 0)
+		table->fd_in = table->fd_tmp;
+	// nbr_outfile = ft_cnt_outfile(tb_lst);
+	if (table->nbr_outfile) // no outfile
+		table->fd_out = ft_getfd_out(tb_lst);
+	else if (table->i != ms->nbr_cmd - 1 && ms->nbr_cmd > 1)
+		table->fd_out = table->fd_pipe[1];
+	// dprintf(2 , "%d nbr_outfile:  %d fd_in_getfd__ :  %d\n", table->i, nbr_outfile, exec_data->fd_in);
+	// dprintf(2 , "%d nbr_outfile:  %d fd_out_getfd__ :  %d\n", table->i, nbr_outfile, exec_data->fd_out);
 }
