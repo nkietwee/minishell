@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 02:16:43 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:12:53 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,17 @@ void ft_dup2(t_minishell *ms, t_list *tb_lst)
 	// t_data *exec_data;
 
 	table = (t_table *)(tb_lst->data);
-	// exec_data = (t_data *)(&(table->exec_data));
-	// dprintf(2, "fd_in = %d  fd_out = %d\n",table->fd_in, table->fd_out);
 	//infile
 	if (table->nbr_infile)
 		dup2(table->fd_in, STDIN_FILENO);
 	else if (table->i != 0)
 		dup2(table->fd_tmp, STDIN_FILENO);
+
 	//outfile
 	if (table->nbr_outfile)
 		dup2(table->fd_out, STDOUT_FILENO);
 	else if (table->i != ms->nbr_cmd - 1 && ms->nbr_cmd > 1)
 		dup2(table->fd_pipe[1], STDOUT_FILENO);
-	// dprintf(2, "fd_in = %d  fd_out = %d\n",table->fd_in, table->fd_out);
-
-
 }
 
 void ft_initdata_exec(t_list *tb_lst, char **env)
@@ -71,19 +67,9 @@ void ft_initdata_exec(t_list *tb_lst, char **env)
 	{
 		table = (t_table *)(tb_lst->data);
 		table->i = i_cnt;
-		// dprintf(2, "cmd[%d] : %s----------------------\n" , table->i, table->cmd[0]);
-		// table->pid = 0;
-		// table->fd_in = 0;
-		// table->fd_out = 0;
-		// table->fd_pipe[0] = 0;
-		// table->fd_pipe[1] = 0;
 		table->nbr_infile = ft_cnt_infile(tb_lst);
 		table->nbr_outfile = ft_cnt_outfile(tb_lst);
 		table->nbr_heredoc = ft_cnt_heredoc(tb_lst);
-		// dprintf(2, "[%d] nbr_infile : %d\n" , table->i, table->nbr_infile);
-		// table->exec_data.nbr_out_append = 0;
-		// dprintf(2, "[%d] nbr_outfile : %d\n" , table->i, table->nbr_outfile);
-		// dprintf(2, "[%d] heredoc : %d\n" , table->i, table->nbr_heredoc);
 		i_cnt++;
 		tb_lst = tb_lst->next;
 	}
@@ -91,30 +77,19 @@ void ft_initdata_exec(t_list *tb_lst, char **env)
 
 void ft_waitpid(t_minishell *ms, t_list *tb_lst_cpy)
 {
-	(void) ms;
 	t_table	*table_cpy;
-	t_data	data_exec_cpy;
 
 	while (tb_lst_cpy)
 	{
 		table_cpy = (t_table *)(tb_lst_cpy->data);
-		data_exec_cpy = (table_cpy->exec_data) ;
 		waitpid(ms->pid[table_cpy->i], NULL, 0);
 		tb_lst_cpy = tb_lst_cpy->next;
 	}
-	// t_table	*table;
-	// while (i < ms->nbr_cmd)
-	// {
-	// 	table = (t_table *)(tb_lst->data);
-	// 	waitpid(table->pid, NULL, 0);
-	// 	tb_lst = tb_lst->next;
-	// }
 }
-// void ft_execute(t_list *tb_lst, t_dict *dict, int nbr_cmd)
+
 void ft_execute(t_minishell *ms, t_list *tb_lst)
 {
 	t_table	*table = NULL;
-	t_data	*data_exec;
 	t_list	*tb_lst_cpy = NULL;
 	int i = 0;
 
@@ -124,8 +99,7 @@ void ft_execute(t_minishell *ms, t_list *tb_lst)
 	while (i < ms->nbr_cmd)
 	{
 		table = (t_table *)(tb_lst->data);
-		data_exec = (t_data *)(&(table->exec_data));
-		// dprintf(2, "tb_lst_1\n");
+
 		if (table->i != ms->nbr_cmd -1)
 		{
 			if (pipe(table->fd_pipe) == -1)
@@ -140,10 +114,12 @@ void ft_execute(t_minishell *ms, t_list *tb_lst)
 		else //if (table->pid > 0)
 			branch_parent(ms, tb_lst);
 		i++;
+		close(table->fd_out);
+		close(table->fd_in);
 		tb_lst = tb_lst->next;
 	}
-	// close(data_exec->fd_out);
-	// close(data_exec->fd_in);
+	// ft_close_pipe(ms, tb_lst);
+
 	ft_waitpid(ms, tb_lst_cpy);
 	free(ms->pid);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 01:49:38 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:12:26 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_execvecmd(char **cmd, char **path, char **env)
 		dprintf(2, "path_exec : %s\n", path_exec);
 		if (access(path_exec, F_OK) == EXIT_SUCCESS)
 		{
-			cmd[0] = path_exec;
+			// cmd[0] = path_exec;
+			dprintf(2, "cmd[0] : %s\n", cmd[0]);
 			if (execve(path_exec, cmd, env) == -1)
 			{
 				ft_putstr_fd("Can't execve\n" , STDOUT_FILENO);
@@ -82,6 +83,7 @@ void	ft_parent_builtin(t_minishell *ms, t_list *tb_lst)
 
 	table = (t_table *)(tb_lst->data);
 	ft_getfd(ms, tb_lst);
+	table->fd_tmp = dup(table->fd_pipe[0]);
 	ft_close_pipe(ms, tb_lst);
 	if (table->exec_status == 2)
 	{
@@ -99,13 +101,12 @@ void	ft_parent_builtin(t_minishell *ms, t_list *tb_lst)
 void	ft_child_exve(t_minishell *ms, t_list *tb_lst)
 {
 	t_table	*table;
-	t_data	*exec_data;
+	// t_data	*exec_data;
 	char	**path;
 
 	table = (t_table *)(tb_lst->data);
-	exec_data = (t_data *)(&(table->exec_data));
+	// exec_data = (t_data *)(&(table->exec_data));
 	path = ft_findpath(ms->env); // fixed from env to t_dict *dict
-	dprintf(2, "ft_child_exve %d\n", table->i);
 	ft_getfd(ms, tb_lst);
 	if (table->fd_in == -1)
 		return ;
@@ -114,8 +115,10 @@ void	ft_child_exve(t_minishell *ms, t_list *tb_lst)
 	if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
 		ft_execvepath(table->cmd, ms->env);
 	else
+	{
+		dprintf(2, "ft_child_exve %d\n", table->i);
 		ft_execvecmd(table->cmd, path, ms->env);
-
+	}
 }
 
 void	ft_child_builtin(t_minishell *ms, t_list *tb_lst)
@@ -145,12 +148,12 @@ void	ft_child_builtin(t_minishell *ms, t_list *tb_lst)
 
 void	ft_child_do_nothing(t_minishell *ms, t_list *tb_lst)
 {
-	t_table	*table;
+	// t_table	*table;
 	// t_data	*exec_data;
 
-	table = (t_table *)(tb_lst->data);
+	// table = (t_table *)(tb_lst->data);
 	ft_close_pipe(ms, tb_lst);
-	exit(0);
+	// exit(0);
 }
 
 void ft_close_pipe(t_minishell *ms, t_list *tb_lst)
