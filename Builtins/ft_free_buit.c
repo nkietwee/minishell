@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_buit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:31:16 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/08/26 20:30:43 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_freedict(t_dict **dict)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_in_quote.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:32:48 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:32:56 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 // void	print_lst(t_list *ep_lst_again)
 // {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   paser.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:52:19 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/02 21:33:25 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 static int	print_error_exit(t_minishell *ms)
 {

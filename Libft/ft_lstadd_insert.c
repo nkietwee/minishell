@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_insert.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:50:11 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/08/27 15:10:18 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_lstadd_insert(t_dict **lst, t_dict *new, int index)
 {

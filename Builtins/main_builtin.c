@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 02:58:16 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 18:46:47 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:00:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 /*
 // echo
@@ -36,7 +36,7 @@ int	ft_findstr(char *str, char *find, int len)
 	return (EXIT_FAILURE);
 }
 
-// void	ft_builtin_parent(char **cmd, char  **env)
+// void	ft_buildin_parent(char **cmd, char  **env)
 // {
 // 	if (ft_findstr(cmd[0], "export", 6) == EXIT_SUCCESS)
 // 		ft_export(cmd, env);
@@ -58,9 +58,9 @@ int	ft_findstr(char *str, char *find, int len)
 // 	// 	ft_pwd();
 // }
 
-// void	ft_builtin_child(char **cmd, char  **env, int fd_out)
+// void	ft_buildin_child(char **cmd, char  **env, int fd_out)
 // {
-// 	// dprintf(2, "ft_builtin_child\n");
+// 	// dprintf(2, "ft_buildin_child\n");
 // 	// printf("cmd : %s\n", cmd[0]);
 // 	if (ft_strcmp(cmd[0], "pwd") == 0)
 // 		ft_pwd();
@@ -74,7 +74,7 @@ int	ft_findstr(char *str, char *find, int len)
 // 	// exit(0);
 // }
 
-// void	ft_builtin(char **av, t_data *data, char **env)
+// void	ft_buildin(char **av, t_data *data, char **env)
 // {
 // 	char	**tmp=NULL;
 
@@ -123,10 +123,10 @@ int	ft_findstr(char *str, char *find, int len)
 // 	main.dict = ft_getenv(env);
 // 	printf("%s\n", main.dict->tmp_dict->key);
 // 	exit(0);
-// 	// ft_builtin(av, env);
-// 	printf("ft_builtin\n");
+// 	// ft_buildin(av, env);
+// 	printf("ft_buildin\n");
 // 	// exit(0);
-// 	// ft_builtin(av, &data, envp);
+// 	// ft_buildin(av, &data, envp);
 // 	// while (1)
 // 	// {
 // 	// 	printf("entry\n");
@@ -135,8 +135,8 @@ int	ft_findstr(char *str, char *find, int len)
 // 	// 	// 	return (0);
 // 	// 	// add_history(tmp);
 // 	// 	// if (ft_strlen(tmp) > 0)
-// 	// 	// ft_builtin(tmp, &data, env);
-// 	// 	ft_builtin(av, &data, env);
+// 	// 	// ft_buildin(tmp, &data, env);
+// 	// 	ft_buildin(av, &data, env);
 // 	// 	// free(tmp);
 // 	// }
 

@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../Include/minishell.h"
 
 void    ft_prterr(int mode, char *cmd, char *str, int err)
 {
-
+    
     if (mode == PER_DN)
         printf("bash: %s: %s: No such file or directory" ,cmd, str);
     else if (mode == CANNT_OPEN)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../Include/minishell.h"
 
 // int ft_findbuitin(char *str, char **env)
 // {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:14 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:07:19 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/08 01:34:46 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 // t_dict	*ft_lstdelete_node(t_dict **dict, int index)
 // {
@@ -65,13 +65,13 @@ void	ft_lstdelete_node(t_dict **dict, int index)
 {
 	t_dict *head;
 	t_dict *start;
-	// t_dict *tmp;
-	// t_dict *tmp_2;
+	t_dict *tmp;
+	t_dict *tmp_2;
 	t_dict *free_node;
 
 	head = (*dict);
 	start = (*dict);
-	// tmp_2 = (*dict);
+	tmp_2 = (*dict);
 	free_node = (*dict);
 	// 	if (index == 0)
 	// {
@@ -102,14 +102,16 @@ void	ft_lstdelete_node(t_dict **dict, int index)
 			free_node = free_node->next;
 			l++;
 		}
+		dprintf(2, "l : %d\n", l);
 		start->next = (*dict)->next;
 		free(free_node->tmp_dict->key);
 		free(free_node->tmp_dict->value);
 		free(free_node->tmp_dict);
 		free(free_node);
 		(*dict) = head;
-
 	}
+	// dprintf(2, "dict_unset\n");
+	// ft_prtdict(*dict);
 }
 
 int		ft_findkey_export(char *key, t_dict	*dict)
@@ -131,12 +133,17 @@ void	ft_unset(char **cmd, t_dict **dict)
 {
 	int		i;
 	int		index;
-	// t_dict	*tmp;
+	t_dict	*tmp;
 
 	i = 1;
+	dprintf(2, "ft_unset\n");
+	// dprintf(2, "cmd[0] : %s\n" , cmd[0]);
+	// dprintf(2, "cmd[0] : %s\n" , cmd[1]);
+	// exit(0);
 	while (cmd[i])
 	{
 		index = ft_findkey_export(cmd[i], *dict);
+		dprintf(2, "ft_index : %d\n", index);
 		if (index >= 0)
 			ft_lstdelete_node(dict, index);
 		i++;

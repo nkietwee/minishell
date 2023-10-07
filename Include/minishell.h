@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 02:15:28 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 18:13:45 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@
 # include "libminishell.h"
 # include "parser.h"
 
-# define ULLONG_MAX 9223372036854775807
-# define LLONG_MAX			// ft_putstr_fd("exit\n", STDOUT_FILENO);
-			// ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
-			// ft_putstr_fd(cmd[1], STDOUT_FILENO);
-			// ft_putstr_fd(": numeric argument required\n", STDOUT_FILENO);
-			// exit(255);7
-
 /* token and tag_ctrl index define*/
 
 # define EMPTY 0
@@ -56,6 +49,10 @@
 # define HDBFCMD 12
 # define APBFCMD 13
 # define FPBFCMD 14
+
+# define CMD_ 0
+# define BUI_CHILD 1
+# define BUI_PARENT 2
 
 /* error msg define*/
 
@@ -129,36 +126,32 @@ typedef struct s_rdr
 
 typedef struct s_data
 {
-	// pid_t	pid;
-	// int		fd_in;
-	// int		fd_out;
-	// int		table->fd_tmp;
+	pid_t	pid;
+	int		fd_in;
+	int		fd_out;
+	int		i;
+	// int		fd_tmp_read;
 	// int		fd_pipe[2];
 
+	int		nbr_infile;
 	int		nbr_out_append;
-	// int		nbr_heredoc; //จน heredoc file
+	int		nbr_cmd;
+	int		nbr_heredoc;
 
-	// int		fd_heredoc;
+	int		fd_heredoc;
+	char	*file;
 } t_data;
 
 typedef struct s_table
 {
 	t_list	*rdr; // redirect
 	t_data	exec_data;
-
-	int		fd_tmp;
-	int		fd_pipe[2];
-	int		fd_in;
-	int		fd_out;
-	int		exec_status;
-
 	char	**cmd;
-	int		i;
+	// int		i;
 	int		fd_heredoc;
 	int		nbr_heredoc;
-	int		nbr_infile;
-	int		nbr_outfile;
-	char	**tmp_env;
+	int		exec_status;
+	int		fd_pipe[2];
 } t_table;
 
 typedef struct	s_minishell
@@ -166,18 +159,15 @@ typedef struct	s_minishell
 	t_list	*tk_lst; // tk_list from token list lexer
 	t_list	*tb_lst; //  tb_list from table list from parser
 	t_dict	*dict; // env
+	pid_t	*pid;
 	int		index;
 	int		err_code;
 	int		exit_code;
-	int		nbr_cmd;
-	pid_t	*pid;
+	int		nbr_cmd_all;
 	// int		nbr_heredoc;
 	char	**env;
-	// struct sigaction	sigint;
-	// struct sigaction	sigquit;
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
 }				t_minishell;
-
-void branch_parent(t_minishell *ms, t_list *tb_lst);
-void branch_child(t_minishell *ms, t_list *tb_lst);
 
 #endif

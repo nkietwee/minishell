@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/10/04 13:47:18 by pnamwayk         ###   ########.fr        #
+#    Updated: 2023/10/07 05:59:33 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,11 @@ NAME = minishell
 CC = cc
 
 # FLAGS = -Wall -Wextra -Werror
-FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 RM = rm -f
 
-INC = Include/
+INC = minishell.h
 
 BUILTINS_PATH = Builtins/
 EXECUTE_PATH = Execute/
@@ -55,7 +55,9 @@ EXECUTE_SRCS = execute.c\
 			ft_heredoc.c\
 			ft_check_name.c\
 			ft_main_exec.c\
-			ft_execve.c
+			ft_execve.c \
+			ft_child.c \
+			ft_parent.c
 
 GET_NEXT_LINE_SRCS = get_next_line.c\
 					get_next_line_utils.c\
@@ -95,8 +97,8 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%o:%c
-	$(CC) $(FLAGS) -c -I $(INC) $< -o $@
+%o:%c $(INC)
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)

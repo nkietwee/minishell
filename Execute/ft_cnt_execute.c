@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cnt_execute.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 00:42:53 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 18:47:34 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 // int	ft_cnt_heredoc(t_list *tb_list)
 int	ft_cnt_heredoc(t_list *tb_list)
@@ -22,8 +22,8 @@ int	ft_cnt_heredoc(t_list *tb_list)
 
 	i = 0;
 	// printf("ft_cnt_heredoc\n");
-	while (tb_list)
-	{
+	// while (tb_list)
+	// {
 		table = (t_table *)(tb_list->data);
 		rdr_list = table->rdr;
 		while (rdr_list)
@@ -36,8 +36,8 @@ int	ft_cnt_heredoc(t_list *tb_list)
 			}
 			rdr_list = rdr_list->next;
 		}
-		tb_list = tb_list->next;
-	}
+		// tb_list = tb_list->next;
+	// }
 	return (i);
 }
 
@@ -87,16 +87,11 @@ int	ft_cnt_outfile(t_list *table_list)
 	i = 0;
 	table = (t_table *)(table_list->data);
 	rdr_lst = (t_list *)(table->rdr);
-	dprintf(2, "ft_cnt_outfile\n");
 	while (rdr_lst)
 	{
 		rdr = (t_rdr *)(rdr_lst->data);
-		ft_prt_type(rdr->type);
 		if (rdr->type == OUTFILE || rdr->type == APPEND)
-		{
 			i++;
-			dprintf(2, "hello\n");
-		}
 		rdr_lst = rdr_lst->next;
 	}
 	return (i);

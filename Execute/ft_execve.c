@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 01:49:38 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 05:58:51 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_execvecmd(char **cmd, char **path, char **env)
 {
@@ -24,7 +24,7 @@ void	ft_execvecmd(char **cmd, char **path, char **env)
 	{
 		path_exec = ft_strjoinextra(path[i], cmd[0], NONE);
 		// free(cmd[0]);
-		dprintf(2, "path_exec : %s\n", path_exec);
+		// dprintf(2, "path_exec : %s\n", path_exec);
 		if (access(path_exec, F_OK) == EXIT_SUCCESS)
 		{
 			cmd[0] = path_exec;
@@ -44,7 +44,7 @@ void	ft_execvecmd(char **cmd, char **path, char **env)
 
 void	ft_execvepath(char **path, char **tmp_env)
 {
-	dprintf(2, "Entry : execvepath\n");
+	// dprintf(2, "Entry : execvepath\n");
 	if (access(path[0], F_OK | X_OK) == -1)
 	{
 		ft_prterrexec(path[0], 1, ERR_PATH);
@@ -63,108 +63,23 @@ void	ft_prtcmd(t_list *tb_lst, int i)
 
 }
 
-void	ft_parent_do_nothing(t_minishell *ms, t_list *tb_lst)
-{
-	t_table	*table;
-	// t_data exec_data;
-	// dprintf(2, "Hello from parent\n");
-	table = (t_table *)(tb_lst->data);
-	// exec_data = (t_data)(table->exec_data);
-	table->fd_tmp = dup(table->fd_pipe[0]); // another process can read from previos process
-	ft_close_pipe(ms, tb_lst);
-}
 
-
-void	ft_parent_builtin(t_minishell *ms, t_list *tb_lst)
-{
-	t_table	*table;
-	// t_dict	*tmp_env;
-
-	table = (t_table *)(tb_lst->data);
-	ft_getfd(ms, tb_lst);
-	ft_close_pipe(ms, tb_lst);
-	if (table->exec_status == 2)
-	{
-		if (ft_strcmp(table->cmd[0], "cd") == 0)
-			ft_cd(table->cmd, ms->dict);
-		if ((ft_strcmp(table->cmd[0], "export") == 0) && table->cmd[1])
-			ft_export(table->cmd,  ms->dict);
-		if (ft_strcmp(table->cmd[0], "unset") == 0)
-			ft_unset(table->cmd, &ms->dict);
-		if (ft_strcmp(table->cmd[0], "exit") == 0)
-			ft_exit(table->cmd, ms->dict);
-	}
-}
-
-void	ft_child_exve(t_minishell *ms, t_list *tb_lst)
-{
-	t_table	*table;
-	t_data	*exec_data;
-	char	**path;
-
-	table = (t_table *)(tb_lst->data);
-	exec_data = (t_data *)(&(table->exec_data));
-	path = ft_findpath(ms->env); // fixed from env to t_dict *dict
-	dprintf(2, "ft_child_exve %d\n", table->i);
-	ft_getfd(ms, tb_lst);
-	if (table->fd_in == -1)
-		return ;
-	ft_dup2(ms, tb_lst);
-	ft_close_pipe(ms, tb_lst);
-	if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
-		ft_execvepath(table->cmd, ms->env);
-	else
-		ft_execvecmd(table->cmd, path, ms->env);
-
-}
-
-void	ft_child_builtin(t_minishell *ms, t_list *tb_lst)
-{
-	t_table	*table;
-	// t_data	*exec_data;
-
-	table = (t_table *)(tb_lst->data);
-	// exec_data = (t_data *)(&(table->exec_data));
-	ft_getfd(ms, tb_lst);
-	if (table->fd_in == -1)
-		return ;
-	ft_dup2(ms, tb_lst);
-	ft_close_pipe(ms, tb_lst);
-	if (table->exec_status == 1)
-	{
-		if ((ft_strcmp(table->cmd[0], "export") == 0) && !table->cmd[1])
-			ft_export(table->cmd,  ms->dict);
-		if (ft_strcmp(table->cmd[0], "echo") == 0)
-			ft_echo(table->cmd , table->fd_out);
-		if (ft_strcmp(table->cmd[0], "pwd") == 0)
-			ft_pwd();
-		if (ft_strcmp(table->cmd[0], "env") == 0)
-			ft_env(ms->dict);
-	}
-}
-
-void	ft_child_do_nothing(t_minishell *ms, t_list *tb_lst)
-{
-	t_table	*table;
-	// t_data	*exec_data;
-
-	table = (t_table *)(tb_lst->data);
-	ft_close_pipe(ms, tb_lst);
-	exit(0);
-}
 
 void ft_close_pipe(t_minishell *ms, t_list *tb_lst)
 {
-	t_table	*table;
+	t_table *table;
 
 	table = (t_table *)(tb_lst->data);
-	if (ms->nbr_cmd > 1)
+	if (ms->nbr_cmd_all > 1)
 	{
 		close(table->fd_pipe[0]);
 		close(table->fd_pipe[1]);
 	}
 }
-/* void	ft_child(t_list *tb_lst, int nbr_cmd, t_dict *dict, int *table->fd_tmp)
+
+
+
+/* void	ft_child(t_list *tb_lst, int nbr_cmd, t_dict *dict, int *fd_tmp_read)
 {
 	char **cmd;
 	t_table	*table;
@@ -188,10 +103,10 @@ void ft_close_pipe(t_minishell *ms, t_list *tb_lst)
 	// dprintf(2, "fd_here_child_2 : %d\n", table->fd_heredoc);
 	if (exec_data->fd_in == -1)
 		return ;
-	ft_dup2(table->i, tb_lst, table->fd_tmp, nbr_cmd);
+	ft_dup2(table->i, tb_lst, fd_tmp_read, nbr_cmd);
 	// dprintf(2, "fd_inchild_2 : %d\n", exec_data->fd_in);
 	// dprintf(2, "fd_outchild_2 : %d\n", exec_data->fd_out);
-	// ft_builtin_child(table->cmd, env, exec_data->fd_out);
+	// ft_buildin_child(table->cmd, env, exec_data->fd_out);
 	// if (table->fd_heredoc > 2)
 	// 	close(table->fd_heredoc);
 	if (nbr_cmd > 1)

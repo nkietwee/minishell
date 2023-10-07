@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prtlinklist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:25:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:07:06 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 04:50:52 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_prtdict_value(t_dict_value	**tmp_value)
 {
@@ -36,14 +36,14 @@ void	ft_prtdict(t_dict	*dict)
 		dict = dict -> next;
 		i++;
 	}
-	dprintf(2, "i : %d\n", i);
+	// dprintf(2, "i : %d\n", i);
 }
 
 void	ft_prtexport(t_dict	*dict)
 {
-	// int	i;
+	int	i;
 
-	// i = 0;
+	i = 0;
 	while (dict)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);

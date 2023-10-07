@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tmpexport.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:33:04 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:58:18 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 //str is arg that wanted to add at last arg from env
 t_dict_value **ft_get_value(char **str)
@@ -58,7 +58,6 @@ t_dict	*ft_exports(char **env, char **av)
 	printf("ft_lstadd_insert\n");
 	dict = ft_getenv(env);
 	tmp_value =  ft_get_value(av);
-	// ft_prtdict_value(tmp_value);
 	len = ft_cntdict_export(tmp_value);
 	while (i < len)
 	{
@@ -66,7 +65,6 @@ t_dict	*ft_exports(char **env, char **av)
 		ft_lstadd_back_dict(&dict, tmp_newdict);
 		i++;
 	}
-	ft_prtdict(dict);
 	return (tmp_newdict); // for print env
 }
 
