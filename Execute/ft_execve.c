@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/07 16:48:04 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:38:01 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	ft_child_builtin(t_minishell *ms, t_list *tb_lst)
 		if (ft_strcmp(table->cmd[0], "env") == 0)
 			ft_env(ms->dict);
 	}
+	exit(0);
 }
 
 void	ft_child_do_nothing(t_minishell *ms, t_list *tb_lst)
@@ -153,7 +154,7 @@ void	ft_child_do_nothing(t_minishell *ms, t_list *tb_lst)
 
 	// table = (t_table *)(tb_lst->data);
 	ft_close_pipe(ms, tb_lst);
-	// exit(0);
+	exit(0);
 }
 
 void ft_close_pipe(t_minishell *ms, t_list *tb_lst)

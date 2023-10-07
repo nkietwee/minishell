@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/07 17:29:10 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:40:01 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ void ft_waitpid(t_minishell *ms, t_list *tb_lst_cpy)
 	while (tb_lst_cpy)
 	{
 		table_cpy = (t_table *)(tb_lst_cpy->data);
-		waitpid(ms->pid[table_cpy->i], NULL, 0);
+		// waitpid(ms->pid[table_cpy->i], NULL, 0);
+		waitpid(ms->pid[table_cpy->i], &ms->status, WUNTRACED);
+		// if (!main->do_cmd && WIFEXITED(ms->status))
+		// 	main->exit_status = WEXITSTATUS(ms->status);
 		tb_lst_cpy = tb_lst_cpy->next;
 	}
 }
@@ -117,7 +120,7 @@ void ft_execute(t_minishell *ms, t_list *tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
 
-		if (table->i != ms->nbr_cmd -1)
+		if (table->i != ms->nbr_cmd - 1 && ms->nbr_cmd > 1)
 		{
 			if (pipe(table->fd_pipe) == -1)
 				ft_prterr(CANNT_PIPE, "Pipe");
@@ -127,9 +130,15 @@ void ft_execute(t_minishell *ms, t_list *tb_lst)
 		if (ms->pid[i] == -1)
 			ft_prterr(CANNT_FORK, "Fork");
 		else if (ms->pid[i] == 0)
+		{
+			dprintf(2, "child %d----------------\n", ms->pid[i]);
 			branch_child(ms, tb_lst);
+		}
 		else //if (table->pid > 0)
+		{
+			dprintf(2, "parent %d----------------\n", ms->pid[i]);
 			branch_parent(ms, tb_lst);
+		}
 		i++;
 		tb_lst = tb_lst->next;
 	}
@@ -144,11 +153,17 @@ void branch_parent(t_minishell *ms, t_list *tb_lst)
 	t_table	*table;
 
 	table = (t_table *)(tb_lst->data);
-	dprintf(2, "---parent[%d] table->exec_status: %d\n", table->i, table->exec_status);
+	// dprintf(2, "---parent[%d] table->exec_status: %d\n", table->i, table->exec_status);
 	if (table->exec_status == 2)
+	{
+		dprintf(2, "ft_parent_builtin %d----------------\n", table->exec_status);
 		ft_parent_builtin(ms, tb_lst);
+	}
 	else //table->exec_status == 1
+	{
+		dprintf(2, "ft_parent_do_nothing %d----------------\n", table->exec_status);
 		ft_parent_do_nothing(ms, tb_lst);
+	}
 }
 
 void branch_child(t_minishell *ms, t_list *tb_lst)
@@ -156,12 +171,22 @@ void branch_child(t_minishell *ms, t_list *tb_lst)
 	t_table	*table;
 
 	table = (t_table *)(tb_lst->data);
-	dprintf(2, "---child[%d] table->exec_status: %d\n", table->i, table->exec_status);
+	// dprintf(2, "---child[%d] table->exec_status: %d\n", table->i, table->exec_status);
 	if (!table->exec_status)
+	{
+		dprintf(2, "ft_child_exve %d----------------\n", table->exec_status);
 		ft_child_exve(ms, tb_lst);
+	}
 	else if (table->exec_status == 1)
+	{
+		dprintf(2, "ft_child_builtin %d----------------\n", table->exec_status);
 		ft_child_builtin(ms, tb_lst);
+	}
 	else //table->exec_status == 2
+	{
+		dprintf(2, "ft_child_do_nothing %d----------------\n", table->exec_status);
 		ft_child_do_nothing(ms, tb_lst);
+	}
+	exit(0);
 }
 

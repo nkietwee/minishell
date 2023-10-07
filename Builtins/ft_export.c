@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 15:48:06 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:06:37 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:13:53 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,5 @@ void	ft_export(char **cmd, t_dict *dict)
 		// ft_printvalue_ep(env);
 	if (len > 1) // (export with arg)
 		ft_addvalueexport(cmd, dict); // left assign value
+	// ft_env(dict);
 }

@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/07 17:28:41 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:29:57 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct	s_minishell
 	pid_t	*pid;
 	int		all_heredoc;
 	char	**env;
+	int		status;
 	// struct sigaction	sigint;
 	// struct sigaction	sigquit;
 }				t_minishell;
