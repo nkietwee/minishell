@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 17:03:35 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 17:06:54 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/08 00:09:43 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,18 +122,20 @@ t_dict_value	**ft_get_value(char **str, t_dict *dict)
 }
 
 /*av instead value that it want to attach with last arg*/
-void	ft_addvalueexport(char **av, t_dict *dict)
+void	ft_addvalueexport(char **av, t_dict **dict)
 {
 	t_dict			*tmp_newdict=NULL;
 	t_dict_value	**tmp_value;
 	int				i;
 
 	i = 0;
-	tmp_value = ft_get_value(av, dict);
+	tmp_value = ft_get_value(av, *dict);
 	while (tmp_value[i])
 	{
 		tmp_newdict = ft_lstnew_dict(tmp_value[i]);
-		ft_lstadd_back_dict(&dict, tmp_newdict);
+		ft_lstadd_back_dict(dict, tmp_newdict);
 		i++;
 	}
+	dprintf(2, "print_dict\n");
+	ft_prtdict(*dict);
 }

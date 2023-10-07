@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 02:09:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 12:36:42 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 23:55:44 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	ft_lstadd_back_dict(t_dict **lst, t_dict *new)
 	// dprintf(2, "c2\n");
 	if (*lst)
 	{
-		// dprintf(2, "c3\n");
+		// dprintf(2, "*lst = %s\n", *lst->value);
 		last = ft_lstlast_dict(*lst);
+
 		// dprintf(2, "c4\n");
 		last->next = new;
 		// dprintf(2, "c5\n");

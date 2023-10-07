@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/07 16:48:04 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 23:50:31 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ void	ft_parent_builtin(t_minishell *ms, t_list *tb_lst)
 	ft_close_pipe(ms, tb_lst);
 	if (table->exec_status == 2)
 	{
+		dprintf(2, "ft_parent_builtin\n");
 		if (ft_strcmp(table->cmd[0], "cd") == 0)
 			ft_cd(table->cmd, ms->dict);
 		if ((ft_strcmp(table->cmd[0], "export") == 0) && table->cmd[1])
-			ft_export(table->cmd,  ms->dict);
+			ft_export(table->cmd,  &ms->dict);
 		if (ft_strcmp(table->cmd[0], "unset") == 0)
 			ft_unset(table->cmd, &ms->dict);
 		if (ft_strcmp(table->cmd[0], "exit") == 0)
@@ -136,7 +137,7 @@ void	ft_child_builtin(t_minishell *ms, t_list *tb_lst)
 	if (table->exec_status == 1)
 	{
 		if ((ft_strcmp(table->cmd[0], "export") == 0) && !table->cmd[1])
-			ft_export(table->cmd,  ms->dict);
+			ft_export(table->cmd,  &ms->dict);
 		if (ft_strcmp(table->cmd[0], "echo") == 0)
 			ft_echo(table->cmd , table->fd_out);
 		if (ft_strcmp(table->cmd[0], "pwd") == 0)
