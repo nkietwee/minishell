@@ -11,9 +11,12 @@ a
 
 b
 
+d
+
 f
 
 file_open.c
+g
 g
 
 infile
@@ -21,6 +24,7 @@ l
 libminishell
 minishell
 o
+out
 parser
 test
 tmpfile

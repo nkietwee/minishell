@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 13:12:53 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 17:29:10 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,32 @@ void ft_dup2(t_minishell *ms, t_list *tb_lst)
 	table = (t_table *)(tb_lst->data);
 	//infile
 	if (table->nbr_infile)
+	{
+		get_infile(tb_lst);
+		dprintf(2, "dup infile %d fd = %d\n", table->i, table->fd_in);
 		dup2(table->fd_in, STDIN_FILENO);
+		close(table->fd_in);
+		unlink_last_infile(tb_lst);
+	}
 	else if (table->i != 0)
+	{
+		dprintf(2, "dup infile %d fd_tmp = %d\n", table->i, table->fd_tmp);
 		dup2(table->fd_tmp, STDIN_FILENO);
+	}
 
 	//outfile
 	if (table->nbr_outfile)
+	{
+		get_outfile(tb_lst);
+		dprintf(2, "dup outfile %d fd = %d\n", table->i, table->fd_out);
 		dup2(table->fd_out, STDOUT_FILENO);
+		close(table->fd_out);
+	}
 	else if (table->i != ms->nbr_cmd - 1 && ms->nbr_cmd > 1)
+	{
+		dprintf(2, "dup outfile %d\n", table->i);
 		dup2(table->fd_pipe[1], STDOUT_FILENO);
+	}
 }
 
 void ft_initdata_exec(t_list *tb_lst, char **env)
@@ -114,8 +131,6 @@ void ft_execute(t_minishell *ms, t_list *tb_lst)
 		else //if (table->pid > 0)
 			branch_parent(ms, tb_lst);
 		i++;
-		close(table->fd_out);
-		close(table->fd_in);
 		tb_lst = tb_lst->next;
 	}
 	// ft_close_pipe(ms, tb_lst);

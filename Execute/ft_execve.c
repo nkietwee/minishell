@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnamwayk <pnamwayk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 13:12:26 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 16:48:04 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_parent_builtin(t_minishell *ms, t_list *tb_lst)
 	// t_dict	*tmp_env;
 
 	table = (t_table *)(tb_lst->data);
-	ft_getfd(ms, tb_lst);
+	// ft_getfd(ms, tb_lst);
 	table->fd_tmp = dup(table->fd_pipe[0]);
 	ft_close_pipe(ms, tb_lst);
 	if (table->exec_status == 2)
@@ -107,16 +107,16 @@ void	ft_child_exve(t_minishell *ms, t_list *tb_lst)
 	table = (t_table *)(tb_lst->data);
 	// exec_data = (t_data *)(&(table->exec_data));
 	path = ft_findpath(ms->env); // fixed from env to t_dict *dict
-	ft_getfd(ms, tb_lst);
-	if (table->fd_in == -1)
-		return ;
+	// ft_getfd(ms, tb_lst);
+	// if (table->fd_in == -1)
+	// 	return ;
 	ft_dup2(ms, tb_lst);
 	ft_close_pipe(ms, tb_lst);
 	if (ft_findchar(table->cmd[0], '/') == EXIT_SUCCESS) // cmd or av4
 		ft_execvepath(table->cmd, ms->env);
 	else
 	{
-		dprintf(2, "ft_child_exve %d\n", table->i);
+		// dprintf(2, "ft_child_exve %d\n", table->i);
 		ft_execvecmd(table->cmd, path, ms->env);
 	}
 }
@@ -128,9 +128,9 @@ void	ft_child_builtin(t_minishell *ms, t_list *tb_lst)
 
 	table = (t_table *)(tb_lst->data);
 	// exec_data = (t_data *)(&(table->exec_data));
-	ft_getfd(ms, tb_lst);
-	if (table->fd_in == -1)
-		return ;
+	// ft_getfd(ms, tb_lst);
+	// if (table->fd_in == -1)
+	// 	return ;
 	ft_dup2(ms, tb_lst);
 	ft_close_pipe(ms, tb_lst);
 	if (table->exec_status == 1)

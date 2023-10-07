@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 00:33:50 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 01:45:55 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 16:14:36 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_prterrexec(char *str, int errno, int mode);
 int	ft_findchar(char *s1, char s2);
 
 /*ft_heredoc*/
-int	ft_heredoc(t_list *table_list, int cnt_heredoc);
+void	ft_heredoc(t_list *table_list);
 
 /*ft_unset*/
 // void	ft_unset(char **cmd, t_dict *dict);

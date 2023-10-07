@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 15:43:57 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 17:44:42 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,13 @@ void	ft_prt_heredoc(t_list *tb_list)
 	}
 }
 
-int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
+void	ft_heredoc(t_list *tb_lst)
 {
 	t_table *table;
 	t_list	*rdr_lst;
 	t_rdr	*rdr;
 	char	*tmp;
-	int		fd_heredoc;
-	int		i;
 
-	i = 0;
-	// ft_prt_heredoc(tb_lst);
-	fd_heredoc = open("../tmpfile", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	printf("fd_heredoc : %d\n", fd_heredoc);
 	while (tb_lst)
 	{
 		table = (t_table *)(tb_lst->data);
@@ -82,31 +76,29 @@ int	ft_heredoc(t_list *tb_lst, int nbr_heredoc)
 			if (rdr->type == HEREDOC)
 			{
 				rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
+				table->fd_heredoc = open(rdr->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 				dprintf(2, "rdr->file : %s\n" , rdr->file);
-			}
-			else
-				break;
-			while (1)
-			{
 				write(STDOUT_FILENO, "> ", 2);
 				tmp = get_next_line(STDIN_FILENO);
-				if (ft_strcmp(tmp, rdr->file) == EXIT_SUCCESS)
+				while (tmp)
 				{
-					// dprintf(2, "hello\n");
-					i++;
-					break;
+					if (ft_strcmp(tmp, rdr->file) == EXIT_SUCCESS)
+						break;
+					write(table->fd_heredoc, tmp, ft_strlen(tmp));
+					if (tmp)
+						free(tmp);
+					write(STDOUT_FILENO, "> ", 2);
+					tmp = get_next_line(STDIN_FILENO);
 				}
-				if (i == nbr_heredoc - 1)
-					write(fd_heredoc, tmp, ft_strlen(tmp));
+				close (table->fd_heredoc);
+				dprintf(2,"r->file = %s t->fd_heredoc = %d\n", rdr->file, table->fd_heredoc);
 			}
 			rdr_lst = rdr_lst->next;
 			// dprintf(2, "lst : %s\n", ((t_rdr *)(rdr_lst->data))->file );
 		}
+		dprintf(2,"table->fd_heredoc = %d\n", table->fd_heredoc);
 		tb_lst = tb_lst->next;
 	}
-	close (fd_heredoc);
-	fd_heredoc = open("../tmpfile", O_RDONLY , 0644);
-	return (fd_heredoc);
 }
 
 // int main(int ac, char **av)

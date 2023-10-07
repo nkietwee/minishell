@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:14:59 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 01:58:40 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 16:15:44 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_mainexec(t_minishell *ms)
 	// if (ft_checkfile(ms->tb_lst) == EXIT_FAILURE)
 	// 	return ;
 	// ft_countexec(ms);
-	t_table	*table;
+	// t_table	*table;
 
 	// int i = 0;
 	// while(ms->tb_lst)
@@ -68,13 +68,13 @@ void	ft_mainexec(t_minishell *ms)
 		// 	ms->tb_lst = ms->tb_lst->next;
 		// }
 
-	table = (ms->tb_lst->data);
-	table->nbr_heredoc = ft_cnt_heredoc(ms->tb_lst);
+	// table = (ms->tb_lst->data);
+	ms->all_heredoc = ft_cnt_heredoc(ms->tb_lst);
 
-	dprintf(2, "nbr_here : %d\n" , table->nbr_heredoc);
-	if (table->nbr_heredoc > 0)
-		table->fd_heredoc = ft_heredoc(ms->tb_lst , table->nbr_heredoc);
-	dprintf(2, "fd_here : %d\n", table->fd_heredoc);
+	dprintf(2, "all_here : %d\n" , ms->all_heredoc);
+	if (ms->all_heredoc > 0)
+		ft_heredoc(ms->tb_lst);
+	// dprintf(2, "fd_here : %d\n", table->fd_heredoc);
 	// ft_heredoc(ms->tb_lst , 3);
 	// exit(0);
 	ms->nbr_cmd = ft_cntcmd(ms->tb_lst);
@@ -90,7 +90,7 @@ void	ft_mainexec(t_minishell *ms)
 	// ft_builtin_onecmd(ms);
 	// dprintf(2, "nbr_cmd : %d\n" , ms->nbr_cmd);
 	ft_execute(ms, ms->tb_lst);
-	
+
 	// ft_execute(ms->tb_lst, ms->dict, ms->nbr_cmd);
 
 }

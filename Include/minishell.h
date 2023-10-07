@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 02:15:28 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 17:28:41 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ typedef struct s_table
 	int		i;
 	int		fd_heredoc;
 	int		nbr_heredoc;
-	int		nbr_infile;
-	int		nbr_outfile;
+	int		nbr_infile; // infile + heredoc
+	int		nbr_outfile; //out + append
 	char	**tmp_env;
 } t_table;
 
@@ -171,7 +171,7 @@ typedef struct	s_minishell
 	int		exit_code;
 	int		nbr_cmd;
 	pid_t	*pid;
-	// int		nbr_heredoc;
+	int		all_heredoc;
 	char	**env;
 	// struct sigaction	sigint;
 	// struct sigaction	sigquit;
@@ -179,5 +179,9 @@ typedef struct	s_minishell
 
 void branch_parent(t_minishell *ms, t_list *tb_lst);
 void branch_child(t_minishell *ms, t_list *tb_lst);
+void	get_outfile(t_list *tb_lst);
+void	get_infile(t_list *tb_lst);
+// int	check_heredoc(t_list *tb_list, char *filename);
+void	unlink_last_infile(t_list *tb_list);
 
 #endif

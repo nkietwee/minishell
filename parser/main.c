@@ -170,9 +170,7 @@ int	main(int ac, char **av, char **env)
 			continue;
 		// print_table(ms);
 		// print_token(ms);
-		// // t_dict *dict;
 		// print_dict(ms.dict);
-		// exit(0);
 		ft_mainexec(&ms);
 		clear_tb_n_tk(&ms);
 	}

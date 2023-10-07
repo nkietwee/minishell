@@ -6,7 +6,7 @@
 /*   By: pnamwayk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/05 00:42:53 by pnamwayk         ###   ########.fr       */
+/*   Updated: 2023/10/07 17:27:26 by pnamwayk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,29 @@ int	ft_cnt_heredoc(t_list *tb_list)
 	return (i);
 }
 
+void	unlink_last_infile(t_list *tb_list)
+{
+	t_table *table;
+	t_list *rdr_list;
+	t_rdr	*rdr;
+	int i;
+
+	i = 0;
+	table = (t_table *)(tb_list->data);
+	rdr_list = table->rdr;
+	while (rdr_list)
+	{
+		rdr = (t_rdr *)(rdr_list->data);
+		if (rdr->type == HEREDOC || rdr->type == INFILE)
+		{
+			if (rdr->type == HEREDOC && i == table->nbr_infile - 1)
+				unlink(rdr->file);
+			i++;
+		}
+		rdr_list = rdr_list->next;
+	}
+}
+
 int	ft_cntcmd(t_list *table_list)
 {
 	int	i;
@@ -70,7 +93,7 @@ int	ft_cnt_infile(t_list *table_list)
 	while (rdr_lst)
 	{
 		rdr = (t_rdr *)(rdr_lst->data);
-		if (rdr->type == INFILE)
+		if (rdr->type == HEREDOC || rdr->type == INFILE)
 			i++;
 		rdr_lst = rdr_lst->next;
 	}
