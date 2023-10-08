@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:36:27 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/08 04:44:58 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:18:19 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_prt_heredoc(t_list *tb_list)
 int	ft_do_here(t_list *rdr_lst, int nbr_heredoc, char *file)
 {
 	t_table *table;
-	// t_list	*rdr_lst;
 	t_rdr	*rdr;
 	char	*tmp;
 	int		fd_heredoc;
@@ -70,19 +69,23 @@ int	ft_do_here(t_list *rdr_lst, int nbr_heredoc, char *file)
 
 	i = 0;
 	// ft_prt_heredoc(tb_lst);
-	fd_heredoc = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (fd_heredoc == -1)
-		return (-1);
+	// dprintf(2, "fd_here : %d\n", fd_heredoc);
+	// if (fd_heredoc == -1)
+	// 	return (-1);
 	while (rdr_lst)
 	{
 		rdr = (t_rdr *)(rdr_lst->data);
 		if (rdr->type == HEREDOC)
 		{
 			rdr->file = ft_strjoinextra(rdr->file, "\n", NONE);
-			while (rdr->type == HEREDOC)
+			fd_heredoc = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			// dprintf(2, "fd_heredoc [%s] : %d\n" ,file, fd_heredoc);
+			while (1)
 			{
 				write(STDOUT_FILENO, "> ", 2);
 				tmp = get_next_line(STDIN_FILENO);
+			// 	// dprintf(2, "tmp : %s", tmp);
+			// 	// dprintf(2, "deli : %s", rdr->file);
 				if (ft_strcmp(tmp, rdr->file) == EXIT_SUCCESS)
 				{
 					i++;
@@ -90,14 +93,16 @@ int	ft_do_here(t_list *rdr_lst, int nbr_heredoc, char *file)
 				}
 				if (i == nbr_heredoc - 1)
 					write(fd_heredoc, tmp, ft_strlen(tmp));
+				if (tmp)
+					free(tmp);
+			// 	tmp = get_next_line(STDIN_FILENO);
 			}
+			// close(table->exec_data.fd_heredoc);
 		}
 		rdr_lst = rdr_lst->next;
-		// dprintf(2, "lst : %s\n", ((t_rdr *)(rdr_lst->data))->file );
 	}
 	close (fd_heredoc);
 	fd_heredoc = open(file, O_RDONLY , 0644);
-	// exit(0);
 	return (fd_heredoc);
 }
 
@@ -126,12 +131,12 @@ int	ft_main_heredoc(t_list *tb_lst)
 		table = (t_table *)(tb_lst->data);
 		exec_data = (t_data *)(&(table->exec_data));
 		exec_data->nbr_heredoc = ft_cnt_heredoc(tb_lst);
-		exec_data->file = ft_createfile(round);
-		dprintf(2, "nbr_heredoc : %d\n", exec_data->nbr_heredoc);
-		dprintf(2, "file : %s\n", exec_data->file);
-		exec_data->fd_heredoc = ft_do_here(table->rdr, exec_data->nbr_heredoc, file);
+		exec_data->filename = ft_createfile(round);
+		// dprintf(2, "nbr_heredoc : %d\n", exec_data->nbr_heredoc);
+		// dprintf(2, "file : %s\n", exec_data->filename);
+		exec_data->fd_heredoc = ft_do_here(table->rdr, exec_data->nbr_heredoc, exec_data->filename);
 		// dprintf(2, "fd_heredoc_main[%d] : %d\n", round, exec_data->fd_heredoc);
-		// free(exec_data->file);
+		// free(exec_data->filename);
 		round++;
 		tb_lst = tb_lst->next;
 	}

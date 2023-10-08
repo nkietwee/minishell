@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:26:45 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/08 02:53:51 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:59:49 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void ft_dup2(t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 	exec_data = (t_data *)(&(table->exec_data));
 	// dprintf(2, "i_dup2 : %d\n", exec_data->i);
 	// dprintf(2, "nbr_cmd_dup2 : %d\n", nbr_cmd);
+	// dprintf(2, "fd_in : %d\n", exec_data->fd_in);
+	// dprintf(2, "fd_here : %d\n", exec_data->fd_heredoc);
+	// dprintf(2, "fd_out : %d\n", exec_data->fd_out);
 
 	if (exec_data->i == 0 && nbr_cmd == 1) // for 1 cmd
 	{
 		// dprintf(2, "dup for 1 cmd\n");
-		// dprintf(2, "fd_in_dup2_bf : %d\n" , exec_data->fd_in);
-		// dprintf(2, "fd_here_dup2 : %d\n" , table->fd_heredoc );
-		// dprintf(2, "fd_out_dup2_bf : %d\n", exec_data->fd_out);
 		dup2(exec_data->fd_in, STDIN_FILENO);
 		dup2(exec_data->fd_out, STDOUT_FILENO);
 		if (exec_data->fd_in != STDIN_FILENO)
@@ -36,21 +36,28 @@ void ft_dup2(t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 		if (exec_data->fd_out != STDOUT_FILENO)
 			close(exec_data->fd_out);
 	}
-	else if (exec_data->i != nbr_cmd - 1 ) // start with  > 1 cmd
+	else if (exec_data->i == 0 && nbr_cmd > 1) // start with  > 1 cmd
 	{
-		// dprintf(2, "dup 1 cmd\n");
+		dprintf(2, "dup start with > 1 cmd\n");
+		// dprintf(2, "nbr_out : %d\n", exec_data->nbr_out_append);
 		dup2(exec_data->fd_in, STDIN_FILENO);
-		dup2(table->fd_pipe[1], STDOUT_FILENO);
+		if (exec_data->nbr_out_append)
+			dup2(exec_data->fd_out, STDOUT_FILENO);
+		else
+			dup2(table->fd_pipe[1], STDOUT_FILENO);
+		// if (exec_data->fd_out != STDOUT_FILENO)
+		// 	close(exec_data->fd_out);
+
+
 	}
-	else if (exec_data->i == nbr_cmd - 1) // end
+	else if (exec_data->i == nbr_cmd - 1 ) // end
 	{
-		// dprintf(2, "last cmd\n");
-		// printf("fd_out : %d\n", exec_data->fd_out);
-		exec_data->fd_out = STDOUT_FILENO; // for test
-		dup2(*fd_tmp_read, STDIN_FILENO);
+		dprintf(2, "last cmd\n");
+		if (exec_data->nbr_infile || exec_data->nbr_heredoc)
+			dup2(exec_data->fd_in, STDIN_FILENO);
+		else
+			dup2(*fd_tmp_read, STDIN_FILENO);
 		dup2(exec_data->fd_out, STDOUT_FILENO);
-		if (exec_data->fd_out != STDOUT_FILENO)
-			close(exec_data->fd_out);
 	}
 	else // btw
 	{
@@ -58,6 +65,7 @@ void ft_dup2(t_list *tb_lst, int *fd_tmp_read, int nbr_cmd)
 		dup2(*fd_tmp_read, STDIN_FILENO);
 		dup2(table->fd_pipe[1], STDOUT_FILENO);
 	}
+	dprintf(2, "finish_dup2\n");
 }
 void ft_initdata_exec(t_list *tb_lst, char **env)
 {
@@ -89,6 +97,8 @@ void ft_waitpid(t_minishell *ms)
 	while (i < ft_lstsize(ms->tb_lst))
 	{
 		waitpid(ms->pid[i], NULL, 0);
+		// waitpid(ms->pid[i], &ms->status, 0);
+		// ms->exit_code = WEXITSTATUS(ms->status);
 		tb_lst = tb_lst->next;
 		i++;
 	}
