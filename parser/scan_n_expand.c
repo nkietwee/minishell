@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:15:57 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:32 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:45:10 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void	expand(char **ep_str, t_dict *dict, char *exit_code)
 		*ep_str = ft_strdup(exit_code);
 		return ;
 	}
-	while(dict)
+	while (dict)
 	{
-		if (ft_strncmp(ep_str_ptr, dict->tmp_dict->key, ft_strlen(ep_str_ptr)) == 0 && \
-		ft_strncmp(dict->tmp_dict->key, ep_str_ptr, ft_strlen(dict->tmp_dict->key)) == 0)
+		if (ft_strncmp(ep_str_ptr, dict->tmp_dict->key, \
+		ft_strlen(ep_str_ptr)) == 0 && ft_strncmp(dict->tmp_dict->key, \
+		ep_str_ptr, ft_strlen(dict->tmp_dict->key)) == 0)
 		{
 			free(*ep_str);
 			*ep_str = ft_strdup(dict->tmp_dict->value);
@@ -45,7 +46,7 @@ void	scan_n_expand(t_list **ep_lst, t_dict *dict, char *exit_code)
 	t_list	*ep_lst_ptr;
 
 	ep_lst_ptr = *ep_lst;
-	while(ep_lst_ptr)
+	while (ep_lst_ptr)
 	{
 		ep_str = (char *)((ep_lst_ptr)->data);
 		if (*ep_str == '\"')

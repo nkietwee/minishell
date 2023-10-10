@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 00:48:00 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/17 02:23:17 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/08 21:36:09 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	size_t	j;
 	size_t	malloc_len;
 
-	if (start > ft_strlen(s))
+	if (start > (unsigned int)ft_strlen(s))
 		malloc_len = 0;
-	else if ((ft_strlen(s) - start) >= len)
+	else if (((unsigned int)ft_strlen(s) - start) >= len)
 		malloc_len = len;
 	else
-		malloc_len = (ft_strlen(s) - start);
+		malloc_len = ((unsigned int)ft_strlen(s) - start);
 	str = (char *)malloc(sizeof(*s) * (malloc_len + 1));
 	if (!str)
 		return (0);

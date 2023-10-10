@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:59:50 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:34 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:42:36 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ static int	search_empty(char *str, int *index)
 	return (ARG);
 }
 
+static int	ret_pipe_n_fpath(int **tag_ctrl)
+{
+	if (**tag_ctrl == PIPE)
+	{
+		**tag_ctrl = EMPTY;
+		return (PIPE);
+	}
+	**tag_ctrl = EMPTY;
+	return (FPATH);
+}
+
 static int	tag_token(int *tag_ctrl)
 {
 	int	temp;
@@ -81,16 +92,8 @@ static int	tag_token(int *tag_ctrl)
 		*tag_ctrl = FPATH;
 		return (temp);
 	}
-	else if (*tag_ctrl == PIPE)
-	{
-		*tag_ctrl = EMPTY;
-		return (PIPE);
-	}
-	else if (*tag_ctrl == FPATH)
-	{
-		*tag_ctrl = EMPTY;
-		return (FPATH);
-	}
+	else if (*tag_ctrl == PIPE || *tag_ctrl == FPATH)
+		return (ret_pipe_n_fpath(&tag_ctrl));
 	return (0);
 }
 
@@ -99,21 +102,23 @@ int	tokenize(t_minishell **ms)
 	t_list	*tk_lst;
 	int		tag_ctrl;
 
-	if(!ms)
-		return(exit_err(*ms, 3));
+	if (!ms)
+		return (exit_err(*ms, 3));
 	tk_lst = (*ms)->tk_lst;
 	tag_ctrl = EMPTY;
 	(*ms)->index = -1;
-	while(tk_lst)
+	while (tk_lst)
 	{
 		if ((*ms)->index == -1)
-			tag_ctrl = search_start(((t_token *)tk_lst->data)->str, &(*ms)->index);
+			tag_ctrl = search_start(((t_token *)tk_lst->data)->str, \
+			&(*ms)->index);
 		else if (tag_ctrl == EMPTY)
-			tag_ctrl = search_empty(((t_token *)tk_lst->data)->str, &(*ms)->index);
+			tag_ctrl = search_empty(((t_token *)tk_lst->data)->str, \
+			&(*ms)->index);
 		if (tag_ctrl == PIPE)
 			(*ms)->index = -1;
 		((t_token *)tk_lst->data)->type = tag_token(&tag_ctrl);
 		tk_lst = tk_lst->next;
 	}
-	return(0);
+	return (0);
 }

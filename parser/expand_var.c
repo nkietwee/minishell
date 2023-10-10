@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 16:25:59 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:25:02 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static size_t	size_logic(char *tk_str, int index)
 	if (index == 0)
 	{
 		if (tk_str[i] == '$' && tk_str[i + 1] == '?')
-			return(2);
-		if(tk_str[i] == '$')
+			return (2);
+		if (tk_str[i] == '$')
 			i++;
-		while(tk_str[i] && !ft_isquote(tk_str[i]) && tk_str[i] != '$')
+		while (tk_str[i] && !ft_isquote(tk_str[i]) && tk_str[i] != '$')
 			i++;
 		return (i);
 	}
@@ -32,7 +32,7 @@ static size_t	size_logic(char *tk_str, int index)
 	{
 		quote = tk_str[i];
 		i++;
-		while(tk_str[i] && tk_str[i] != quote)
+		while (tk_str[i] && tk_str[i] != quote)
 			i++;
 		if (tk_str[i] == quote)
 			i++;
@@ -48,17 +48,17 @@ static t_list	*init_expand_lst(char *tk_str)
 	int		index;
 
 	ep_lst = NULL;
-	while(*tk_str)
+	while (*tk_str)
 	{
 		index = 0;
 		if (ft_isquote(*tk_str))
 			index = 1;
 		size = size_logic(tk_str, index);
-		if(!ep_lst)
+		if (!ep_lst)
 			ep_lst = ft_lstnew(ft_substr(tk_str, 0, size));
 		else
 			ft_lstadd_back(&ep_lst, ft_lstnew(ft_substr(tk_str, 0, size)));
-		while(size > 0)
+		while (size > 0)
 		{
 			(tk_str)++;
 			size--;
@@ -73,7 +73,7 @@ void	quotes_remove(t_list **ep_lst)
 	t_list	*ep_lst_ptr;
 
 	ep_lst_ptr = *ep_lst;
-	while(ep_lst_ptr)
+	while (ep_lst_ptr)
 	{
 		ep_str = ft_strdup(ep_lst_ptr->data);
 		if (*ep_str == '\'' || *ep_str == '\"')
@@ -94,7 +94,7 @@ static void	ep_lst_to_str(t_token **token, t_list **ep_lst)
 
 	ep_lst_ptr = *ep_lst;
 	str = ft_strdup("");
-	while(ep_lst_ptr)
+	while (ep_lst_ptr)
 	{
 		tmp = ft_strjoin(str, (char *)(ep_lst_ptr->data));
 		free(str);

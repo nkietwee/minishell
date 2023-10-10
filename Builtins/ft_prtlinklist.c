@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:25:43 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/08 17:52:52 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:13:01 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void	ft_prtdict(t_dict	*dict)
 	i = 0;
 	while (dict)
 	{
-		printf("%s=%s\n", dict->tmp_dict->key ,dict->tmp_dict->value);
+		printf("%s=%s\n", dict->tmp_dict->key, dict->tmp_dict->value);
 		dict = dict -> next;
 		i++;
 	}
-	// dprintf(2, "i : %d\n", i);
 }
 
 void	ft_prtexport(t_dict	*dict)

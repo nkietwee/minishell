@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 15:36:50 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:27 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:30:09 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*prompt(void)
 
 	cwd_split = ft_split(getcwd(NULL, 0), '/');
 	i = 0;
-	while(cwd_split[i])
+	while (cwd_split[i])
 		i++;
 	cwd = cwd_split[i - 1];
 	usr = getenv("USER");
@@ -47,7 +47,7 @@ char	*prompt(void)
 		usr = "";
 	i = 0;
 	ret = strjoin_to_ret(usr, cwd);
-	while(cwd_split[i])
+	while (cwd_split[i])
 	{
 		free(cwd_split[i]);
 		i++;

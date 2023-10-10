@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 14:50:46 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:15 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:28:35 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	print_error_exit(t_minishell *ms, char *line)
 	return (1);
 }
 
-static int special_char_validate(t_minishell *ms)
+static int	special_char_validate(t_minishell *ms)
 {
 	t_list	*tk_lst;
 	t_token	*token;
@@ -39,7 +39,7 @@ static int special_char_validate(t_minishell *ms)
 	tk_lst = ms->tk_lst;
 	tk_lst = ft_lstlast(tk_lst);
 	token = ((t_token *)(tk_lst->data));
-	if(token->type == HEREDOC || token->type == INFILE || \
+	if (token->type == HEREDOC || token->type == INFILE || \
 	token->type == APPEND || token->type == OUTFILE || token->type == PIPE)
 		return (exit_err(ms, 4));
 	return (0);
