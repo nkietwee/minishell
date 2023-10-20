@@ -6,41 +6,17 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:55:20 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/02 21:39:42 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:58:47 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-typedef struct s_dict t_dict;
-typedef struct s_dict_value t_dict_value;
+# include <stdlib.h>
 
-// typedef struct s_data t_data;
-#include <stdlib.h>
-
-// void	ft_putstr_fd(char *str, int fd);
-// char	**ft_split(char const *s, char c);
-// char	*ft_strdup(char *str);
-// char	*ft_strjoinextra(char *str1, char *str2, int nbr_free);
-// int		ft_strlen(char *str);
-// int		ft_strcmp(char *s1, char *s2);
-// int     ft_isalpha(int c);
-
-// /*link list*/
-// t_dict	*ft_lstnew(void *content);
-// void	ft_lstadd_front(t_dict **lst, t_dict *new);
-// void	ft_lstadd_back(t_dict **lst, t_dict *new);
-// t_dict	*ft_lstlast(t_dict *lst);
-
-// int		ft_lstsize(t_dict *lst);
-// // int	ft_lstsize(void *lst);
-
-// typedef struct s_list
-// {
-// 	void			*data;
-// 	struct s_list	*next;
-// }					t_list;
+typedef struct s_dict		t_dict;
+typedef struct s_dict_value	t_dict_value;
 
 int					ft_issign(int c);
 int					ft_isspace(int c);
@@ -59,7 +35,7 @@ int					ft_atoi(const char *str);
 int					ft_lstsize(t_list *lst);
 int					ft_lstsize_dict(t_dict *lst);
 
-int				ft_strlen(const char *str);
+int					ft_strlen(const char *str);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 void				*ft_memcpy(void *dest, const void *src, size_t n);
@@ -85,7 +61,6 @@ t_dict				*ft_lstnew_dict(void *content);
 
 t_list				*ft_lstlast(t_list *lst);
 
-
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void *));
 t_list				*ft_lstpop_top(t_list **lst);
@@ -103,7 +78,7 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 
 long				ft_atol(const char *str);
 int					ft_strcmp(char *s1, char *s2);
-char	*ft_strjoinextra(char *str1, char *str2, int nbr_free);
-char	*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoinextra(char *str1, char *str2, int nbr_free);
+char				*ft_strjoin(char const *s1, char const *s2);
 
 #endif

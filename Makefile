@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 16:21:02 by nkietwee          #+#    #+#              #
-#    Updated: 2023/10/03 16:16:56 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/10/11 00:59:43 by ptungbun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,9 @@ NAME = minishell
 
 CC = cc
 
-# FLAGS = -Wall -Wextra -Werror
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
-
-INC = minishell.h
 
 BUILTINS_PATH = Builtins/
 EXECUTE_PATH = Execute/
@@ -28,9 +25,12 @@ LIBFT_PATH = Libft/
 LIBFTMINISHELL_PATH = libminishell/
 PARSER_PATH = parser/
 
+# /usr/local/Cellar/readline/8.2.1/
+
 # MINISHELL_SRCS = ft_minishell.c
-OPENDIR				=	-L./usr/include/readline -L./libft -L./libminishell
-LIBLINK				=	-lreadline
+OPENDIR				=	-L/usr/local/Cellar/readline/8.2.1/lib/ -L./libft -L./libminishell -L/usr/local/lib
+OPENINC				=	-I/usr/local/Cellar/readline/8.2.1/include/readline -I/usr/local/include
+LIBLINK				=	-lreadline -D READLINE_LIBRARY=1
 
 BUILTINS_SRCS = ft_cnt_builtins.c\
 				ft_getenv.c\
@@ -42,6 +42,7 @@ BUILTINS_SRCS = ft_cnt_builtins.c\
 				ft_echo.c\
 				ft_export.c\
 				ft_export_util.c\
+				ft_export_util2.c\
 				ft_prtlinklist.c\
 				ft_unset.c\
 				ft_exit.c
@@ -55,7 +56,11 @@ EXECUTE_SRCS = execute.c\
 			ft_heredoc.c\
 			ft_check_name.c\
 			ft_main_exec.c\
-			ft_execve.c
+			ft_execve.c \
+			ft_child.c \
+			ft_parent.c\
+			ft_print.c\
+			ft_dup.c
 
 GET_NEXT_LINE_SRCS = get_next_line.c\
 					get_next_line_utils.c\
@@ -95,11 +100,11 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%o:%c $(INC)
-	$(CC) $(FLAGS) -c $< -o $@
+%.o: %.c
+	$(CC) $(FLAGS) -D READLINE_LIBRARY=1 -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L/usr/local/lib -I/usr/local/include -lreadline $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) $(LIBLINK) $(OPENDIR) $(OPENINC) $(OBJS) -o $(NAME)
 
 # $(CC) $(FLAGS) -L/usr/local/lib -L./usr/include -I/usr/local/include  $(OBJS) -o $(NAME) -lreadline
 

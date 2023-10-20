@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 23:42:33 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:32:52 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:32:48 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	set_exit_code(t_minishell *ms)
 	ms->err_code == 4 || ms->err_code == 5 || \
 	ms->err_code == 7)
 		ms->exit_code = 128;
+	if (ms->err_code == 8)
+		ms->exit_code = 127;
 	if (ms->err_code == 3)
 		ms->exit_code = 1;
 }

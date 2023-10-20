@@ -6,20 +6,22 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:48:46 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 07:54:01 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:56:00 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <unistd.h> //access
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h> //open
-# include <readline/readline.h>
-# include <readline/history.h>
-
+# include <sys/types.h>
+# include <sys/wait.h>
+# include "/usr/local/Cellar/readline/8.2.1/include/readline/readline.h"
+# include "/usr/local/Cellar/readline/8.2.1/include/readline/history.h"
+# include <signal.h>
 
 # include "builtins.h"
 # include "color.h"
@@ -28,13 +30,6 @@
 # include "libft.h"
 # include "libminishell.h"
 # include "parser.h"
-
-# define ULLONG_MAX 9223372036854775807
-# define LLONG_MAX			// ft_putstr_fd("exit\n", STDOUT_FILENO);
-			// ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
-			// ft_putstr_fd(cmd[1], STDOUT_FILENO);
-			// ft_putstr_fd(": numeric argument required\n", STDOUT_FILENO);
-			// exit(255);7
 
 /* token and tag_ctrl index define*/
 
@@ -57,15 +52,23 @@
 # define APBFCMD 13
 # define FPBFCMD 14
 
+# define CMD_ 0
+# define BUI_CHILD 1
+# define BUI_PARENT 2
+
 /* error msg define*/
 
-# define ERRINITCMDLST "minishell: error in init_command_list\n"
-# define ERRQUOTEVALIDATE "minishell: syntax error near unexpected token `unclose quotes'\n"
-# define ERRTOKENIZE "minishell: error in tokenize\n"
-# define ERRSCHARVALIDATE "minishell: syntax error near unexpected token `metachar at the end of line'\n"
-# define ERREXPANDVAR "minishell: error in expand_var'\n"
-# define ERRCMDTOTABLE "minishell: error in get_cmd_to_table'\n"
-# define ERRRDRTOTABLE "minishell: error in get_rdr_to_table'\n"
+# define ERRINITCMDLST "bash: error in init_command_list\n"
+# define ERRQUOTEVALIDATE "bash: syntax error near unexpected \
+token `unclose quotes'\n"
+# define ERRTOKENIZE "bash: error in tokenize\n"
+# define ERRSCHARVALIDATE "bash: syntax error near unexpected token \
+`metachar at the end of line'\n"
+# define ERREXPANDVAR "bash: error in expand_var'\n"
+# define ERRCMDTOTABLE "bash: error in get_cmd_to_table'\n"
+# define ERRRDRTOTABLE "bash: error in get_rdr_to_table'\n"
+# define ERRD "bash .: command not found\n"
+# define ERRDD "bash ..: command not found\n"
 
 # define FOUND 1
 # define NOTFOUND 0
@@ -96,7 +99,7 @@ enum e_prtexec
 	PER_FILE
 };
 
-typedef struct	s_token
+typedef struct s_token
 {
 	int		type;
 	char	*str;
@@ -110,62 +113,59 @@ typedef struct s_list
 
 typedef struct s_dict_value
 {
-	char *key;
-	char *value;
-	int	equal; // for check equal
-} t_dict_value;
+	char	*key;
+	char	*value;
+}				t_dict_value;
 
 typedef struct s_dict
 {
-	t_dict_value *tmp_dict;
-	struct s_dict *next;
-} t_dict;
+	t_dict_value	*tmp_dict;
+	struct s_dict	*next;
+}					t_dict;
 
 typedef struct s_rdr
 {
 	int		type;
 	char	*file;
-} t_rdr;
+}			t_rdr;
 
 typedef struct s_data
 {
 	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
-	// int		fd_tmp_read;
-	int		fd_pipe[2];
-
+	int		i;
 	int		nbr_infile;
 	int		nbr_out_append;
 	int		nbr_cmd;
 	int		nbr_heredoc;
-
-	// int		fd_heredoc;
-} t_data;
+	int		fd_heredoc;
+	char	*filename;
+}			t_data;
 
 typedef struct s_table
 {
-	t_list	*rdr; // redirect
+	t_list	*rdr;
 	t_data	exec_data;
 	char	**cmd;
-	int		i;
 	int		fd_heredoc;
 	int		nbr_heredoc;
-	// int		nbr_cmd;
-	char	**tmp_env;
-} t_table;
+	int		exec_status;
+	int		fd_pipe[2];
+}			t_table;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
-	t_list	*tk_lst; // tk_list from token list lexer
-	t_list	*tb_lst; //  tb_list from table list from parser
-	t_dict	*dict; // env
-	int		index;
-	int		err_code;
-	int		exit_code;
-	int		nbr_cmd;
-	// int		nbr_heredoc;
-	char	**env;
+	t_list				*tk_lst;
+	t_list				*tb_lst;
+	t_dict				*dict;
+	pid_t				*pid;
+	int					index;
+	int					err_code;
+	int					exit_code;
+	int					nbr_cmd_all;
+	char				**env;
+	int					status;
 	struct sigaction	sigint;
 	struct sigaction	sigquit;
 }				t_minishell;

@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 16:05:36 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:04 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:26:00 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static size_t	count_cmd_n_arg(t_list *tk_lst)
 {
 	size_t	size;
-	t_token *token;
+	t_token	*token;
 
 	size = 0;
 	token = tk_lst->data;
-	while(tk_lst && token->type != PIPE)
+	while (tk_lst && token->type != PIPE)
 	{
 		size++;
 		tk_lst = tk_lst->next;
@@ -31,7 +31,7 @@ static size_t	count_cmd_n_arg(t_list *tk_lst)
 
 static char	**get_cmd_n_slide(t_list **lst)
 {
-	t_token *token;
+	t_token	*token;
 	char	**str_ar;
 	size_t	size;
 
@@ -67,7 +67,8 @@ int	get_cmd_to_table(t_minishell **ms)
 		if ((*ms)->tb_lst == NULL)
 			(*ms)->tb_lst = ft_lstnew(malloc(sizeof(t_table)));
 		else
-			ft_lstadd_back(&((*ms)->tb_lst), ft_lstnew(malloc(sizeof(t_table))));
+			ft_lstadd_back(&((*ms)->tb_lst), \
+			ft_lstnew(malloc(sizeof(t_table))));
 		table = (ft_lstlast((*ms)->tb_lst))->data;
 		table->cmd = get_cmd_n_slide(&tk_lst);
 		table->rdr = NULL;

@@ -6,45 +6,36 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:33:47 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 02:07:36 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:42:13 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// int	ft_cnt_heredoc(t_list *tb_list)
 int	ft_cnt_heredoc(t_list *tb_list)
 {
-	int	i;
-	t_table *table;
-	t_list *rdr_list;
+	int		i;
+	t_table	*table;
+	t_list	*rdr_list;
 	t_rdr	*rdr;
 
 	i = 0;
-	// printf("ft_cnt_heredoc\n");
-	while (tb_list)
+	table = (t_table *)(tb_list->data);
+	rdr_list = table->rdr;
+	while (rdr_list)
 	{
-		table = (t_table *)(tb_list->data);
-		rdr_list = table->rdr;
-		while (rdr_list)
-		{
-			rdr = (t_rdr *)(rdr_list->data);
-			if (rdr->type == HEREDOC)
-			{
-				// printf("heredoc : %s\n", rdr->file);
-				i++;
-			}
-			rdr_list = rdr_list->next;
-		}
-		tb_list = tb_list->next;
+		rdr = (t_rdr *)(rdr_list->data);
+		if (rdr->type == HEREDOC)
+			i++;
+		rdr_list = rdr_list->next;
 	}
 	return (i);
 }
 
 int	ft_cntcmd(t_list *table_list)
 {
-	int	i;
-	t_table *table;
+	int		i;
+	t_table	*table;
 
 	i = 0;
 	while (table_list)
@@ -59,8 +50,8 @@ int	ft_cntcmd(t_list *table_list)
 
 int	ft_cnt_infile(t_list *table_list)
 {
-	int	i;
-	t_table *table;
+	int		i;
+	t_table	*table;
 	t_rdr	*rdr;
 	t_list	*rdr_lst;
 
@@ -79,8 +70,8 @@ int	ft_cnt_infile(t_list *table_list)
 
 int	ft_cnt_outfile(t_list *table_list)
 {
-	int	i;
-	t_table *table;
+	int		i;
+	t_table	*table;
 	t_rdr	*rdr;
 	t_list	*rdr_lst;
 

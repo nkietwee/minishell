@@ -6,63 +6,96 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 17:14:59 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/10/04 08:18:31 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:19:40 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_buildin_onecmd(t_minishell *ms)
+void	ft_waitpid(t_minishell *ms)
 {
-	t_table	*table;
-	t_dict	*tmp_env;
+	int		i;
+	t_list	*tb_lst;
 
-	table = (t_table *)(ms->tb_lst->data);
-	if (ft_check_buildin(table->cmd) == EXIT_SUCCESS)
-		ft_getfd(ms->tb_lst);
-	if (ms->nbr_cmd)
+	i = 0;
+	tb_lst = ms->tb_lst;
+	while (i < ft_lstsize(ms->tb_lst))
 	{
-		if (ft_strcmp(table->cmd[0], "echo") == 0)
-			ft_echo(table->cmd , table->exec_data.fd_out);
-		if (ft_strcmp(table->cmd[0], "cd") == 0)
-			ft_cd(table->cmd, ms->dict);
-		if (ft_strcmp(table->cmd[0], "pwd") == 0)
-			ft_pwd();
-		if (ft_strcmp(table->cmd[0], "export") == 0)
-			ft_export(table->cmd, ms->dict);
-		if (ft_strcmp(table->cmd[0], "env") == 0)
-			ft_env(ms->dict);
-		if (ft_strcmp(table->cmd[0], "unset") == 0)
-			ft_unset(table->cmd, &ms->dict);
-		if (ft_strcmp(table->cmd[0], "exit") == 0)
-			ft_exit(table->cmd, ms->dict);
+		waitpid(ms->pid[i], &ms->status, 0);
+		ms->exit_code = WEXITSTATUS(ms->status);
+		tb_lst = tb_lst->next;
+		i++;
 	}
 }
+
+int	ft_check_builtin(char **cmd)
+{
+	if (cmd[0] == NULL)
+		return (-1);
+	if (ft_strcmp(cmd[0], "echo") == 0)
+		return (BUI_CHILD);
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		return (BUI_CHILD);
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
+		return (BUI_CHILD);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		return (BUI_PARENT);
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		return (BUI_PARENT);
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		return (BUI_PARENT);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+	{
+		if (cmd[1] == NULL)
+			return (BUI_CHILD);
+		return (BUI_PARENT);
+	}
+	return (CMD_);
+}
+
 void	ft_mainexec(t_minishell *ms)
 {
-	// if (ft_checkfile(ms->tb_lst) == EXIT_FAILURE)
-	// 	return ;
-	// ft_countexec(ms);
 	t_table	*table;
 
 	table = (ms->tb_lst->data);
 	table->nbr_heredoc = ft_cnt_heredoc(ms->tb_lst);
-	// dprintf(2, "nbr_here : %d\n" , table->nbr_heredoc);
+	ms->nbr_cmd_all = ft_cntcmd(ms->tb_lst);
 	if (table->nbr_heredoc > 0)
-		table->fd_heredoc = ft_heredoc(ms->tb_lst , table->nbr_heredoc);
-	// dprintf(2, "fd_here : %d\n", table->fd_heredoc);
-	// ft_heredoc(ms->tb_lst , 3);
-	// exit(0);
-	ms->nbr_cmd = ft_cntcmd(ms->tb_lst);
-	if (ms->nbr_cmd == 0 && table->nbr_heredoc > 0)
-		return;
-	// ft_initdata_exec(ms->tb_lst);
-	// ft_initdata_exec(ms->tb_lst);
-	ft_initdata_exec(ms->tb_lst , ms->env);
-	// dprintf(2, "env : %s\n", table->tmp_env[0] );
-	ft_buildin_onecmd(ms);
-	// dprintf(2, "nbr_cmd : %d\n" , ms->nbr_cmd);
-	ft_execute(ms->tb_lst, ms->env, ms->nbr_cmd);
-	// ft_execute(ms->tb_lst, ms->dict, ms->nbr_cmd);
+		ft_main_heredoc(ms->tb_lst);
+	if (ms->nbr_cmd_all == 0 && table->nbr_heredoc > 0)
+		return ;
+	ft_initdata_exec(ms->tb_lst);
+	ft_execute(ms, ms->tb_lst);
+}
 
+void	ft_initdata_exec(t_list *tb_lst)
+{
+	t_table	*table;
+	int		i_cnt;
+
+	i_cnt = 0;
+	table = (t_table *)(tb_lst->data);
+	while (tb_lst)
+	{
+		table = (t_table *)(tb_lst->data);
+		table->exec_data.i = i_cnt;
+		table->exec_status = 0;
+		table->exec_data.pid = 0;
+		table->exec_data.fd_in = 0;
+		table->exec_data.fd_out = 0;
+		table->exec_data.nbr_infile = ft_cnt_infile(tb_lst);
+		table->exec_data.nbr_out_append = 0;
+		table->exec_data.nbr_heredoc = ft_cnt_heredoc(tb_lst);
+		i_cnt++;
+		tb_lst = tb_lst->next;
+	}
+}
+
+void	ft_openpipe(t_minishell *ms, t_table *table, int i)
+{
+	if (ms->nbr_cmd_all > 1 && i != ms->nbr_cmd_all - 1)
+	{
+		if (pipe(table->fd_pipe) == -1)
+			ft_prterr(CANNT_PIPE, "Pipe");
+	}
 }

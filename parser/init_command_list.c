@@ -6,11 +6,21 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 13:52:18 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:11 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:13:33 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_line(char *line)
+{
+	if (!*line)
+	{
+		free (line);
+		return (1);
+	}
+	return (0);
+}
 
 static int	slide_n_decide(t_list *tk_lst, char *line)
 {
@@ -50,6 +60,8 @@ int	init_command_list(t_minishell **ms, char *line)
 	char	*ptr_line;
 	int		index;
 
+	while (*line && *line == ' ')
+		line++;
 	ptr_line = line;
 	tk_lst = NULL;
 	index = 0;

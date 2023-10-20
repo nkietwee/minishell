@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:45:34 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/29 23:01:15 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:00:44 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 
 int	ft_ismetachar(char c);
 int	ft_isquote(char c);
-int ft_isvalide_quote(char *str);
+int	ft_isvalide_quote(char *str);
 
 #endif

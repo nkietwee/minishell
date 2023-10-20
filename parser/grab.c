@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 01:24:09 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/10/02 21:33:08 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/10/10 23:11:45 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static size_t	arg_logic(char *line)
 	size_t	size;
 
 	size = 0;
-	while(!ft_isspace(line[size]) && !ft_ismetachar(line[size]) && line[size])
+	while (!ft_isspace(line[size]) && !ft_ismetachar(line[size]) && line[size])
 		size++;
-	return(size);
+	return (size);
 }
 
 static size_t	quote_logic(char *line)
@@ -29,17 +29,21 @@ static size_t	quote_logic(char *line)
 
 	quote = line[0];
 	size = 1;
-	while(line[size] && line[size] != quote)
+	if (!line[size])
+		return (size);
+	while (line[size] && line[size] != quote)
 		size++;
-	if (line[size + 1])
+	if (!line[size])
+		return (size);
+	if (line[size + 1] && line[size + 1] != ' ')
 	{
-		while(!ft_isspace(line[size]) && line[size] && \
+		while (!ft_isspace(line[size]) && line[size] && \
 		!ft_ismetachar(line[size]))
 			size++;
 	}
-	if(line[size] && !ft_ismetachar(line[size]))
+	if (line[size] && !ft_ismetachar(line[size]))
 		size++;
-	return(size);
+	return (size);
 }
 
 static size_t	metachar_logic(char *line)
@@ -62,12 +66,12 @@ static char	*grab_n_slide(char **line, size_t (*logic)(char *))
 	size = logic(*line);
 	if (size > 0)
 		str = ft_substr(*line, 0, size);
-	while(size > 0)
+	while (size > 0)
 	{
 		(*line)++;
 		size--;
 	}
-	while(ft_isspace(*(*line)))
+	while (ft_isspace(*(*line)))
 		(*line)++;
 	return (str);
 }

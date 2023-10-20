@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libminishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:45:34 by ptungbun          #+#    #+#             */
-/*   Updated: 2023/09/28 23:21:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/11 00:01:30 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 typedef struct s_dict_value
 {
-	char *key;
-	char *value;
-} t_dict_value;
+	char	*key;
+	char	*value;
+}			t_dict_value;
 
 typedef struct s_dict
 {
-	t_dict_value *tmp_dict;
-	struct s_dict *next;
-} t_dict;
+	t_dict_value	*tmp_dict;
+	struct s_dict	*next;
+}					t_dict;
 
 /*  libft_minisell  */
 
